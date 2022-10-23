@@ -1,36 +1,34 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
+import axios from 'axios'
 
-export class AccessCodeForm extends Component {
+// const api = axios.create({
+//     baseURL: `http://localhost:3001/`
+// })
 
-    constructor(props) {
-      super(props)
-    
-      this.state = {
-         accessCode: ''
-      }
-    }
+function AccessCodeForm({Login, error}) {
 
-    handleAccessCodeChange = (event) => {
-        this.setState({
+    const [accessCode, setAccessCode] = useState({accessCode: ""});
+
+    const handleAccessCodeChange = (event) => {
+        setAccessCode({
             accessCode: event.target.value
         })
     }
 
-    handleSubmit = (event) => {
-        alert(`${this.state.accessCode}`)
-        event.preventDefault()
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        Login(accessCode);
     }
 
-  render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+        <form onSubmit={handleSubmit}>
             <div>
                 <label>
                     Access Code:
                     <input
                         type='text'
-                        value={this.state.accessCode}
-                        onChange={this.handleAccessCodeChange}>
+                        value={accessCode.accessCode}
+                        onChange={handleAccessCodeChange}>
                     </input>
                 </label>
             </div>
@@ -39,7 +37,6 @@ export class AccessCodeForm extends Component {
             </button>
         </form>
     )
-  }
 }
 
 export default AccessCodeForm
