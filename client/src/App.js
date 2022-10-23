@@ -10,15 +10,10 @@ const api = axios.create({
 
 function App() {
 
-  const [error, setError] = useState("");
-
-  const Login = details => {
-    console.log(details)
-  }
-
   return (
     <Routes>
-      <Route path="/" element={<Home Login={Login} error={error} />} />
+      <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Home />} />
     </Routes>
   )
 }
