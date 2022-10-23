@@ -1,13 +1,21 @@
 const express = require('express');
 const mysql = require('mysql2');
 const db = require('./models');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 
 class App {
 
     constructor () {
-        console.log("app.js")
+        console.log("app.js");
+
         this.app = express();
+
         this.dbConnection();
+
+        this.setMiddleWare();
+
+        this.getRouting();
     }
 
     dbConnection() {
@@ -22,6 +30,17 @@ class App {
         .catch(err => {
             console.log("Unable to connect to the database: ", err);
         });
+    }
+
+    setMiddleWare() {
+        this.app.use(express.json());
+        this.app.use(bodyParser.json());
+        this.app.use(bodyParser.urlencoded({ extended: false }));
+        this.app.use(cors());
+    }
+
+    getRouting() {
+        this.app.use(require('./controllers'));
     }
 
 }
