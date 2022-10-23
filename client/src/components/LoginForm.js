@@ -5,19 +5,19 @@ import axios from 'axios'
 //     baseURL: `http://localhost:3001/`
 // })
 
-function AccessCodeForm({Login, error}) {
+function LoginForm({Login, error}) {
 
-    const [accessCode, setAccessCode] = useState({accessCode: ""});
+    const [loginDetails, setLoginDetails] = useState({accessCode: ""});
 
     const handleAccessCodeChange = (event) => {
-        setAccessCode({
+        setLoginDetails({
             accessCode: event.target.value
         })
     }
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        Login(accessCode);
+        Login(loginDetails);
     }
 
     return (
@@ -27,7 +27,7 @@ function AccessCodeForm({Login, error}) {
                     Access Code:
                     <input
                         type='text'
-                        value={accessCode.accessCode}
+                        value={loginDetails.accessCode}
                         onChange={handleAccessCodeChange}>
                     </input>
                 </label>
@@ -39,4 +39,4 @@ function AccessCodeForm({Login, error}) {
     )
 }
 
-export default AccessCodeForm
+export default LoginForm

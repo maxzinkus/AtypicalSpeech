@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import AccessCodeForm from '../components/AccessCodeForm';
+import LoginForm from '../components/LoginForm';
 
-function Home() {
-
-   const [accessCode, setAccessCode] = useState('');
+function Home({Login, error}) {
 
   return (
-    <><div>Atypical Speech</div><AccessCodeForm>
-
-      </AccessCodeForm></>
+    <>
+      <div>AtypicalSpeech</div>
+      <LoginForm Login={Login} error={error}></LoginForm>
+    </>
   )
 }
 
