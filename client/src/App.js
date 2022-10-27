@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import { Route, Routes } from "react-router-dom"
 import Home from './pages/Home'
 import axios from 'axios'
+import 'semantic-ui-css/semantic.min.css'
 import LoginForm from './components/LoginForm'
 
 const api = axios.create({

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import LoginForm from '../components/LoginForm';
+import RecordingModal from '../components/RecordingModal';
 
 function Home() {
 
@@ -20,7 +21,7 @@ function Home() {
     if (user.accessCode === "") {
       return <LoginForm Login={Login} error={error}></LoginForm>
     } else {
-      return <div>Welcome, accessCode: {user.accessCode}</div>
+      return (<><div>Welcome, accessCode: {user.accessCode}</div><RecordingModal></RecordingModal></>)
     }
   }
 
