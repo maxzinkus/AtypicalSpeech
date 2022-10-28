@@ -78,6 +78,7 @@ function RecordingModal() {
             <UtteranceDisplayer line={utterances[currentState.currentLine]}></UtteranceDisplayer>
             <AudioReactRecorder state={currentState.recordState} onStop={onStop}></AudioReactRecorder>
             {/* {AudioPlayerRendering} */}
+            <audio id="audio" controls src={currentState.audioData ? currentState.audioData.url : null}></audio>
             <AudioPlayer source={currentState.audioData}></AudioPlayer>
             <ScriptController previousLine={previousLine} nextLine={nextLine} start={start} stop={stop} pause={pause}></ScriptController>
         </div></>
