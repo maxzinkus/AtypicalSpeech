@@ -80,6 +80,23 @@ function RecordingModal() {
         window.URL.revokeObjectURL(url);
     };
 
+    // containerName: string
+    // blobName: string, includes file extension if provided
+    // localFileWithPath: fully qualified path and file name
+    // uploadOptions: {
+    //   metadata: { reviewer: 'john', reviewDate: '2022-04-01' }, 
+    //   tags: {project: 'xyz', owner: 'accounts-payable'}
+    // }
+    async function createBlobFromLocalPath(containerClient, blobName, localFileWithPath, uploadOptions){
+
+        // create blob client from container client
+        const blockBlobClient = await containerClient.getBlockBlobClient(blobName);
+    
+        // upload file to blob storage
+        await blockBlobClient.uploadFile(localFileWithPath, uploadOptions);
+        console.log(`${blobName} succeeded`);
+    }
+
     const onStop = (audioData) => {
         console.log('audioData', audioData)
         setCurrentState({
