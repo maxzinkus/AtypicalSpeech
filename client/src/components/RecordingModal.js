@@ -11,6 +11,13 @@ function RecordingModal() {
     const [error, setError] = useState("");
 
     const utterances = JSON.parse('["Ellen looked out at the street through the glass front.", " The man from four hundred and ten was standing out there, smoking a cigarette, watching her.", " When their eyes met, he abruptly threw away the cigarette and started walking toward the apartment house.", " Again she felt that faint dread she had experienced in the hall earlier.", " The waitress picked up her quarter, gave her back a nickel and a dime.", " four hundred and ten was just ahead of her in the lobby.", "He held the front door open for her.", " He opened the elevator doors, too, and she stepped in ahead of him.", " When the doors clanged shut, she had a feeling of panic.", "Come in, my dear, come in.", " She almost fell over the landing.", " The door closed behind her.", " She stumbled to the davenport, sank down, gasping.", " Two cats rubbed against her legs, purring.", " Two cats? She heard herself say stupidly, Missis Moffatt, wheres the other cat? and wondered why she said it."]')
+    
+    const blobToFile = (theBlob, fileName) => {
+        //A Blob() is almost a File() - it's just missing the two properties below which we will add
+        theBlob.lastModifiedDate = new Date();
+        theBlob.name = fileName;
+        return theBlob;
+    }
 
     const previousLine = (event) => {
         var originalLineNumber = currentState.currentLine
@@ -59,6 +66,20 @@ function RecordingModal() {
         })
     }
 
+    const saveBlob = (event) => {
+        var blob = currentState.audioData.blob
+        var fileName = currentState.currentLine.toString()
+        var a = document.createElement("a");
+        document.body.appendChild(a);
+        a.style = "display: none";
+    
+        var url = window.URL.createObjectURL(blob);
+        a.href = url;
+        a.download = fileName;
+        a.click();
+        window.URL.revokeObjectURL(url);
+    };
+
     const onStop = (audioData) => {
         console.log('audioData', audioData)
         setCurrentState({
@@ -80,7 +101,7 @@ function RecordingModal() {
             {/* {AudioPlayerRendering} */}
             <audio id="audio" controls src={currentState.audioData ? currentState.audioData.url : null}></audio>
             <AudioPlayer source={currentState.audioData}></AudioPlayer>
-            <ScriptController previousLine={previousLine} nextLine={nextLine} start={start} stop={stop} pause={pause}></ScriptController>
+            <ScriptController previousLine={previousLine} nextLine={nextLine} start={start} stop={stop} pause={pause} save={saveBlob}></ScriptController>
         </div></>
     )
 }
