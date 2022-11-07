@@ -26,6 +26,7 @@ function RecordingModal() {
         var originalLineNumber = currentState.currentLine
         if (currentState.currentLine >= 1) {
             setCurrentState({
+                ...currentState,
                 currentLine: originalLineNumber - 1
             })
         }
@@ -35,11 +36,10 @@ function RecordingModal() {
     const review = async (event) => {
         console.log("review")
         setCurrentState({
-            currentLine: currentState.currentLine,
-            recordState: currentState.recordState,
-            audioData: currentState.audioData,
+            ...currentState,
             review: true
         })
+        console.log("after review:", currentState)
 
         console.log("stop recording after one second")
         await new Promise(resolve => setTimeout(resolve, RECORDING_DELAY));
@@ -51,6 +51,7 @@ function RecordingModal() {
         var originalLineNumber = currentState.currentLine
         if (currentState.currentLine >= 0) {
             setCurrentState({
+                ...currentState,
                 currentLine: originalLineNumber + 1
             })
         }
@@ -60,9 +61,8 @@ function RecordingModal() {
     const start = (event) => {
         console.log("Start")
         setCurrentState({
-            currentLine: currentState.currentLine,
+            ...currentState,
             recordState: RecordState.START,
-            audioData: currentState.audioData
         })
         console.log(currentState)
     }
@@ -70,17 +70,15 @@ function RecordingModal() {
     const pause = (event) => {
         console.log("Pause")
         setCurrentState({
-            currentLine: currentState.currentLine,
+            ...currentState,
             recordState: RecordState.PAUSE,
-            audioData: currentState.audioData
         })
     }
 
     const stop = (event) => {
         setCurrentState({
-            currentLine: currentState.currentLine,
+            ...currentState,
             recordState: RecordState.STOP,
-            audioData: currentState.audioData
         })
     }
 
@@ -118,15 +116,16 @@ function RecordingModal() {
     const onStop = (audioData) => {
         console.log('audioData', audioData)
         setCurrentState({
-            currentLine: currentState.currentLine,
-            recordState: currentState.recordState,
+            // currentLine: currentState.currentLine,
+            // recordState: currentState.recordState,
+            ...currentState,
             audioData: audioData
         })
         ReviewPageRendering()
     }
 
     const ReviewPageRendering = () => {
-        console.log("review page rendering")
+        console.log("review page rendering: ", currentState.review)
         if (currentState.review) {
             AudioPlayerRendering()
         }
@@ -139,11 +138,10 @@ function RecordingModal() {
     return (
         <><div>RecordingModal</div><div>
             <UtteranceDisplayer line={utterances[currentState.currentLine]}></UtteranceDisplayer>
-            <AudioReactRecorder state={currentState.recordState} onStop={onStop}></AudioReactRecorder>
-            {/* {AudioPlayerRendering} */}
+            {<AudioReactRecorder state={currentState.recordState} onStop={onStop}></AudioReactRecorder>}
             <audio id="audio" controls src={currentState.audioData ? currentState.audioData.url : null}></audio>
             {/* <AudioPlayer source={currentState.audioData}></AudioPlayer> */}
-            <ReviewPage audioData={currentState.audioData}></ReviewPage>
+            {currentState.review && <ReviewPage audioData={currentState.audioData}></ReviewPage>}
             <ScriptController previousLine={previousLine} nextLine={nextLine} start={start} stop={stop} pause={pause} save={saveBlob} review={review}></ScriptController>
         </div></>
     )
