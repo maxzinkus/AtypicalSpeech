@@ -79,7 +79,10 @@ function RecordingModal() {
         setCurrentState({
             ...currentState,
             recordState: RecordState.STOP,
+            review: true
         })
+        console.log("stope")
+        console.log(currentState)
     }
 
     const saveBlob = (event) => {
@@ -127,13 +130,17 @@ function RecordingModal() {
     const ReviewPageRendering = () => {
         console.log("review page rendering: ", currentState.review)
         if (currentState.review) {
-            AudioPlayerRendering()
+            return <ReviewPage audioData={currentState.audioData}></ReviewPage>
         }
     }
 
     const AudioPlayerRendering = () => {
         return <AudioPlayer source={currentState.audioData}></AudioPlayer>
     }
+
+    useEffect(() => {
+        ReviewPageRendering()
+    }, [currentState.review])
 
     return (
         <><div>RecordingModal</div><div>
@@ -142,7 +149,8 @@ function RecordingModal() {
             <audio id="audio" controls src={currentState.audioData ? currentState.audioData.url : null}></audio>
             {/* <AudioPlayer source={currentState.audioData}></AudioPlayer> */}
             {currentState.review && <ReviewPage audioData={currentState.audioData}></ReviewPage>}
-            <ScriptController previousLine={previousLine} nextLine={nextLine} start={start} stop={stop} pause={pause} save={saveBlob} review={review}></ScriptController>
+            {!currentState.review && <ScriptController previousLine={previousLine} nextLine={nextLine} start={start} stop={stop} pause={pause} save={saveBlob} review={review} nextContent={"Review"}></ScriptController>}
+            {currentState.review && <ScriptController previousLine={previousLine} nextLine={nextLine} start={start} stop={stop} pause={pause} save={saveBlob} review={nextLine} nextContent={"next line"}></ScriptController>}
         </div></>
     )
 }
