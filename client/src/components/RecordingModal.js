@@ -47,6 +47,14 @@ function RecordingModal() {
         stop()
     }
 
+    const convertToNonReview = (event) => {
+        console.log("change to recording state")
+        setCurrentState({
+            ...currentState,
+            review: false
+        })
+    }
+
     const nextLine = (event) => {
         var originalLineNumber = currentState.currentLine
         if (currentState.currentLine >= 0) {
@@ -56,16 +64,20 @@ function RecordingModal() {
             })
         }
         console.log("next line: ", currentState.currentLine)
+        convertToNonReview()
         start()
     }
 
     const start = async (event) => {
         console.log("start recording after one second")
         await new Promise(resolve => setTimeout(resolve, RECORDING_DELAY));
+
         setCurrentState({
             ...currentState,
             recordState: RecordState.START,
+            review: false
         })
+
         console.log(currentState)
     }
 
@@ -140,9 +152,9 @@ function RecordingModal() {
         return <AudioPlayer source={currentState.audioData}></AudioPlayer>
     }
 
-    useEffect(() => {
-        ReviewPageRendering()
-    }, [currentState.review])
+    // useEffect(() => {
+    //     ReviewPageRendering()
+    // }, [currentState.review])
 
     return (
         <><div>RecordingModal</div><div>
