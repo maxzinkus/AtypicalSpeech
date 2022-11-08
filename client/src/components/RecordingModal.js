@@ -56,10 +56,12 @@ function RecordingModal() {
             })
         }
         console.log("next line: ", currentState.currentLine)
+        start()
     }
 
-    const start = (event) => {
-        console.log("Start")
+    const start = async (event) => {
+        console.log("start recording after one second")
+        await new Promise(resolve => setTimeout(resolve, RECORDING_DELAY));
         setCurrentState({
             ...currentState,
             recordState: RecordState.START,
