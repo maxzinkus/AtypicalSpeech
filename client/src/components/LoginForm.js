@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 // const api = axios.create({
 //     baseURL: `http://localhost:3001/`
@@ -32,9 +33,12 @@ function LoginForm({Login, error}) {
                     </input>
                 </label>
             </div>
-            <button type="submit">
-                Submit
-            </button>
+            
+            <Link to="/dashboard">
+                <button type="submit">
+                    Submit
+                </button>
+            </Link>
         </form>
     )
 }
