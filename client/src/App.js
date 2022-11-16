@@ -6,6 +6,7 @@ import 'semantic-ui-css/semantic.min.css'
 import LoginForm from './components/LoginForm'
 import { BrowserRouter as Router, Switch } from 'react-router-dom'
 import Dashboard from './components/Dashboard'
+import RecordingModal from './components/RecordingModal'
 
 const api = axios.create({
   baseURL: `http://localhost:3001/`
@@ -23,6 +24,9 @@ function App() {
             </Route>
             <Route exact path="/dashboard">
               <Dashboard/>
+            </Route>
+            <Route exact path="/module1">
+              <RecordingModal></RecordingModal>
             </Route>
           </Switch>
         </div>
