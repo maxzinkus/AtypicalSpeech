@@ -26,7 +26,7 @@ function App() {
               <Dashboard/>
             </Route>
             <Route exact path="/module1">
-              <RecordingModal></RecordingModal>
+              <RecordingModal/>
             </Route>
           </Switch>
         </div>

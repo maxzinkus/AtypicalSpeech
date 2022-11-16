@@ -68,6 +68,7 @@ function RecordingModal() {
         }
         console.log("next line: ", currentState.currentLine)
         // convertToNonReview()
+        saveBlob()
         start()
     }
 
@@ -77,6 +78,7 @@ function RecordingModal() {
 
         setCurrentState({
             ...currentState,
+            currentLine: currentState.currentLine + 1,
             recordState: RecordState.START,
             review: false
         })
