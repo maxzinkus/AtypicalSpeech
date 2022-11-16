@@ -158,11 +158,12 @@ function RecordingModal() {
     }
 
     const UtteranceDisplayerRendering = () => {
+        // await new Promise(resolve => setTimeout(resolve, RECORDING_DELAY));
         return <UtteranceDisplayer line={utterances[currentState.currentLine]}></UtteranceDisplayer>
     }
 
     return (
-        <><div>RecordingModal</div><div>
+        <><div>
             {UtteranceDisplayerRendering()}
             {<AudioReactRecorder state={currentState.recordState} onStop={onStop}></AudioReactRecorder>}
             {currentState.review && <audio id="audio" controls src={currentState.audioData ? currentState.audioData.url : null}></audio>}
