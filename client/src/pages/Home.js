@@ -21,7 +21,7 @@ function Home() {
     if (user.accessCode === "") {
       return <LoginForm Login={Login} error={error}></LoginForm>
     } else {
-      return (<><div>Welcome, accessCode: {user.accessCode}</div><RecordingModal></RecordingModal></>)
+      return (<><div>Welcome, accessCode: {user.accessCode}</div></>)
     }
   }
 

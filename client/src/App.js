@@ -4,6 +4,8 @@ import Home from './pages/Home'
 import axios from 'axios'
 import 'semantic-ui-css/semantic.min.css'
 import LoginForm from './components/LoginForm'
+import { BrowserRouter as Router, Switch } from 'react-router-dom'
+import Dashboard from './components/Dashboard'
 
 const api = axios.create({
   baseURL: `http://localhost:3001/`
@@ -12,10 +14,20 @@ const api = axios.create({
 function App() {
 
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Home />} />
-    </Routes>
+    <Router>
+      <div className='App'>
+        <div className='Content'>
+          <Switch>
+            <Route exact path="/">
+              <Home/>
+            </Route>
+            <Route exact path="/dashboard">
+              <Dashboard/>
+            </Route>
+          </Switch>
+        </div>
+      </div> 
+    </Router>
   )
 }
 

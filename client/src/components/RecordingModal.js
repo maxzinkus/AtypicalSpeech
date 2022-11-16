@@ -154,13 +154,13 @@ function RecordingModal() {
 
     // useEffect(() => {
     //     ReviewPageRendering()
-    // }, [currentState.review])
+    // }, [currentState.currentLine])
 
     return (
         <><div>RecordingModal</div><div>
             <UtteranceDisplayer line={utterances[currentState.currentLine]}></UtteranceDisplayer>
             {<AudioReactRecorder state={currentState.recordState} onStop={onStop}></AudioReactRecorder>}
-            <audio id="audio" controls src={currentState.audioData ? currentState.audioData.url : null}></audio>
+            {currentState.review && <audio id="audio" controls src={currentState.audioData ? currentState.audioData.url : null}></audio>}
             {/* <AudioPlayer source={currentState.audioData}></AudioPlayer> */}
             {currentState.review && <ReviewPage audioData={currentState.audioData}></ReviewPage>}
             {!currentState.review && <ScriptController previousLine={previousLine} nextLine={nextLine} start={start} stop={stop} pause={pause} save={saveBlob} review={review} nextContent={"Review"}></ScriptController>}
