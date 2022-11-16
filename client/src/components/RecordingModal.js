@@ -94,7 +94,9 @@ function RecordingModal() {
         })
     }
 
-    const stop = (event) => {
+    const stop = async (event) => {
+        await new Promise(resolve => setTimeout(resolve, RECORDING_DELAY));
+
         setCurrentState({
             ...currentState,
             recordState: RecordState.STOP,
