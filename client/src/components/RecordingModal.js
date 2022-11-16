@@ -56,15 +56,18 @@ function RecordingModal() {
     }
 
     const nextLine = (event) => {
+        console.log("next line")
         var originalLineNumber = currentState.currentLine
         if (currentState.currentLine >= 0) {
+            console.log("add current line: ", originalLineNumber + 1)
             setCurrentState({
                 ...currentState,
+                review: false,
                 currentLine: originalLineNumber + 1
             })
         }
         console.log("next line: ", currentState.currentLine)
-        convertToNonReview()
+        // convertToNonReview()
         start()
     }
 
@@ -152,19 +155,20 @@ function RecordingModal() {
         return <AudioPlayer source={currentState.audioData}></AudioPlayer>
     }
 
-    // useEffect(() => {
-    //     ReviewPageRendering()
-    // }, [currentState.currentLine])
+    const UtteranceDisplayerRendering = () => {
+        return <UtteranceDisplayer line={utterances[currentState.currentLine]}></UtteranceDisplayer>
+    }
 
     return (
         <><div>RecordingModal</div><div>
-            <UtteranceDisplayer line={utterances[currentState.currentLine]}></UtteranceDisplayer>
+            {UtteranceDisplayerRendering()}
             {<AudioReactRecorder state={currentState.recordState} onStop={onStop}></AudioReactRecorder>}
             {currentState.review && <audio id="audio" controls src={currentState.audioData ? currentState.audioData.url : null}></audio>}
             {/* <AudioPlayer source={currentState.audioData}></AudioPlayer> */}
             {currentState.review && <ReviewPage audioData={currentState.audioData}></ReviewPage>}
-            {!currentState.review && <ScriptController previousLine={previousLine} nextLine={nextLine} start={start} stop={stop} pause={pause} save={saveBlob} review={review} nextContent={"Review"}></ScriptController>}
-            {currentState.review && <ScriptController previousLine={previousLine} nextLine={nextLine} start={start} stop={stop} pause={pause} save={saveBlob} review={nextLine} nextContent={"next line"}></ScriptController>}
+            {<ScriptController previousLine={previousLine} nextLine={nextLine} start={start} stop={stop} pause={pause} save={saveBlob} review={review} nextContent={"Review"} reviewState={currentState.review}></ScriptController>}
+            {/* {!currentState.review && <ScriptController previousLine={previousLine} nextLine={nextLine} start={start} stop={stop} pause={pause} save={saveBlob} review={review} nextContent={"Review"} reviewState={currentState.review}></ScriptController>} */}
+            {/* {currentState.review && <ScriptController previousLine={previousLine} nextLine={nextLine} start={start} stop={stop} pause={pause} save={saveBlob} review={nextLine} nextContent={"next line"}></ScriptController>} */}
         </div></>
     )
 }
