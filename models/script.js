@@ -14,8 +14,15 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Script.init({
-    id: DataTypes.INTEGER,
-    utterances: DataTypes.STRING
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      allowNull: false,
+    },
+    utterances: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    }
   }, {
     sequelize,
     modelName: 'Script',

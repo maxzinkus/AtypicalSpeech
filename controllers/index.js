@@ -5,6 +5,6 @@ router.get('/', (_, res) => {
     res.send("Welcome to AtypicalSpeech")
 });
 
-// router.use('/users', require('./users'));
+// router.use('/script', require('./script'));
 
 module.exports = router;
