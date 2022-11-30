@@ -3,6 +3,7 @@ const { Router } = require('express');
 const router = Router();
 const ctrl = require('./script.ctrl');
 
-// router.get('/findAll', ctrl.get_all_cities);
+router.get('/create', ctrl.create_script);
+router.get('/findOneID', ctrl.get_one_script_by_id);
 
 module.exports = router;
