@@ -22,6 +22,8 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "fs": "0.0.1-security",
+    "list-files": "^1.1.4",
+    "list-react-files": "^0.2.0",
     "mysql2": "^2.3.3",
     "path": "^0.12.7",
     "react-router-dom": "^6.4.3",
