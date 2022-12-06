@@ -8,6 +8,6 @@ router.get('/', (_, res) => {
 
 router.post('/assign_task', ctrl.assign_task_to_user);
 router.post('/create', ctrl.create_user);
-// router.get('/getScriptNum', ctrl.get_script_total_number);
+router.get('/get_assigned_tasks', ctrl.fetch_assigned_tasks_per_user);
 
 module.exports = router;
