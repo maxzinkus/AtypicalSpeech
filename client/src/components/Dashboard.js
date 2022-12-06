@@ -14,9 +14,7 @@ function Dashboard() {
             const scriptCount = await axios.get('http://localhost:3000/script/getScriptNum');
             setCurrentState({scriptCount: scriptCount.data});
         }
-
         fetchScriptCount();
-
     }, []);
 
     return (
@@ -27,11 +25,6 @@ function Dashboard() {
                 <ListItemText primary="Script #1" />
             </ListItemButton>
         </Link>
-        {/* <Link to="/module2">
-            <ListItemButton component="a" href="#simple-list">
-                <ListItemText primary="Script #2" />
-            </ListItemButton>
-        </Link> */}
         </>
     )
 }
