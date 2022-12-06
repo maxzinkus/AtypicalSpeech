@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { Route, Routes } from "react-router-dom"
 import Home from './pages/Home'
 import axios from 'axios'
@@ -14,6 +14,18 @@ const api = axios.create({
 
 function App() {
 
+  // const [currentState, setCurrentState] = useState(null)
+
+  //   useEffect(() => {
+  //       // GET request using fetch inside useEffect React hook
+  //       fetch('http://localhost:3000/script/getScriptNum')
+  //           .then(response => response.json())
+  //           .then(data => console.log(data))
+  //           .then(data => setCurrentState({scriptCount: data}));
+    
+  //       // console.log("script num app.js: ", currentState.scriptCount)
+  //   }, []);
+
   return (
     <Router>
       <div className='App'>
@@ -22,10 +34,14 @@ function App() {
             <Route exact path="/">
               <Home/>
             </Route>
-            <Route exact path="/dashboard">
+            {/* <Route exact path="/dashboard" element={<Dashboard scriptCount={currentState.scriptCount} />}> */}
+            <Route exact path="/dashboard" element={<Dashboard />}>
               <Dashboard/>
             </Route>
             <Route exact path="/module1">
+              <RecordingModal/>
+            </Route>
+            <Route exact path="/module2">
               <RecordingModal/>
             </Route>
           </Switch>

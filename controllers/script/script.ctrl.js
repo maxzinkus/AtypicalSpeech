@@ -11,10 +11,20 @@ exports.get_one_script_by_id = async (req, res) => {
     }
 }
 
+exports.get_script_total_number = async (_, res) => {
+    try {
+        return res.json(await Script.count());
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json(err)
+    }
+}
+
 exports.create_script = async (req, res) => {
     const {id, utterances} = req.body
+    console.log(req.body)
     try {
-        const script = await City.create({id, utterances})
+        const script = await Script.create({id, utterances})
         return res.json(script)
     } catch (err) {
         console.log(err)
