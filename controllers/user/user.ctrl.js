@@ -36,6 +36,42 @@ exports.assign_task_to_user = async (req, res) => {
     }
 }
 
+exports.mark_task_complete = async (req, res) => {
+    const {user_id, script_id} = req.body
+    try {
+        const user = await User.findByPk(user_id)
+
+        // if user not found, show error
+        if (user === null) {
+            console.log("user not found!")
+        }
+
+        const script = await Script.findByPk(script_id)
+
+        // if script not found, show error
+        if (script === null) {
+            console.log("script not found!")
+        }
+
+        const original_completed_tasks = user.completedTasks.tasks
+        console.log(original_completed_tasks)
+
+        if (original_completed_tasks.includes(script_id)) {
+            return res.json(user)
+        }
+
+        original_completed_tasks.push(script_id)
+        user.completedTasks.tasks = original_completed_tasks
+        user.changed('completedTasks', true)
+        await user.save()
+    
+        return res.json(user)
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json(err)
+    }
+}
+
 exports.create_user = async (req, res) => {
     const {user_id} = req.body
     try {
