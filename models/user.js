@@ -24,12 +24,12 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     },
     assignedTasks: {
-      type: DataTypes.ARRAY(DataTypes.INTEGER),
-      allowNull: false,
+      type: DataTypes.JSON,
+      allowNull: true,
     },
     completedTasks: {
-      type: DataTypes.ARRAY(DataTypes.INTEGER),
-      allowNull: false,
+      type: DataTypes.JSON,
+      allowNull: true,
     }
   }, {
     sequelize,
