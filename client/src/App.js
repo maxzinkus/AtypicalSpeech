@@ -41,7 +41,7 @@ function App() {
             {/* <Route path="/module/:id" element={<RecordingModal />}>
               <RecordingModal/>
             </Route> */}
-            <Route path="/module1" element={<RecordingModal />}>
+            <Route path="/module1">
               <RecordingModal/>
             </Route>
           </Switch>

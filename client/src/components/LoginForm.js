@@ -26,20 +26,22 @@ function LoginForm({Login, error}) {
     return (
         <form onSubmit={handleSubmit}>
             <div>
-                <label>
+                <h1 class="text-center">
                     Access Code:
                     <input
                         type='text'
                         value={loginDetails.accessCode}
                         onChange={handleAccessCodeChange}>
                     </input>
-                </label>
+                </h1>
             </div>
             
             <Link to="/dashboard">
-                <Button type="submit" class="btn btn-primary">
-                    Submit
-                </Button>
+                <div class="col-md-4 col-md-offset-4 text-center">
+                    <Button type="submit" class="btn btn-primary">
+                        Submit
+                    </Button>
+                </div>
             </Link>
         </form>
     )

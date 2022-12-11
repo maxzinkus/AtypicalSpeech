@@ -5,8 +5,12 @@ import UtteranceDisplayer from './UtteranceDisplayer';
 import AudioReactRecorder, { RecordState } from 'audio-react-recorder'
 import AudioPlayer from './AudioPlayer';
 import ReviewPage from './ReviewPage';
+import { useLocation } from 'react-router-dom';
 
-function RecordingModal() {
+function RecordingModal(props) {
+
+    const location = useLocation();
+    const accessCode = location.state.accessCode;
 
     const [currentState, setCurrentState] = useState({currentLine: 0, recordState: null, audioData: null, review: false})
     const [error, setError] = useState("");
@@ -108,7 +112,8 @@ function RecordingModal() {
 
     const saveBlob = (event) => {
         var blob = currentState.audioData.blob
-        var fileName =  "nfklewag1429_#1_line" + currentState.currentLine.toString()
+        var fileName =  accessCode + "_line#" + currentState.currentLine.toString()
+        console.log("file name: ", fileName);
         var a = document.createElement("a");
         document.body.appendChild(a);
         a.style = "display: none";
@@ -120,13 +125,6 @@ function RecordingModal() {
         window.URL.revokeObjectURL(url);
     };
 
-    // containerName: string
-    // blobName: string, includes file extension if provided
-    // localFileWithPath: fully qualified path and file name
-    // uploadOptions: {
-    //   metadata: { reviewer: 'john', reviewDate: '2022-04-01' }, 
-    //   tags: {project: 'xyz', owner: 'accounts-payable'}
-    // }
     async function createBlobFromLocalPath(containerClient, blobName, localFileWithPath, uploadOptions){
 
         // create blob client from container client
