@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import { Button } from 'react-bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 // const api = axios.create({
 //     baseURL: `http://localhost:3001/`
@@ -35,9 +37,9 @@ function LoginForm({Login, error}) {
             </div>
             
             <Link to="/dashboard">
-                <button type="submit">
+                <Button type="submit" class="btn btn-primary">
                     Submit
-                </button>
+                </Button>
             </Link>
         </form>
     )

@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom'
 import {ListItemButton, ListItemText} from '@mui/material'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import DashboardCard from './DashboardCard';
 
 function Dashboard() {
 
@@ -17,14 +18,15 @@ function Dashboard() {
         fetchScriptCount();
     }, []);
 
+    var cards = [];
+    for (var i = 1; i < currentState.scriptCount + 1; i++) {
+        cards.push(DashboardCard(i))
+    }
+
     return (
         <>
         <div>Dashboard {currentState.scriptCount}</div>
-        <Link to="/module1">
-            <ListItemButton component="a" href="#simple-list">
-                <ListItemText primary="Script #1" />
-            </ListItemButton>
-        </Link>
+        {cards}
         </>
     )
 }

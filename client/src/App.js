@@ -38,10 +38,10 @@ function App() {
             <Route exact path="/dashboard" element={<Dashboard />}>
               <Dashboard/>
             </Route>
-            <Route exact path="/module1">
+            {/* <Route path="/module/:id" element={<RecordingModal />}>
               <RecordingModal/>
-            </Route>
-            <Route exact path="/module2">
+            </Route> */}
+            <Route path="/module1" element={<RecordingModal />}>
               <RecordingModal/>
             </Route>
           </Switch>
