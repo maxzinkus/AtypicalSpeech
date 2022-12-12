@@ -130,7 +130,7 @@ function RecordingModal() {
 
     const saveBlob = (event) => {
         var blob = currentState.audioData.blob
-        var fileName =  accessCode + "_line#" + currentState.currentLine.toString()
+        var fileName =  accessCode + "_script" + scriptID + "_line#" + currentState.currentLine.toString()
         console.log("file name: ", fileName);
         var a = document.createElement("a");
         document.body.appendChild(a);
