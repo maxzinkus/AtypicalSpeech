@@ -32,7 +32,13 @@ function Dashboard() {
                 return;
             }
 
-            setCurrentState({...currentState, assignedTasks: assignedTasks.data.tasks});
+            var cards = [];
+            for (var i = 0; i < assignedTasks.data.tasks.length; i++) {
+                cards.push(<DashboardCard script_id={assignedTasks.data.tasks[i]}/>)
+            }
+            setCurrentState({...currentState, assignedTasks: assignedTasks.data.tasks, cards: cards});
+
+            // setCurrentState({...currentState, assignedTasks: assignedTasks.data.tasks});
             setIsFetched(true);
         }
 
@@ -40,16 +46,11 @@ function Dashboard() {
 
     }, []);
 
-    useEffect(() => {
-        var cards = [];
-        for (var i = 0; i < currentState.assignedTasks.length; i++) {
-            cards.push(<DashboardCard script_id={currentState.assignedTasks[i]}/>)
-        }
-        setCurrentState({...currentState, cards: cards});
-        setIsCardsCreated(true);
-    }, [isFetched])
+    // useEffect(() => {
+    //     setIsCardsCreated(true);
+    // }, [isFetched])
 
-    if (!isCardsCreated) {
+    if (!isFetched) {
         return (
         <div style={{
           display: "flex",
@@ -59,7 +60,7 @@ function Dashboard() {
           height: "100vh",
         }}>Loading the data {console.log("loading state")}</div>
       );
-      }
+    }
 
     return (
         <>
