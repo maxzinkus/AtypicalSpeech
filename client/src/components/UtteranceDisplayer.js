@@ -5,12 +5,12 @@ function UtteranceDisplayer({line}) {
     color: "white",
     backgroundColor: "DodgerBlue",
     padding: "10px",
-    fontFamily: "Arial"
+    fontFamily: "Arial",
   };
   
 
   return (
-    <div style={mystyle}>Current utterance: {line}</div>
+    <h2 style={mystyle}>Current utterance: {line}</h2>
   )
 }
 
