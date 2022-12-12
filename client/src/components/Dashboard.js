@@ -10,6 +10,7 @@ function Dashboard() {
 
     const [currentState, setCurrentState] = useState({scriptCount: 0, assignedTasks: [], cards: []})
     const [isFetched, setIsFetched] = useState(false);
+    const [isCardsCreated, setIsCardsCreated] = useState(false);
 
     const location = useLocation();
     const accessCode = location.state.accessCode;
@@ -27,6 +28,10 @@ function Dashboard() {
             const assignedTasks = await axios.post('http://localhost:3000/user/get_assigned_tasks/', {user_id: accessCode});
             console.log(assignedTasks.data.tasks)
 
+            if (currentState.assignedTasks === assignedTasks.data.tasks) {
+                return;
+            }
+
             setCurrentState({...currentState, assignedTasks: assignedTasks.data.tasks});
             setIsFetched(true);
         }
@@ -37,18 +42,25 @@ function Dashboard() {
 
     useEffect(() => {
         var cards = [];
-
-        if (!isFetched) return;
-
         for (var i = 0; i < currentState.assignedTasks.length; i++) {
             cards.push(<DashboardCard script_id={currentState.assignedTasks[i]}/>)
         }
-
         setCurrentState({...currentState, cards: cards});
-
+        setIsCardsCreated(true);
     }, [isFetched])
 
-    if (!isFetched) return null;
+    if (!isCardsCreated) {
+        return (
+        <div style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100vh",
+        }}>Loading the data {console.log("loading state")}</div>
+      );
+      }
+
     return (
         <>
         <div>Welcome, {accessCode} {currentState.assignedTasks.length}</div>

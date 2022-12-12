@@ -15,7 +15,7 @@ function DashboardCard({script_id}) {
         <h3 class="card-title">Script {script_id}</h3>
         <p class="card-text">Script Text</p>
         {/* <Link to="/module1"> */}
-        <Link to={{pathname:"/module1", state:{accessCode:"abc"}}}>
+        <Link to={{pathname:'/module1', state:{accessCode:"abc", script_id: script_id}}}>
             <a class="btn btn-primary">Start</a>
         </Link>
         {/* <Link to={`/module/${script_id}`}>

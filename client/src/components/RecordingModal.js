@@ -6,18 +6,36 @@ import AudioReactRecorder, { RecordState } from 'audio-react-recorder'
 import AudioPlayer from './AudioPlayer';
 import ReviewPage from './ReviewPage';
 import { useLocation } from 'react-router-dom';
+import axios from 'axios'
 
 function RecordingModal() {
 
     const location = useLocation();
     const accessCode = location.state.accessCode;
+    const scriptID = location.state.script_id;
+
+    console.log("script id in modal: ", scriptID);
 
     const [currentState, setCurrentState] = useState({currentLine: 0, recordState: null, audioData: null, review: false})
+    const [currentUtterances, setCurrentUtterances] = useState([]);
+    const [isFetched, setIsFetched] = useState(false);
     const [error, setError] = useState("");
 
     const RECORDING_DELAY = 1000;
 
-    const utterances = JSON.parse('["", "Ellen looked out at the street through the glass front.", " The man from four hundred and ten was standing out there, smoking a cigarette, watching her.", " When their eyes met, he abruptly threw away the cigarette and started walking toward the apartment house.", " Again she felt that faint dread she had experienced in the hall earlier.", " The waitress picked up her quarter, gave her back a nickel and a dime.", " four hundred and ten was just ahead of her in the lobby.", "He held the front door open for her.", " He opened the elevator doors, too, and she stepped in ahead of him.", " When the doors clanged shut, she had a feeling of panic.", "Come in, my dear, come in.", " She almost fell over the landing.", " The door closed behind her.", " She stumbled to the davenport, sank down, gasping.", " Two cats rubbed against her legs, purring.", " Two cats? She heard herself say stupidly, Missis Moffatt, wheres the other cat? and wondered why she said it."]')
+    useEffect(() => {
+        async function fetchScript() {
+            const script = await axios.post('http://localhost:3000/script/findScriptID/', {script_id: scriptID});
+            console.log(script.data.utterances.utterances)
+            setCurrentUtterances(script.data.utterances.utterances)
+            console.log("after setting utterances: ", currentUtterances)
+            setIsFetched(true)
+        }
+
+        fetchScript();
+    }, [])
+
+    // const utterances = JSON.parse('["", "Ellen looked out at the street through the glass front.", " The man from four hundred and ten was standing out there, smoking a cigarette, watching her.", " When their eyes met, he abruptly threw away the cigarette and started walking toward the apartment house.", " Again she felt that faint dread she had experienced in the hall earlier.", " The waitress picked up her quarter, gave her back a nickel and a dime.", " four hundred and ten was just ahead of her in the lobby.", "He held the front door open for her.", " He opened the elevator doors, too, and she stepped in ahead of him.", " When the doors clanged shut, she had a feeling of panic.", "Come in, my dear, come in.", " She almost fell over the landing.", " The door closed behind her.", " She stumbled to the davenport, sank down, gasping.", " Two cats rubbed against her legs, purring.", " Two cats? She heard herself say stupidly, Missis Moffatt, wheres the other cat? and wondered why she said it."]')
     
     const blobToFile = (theBlob, fileName) => {
         //A Blob() is almost a File() - it's just missing the two properties below which we will add
@@ -159,21 +177,35 @@ function RecordingModal() {
 
     const UtteranceDisplayerRendering = () => {
         // await new Promise(resolve => setTimeout(resolve, RECORDING_DELAY));
-        return <UtteranceDisplayer line={utterances[currentState.currentLine]}></UtteranceDisplayer>
+        // if (currentUtterances.utterances === ) return
+        return <UtteranceDisplayer line={currentUtterances[currentState.currentLine]}></UtteranceDisplayer>
     }
 
+    const render = () => {
+        return (
+            <><div>
+                {UtteranceDisplayerRendering()}
+                {<AudioReactRecorder state={currentState.recordState} onStop={onStop}></AudioReactRecorder>}
+                {currentState.review && <audio id="audio" controls src={currentState.audioData ? currentState.audioData.url : null}></audio>}
+                {/* <AudioPlayer source={currentState.audioData}></AudioPlayer> */}
+                {currentState.review && <ReviewPage audioData={currentState.audioData}></ReviewPage>}
+                {<ScriptController previousLine={previousLine} nextLine={nextLine} start={start} stop={stop} pause={pause} save={saveBlob} review={review} nextContent={"Review"} reviewState={currentState.review}></ScriptController>}
+                {/* {!currentState.review && <ScriptController previousLine={previousLine} nextLine={nextLine} start={start} stop={stop} pause={pause} save={saveBlob} review={review} nextContent={"Review"} reviewState={currentState.review}></ScriptController>} */}
+                {/* {currentState.review && <ScriptController previousLine={previousLine} nextLine={nextLine} start={start} stop={stop} pause={pause} save={saveBlob} review={nextLine} nextContent={"next line"}></ScriptController>} */}
+            </div></>
+        )
+    }
+
+    if (!isFetched) {
+        return <div className="App">Loading...</div>;
+    }
+    
     return (
-        <><div>
-            {UtteranceDisplayerRendering()}
-            {<AudioReactRecorder state={currentState.recordState} onStop={onStop}></AudioReactRecorder>}
-            {currentState.review && <audio id="audio" controls src={currentState.audioData ? currentState.audioData.url : null}></audio>}
-            {/* <AudioPlayer source={currentState.audioData}></AudioPlayer> */}
-            {currentState.review && <ReviewPage audioData={currentState.audioData}></ReviewPage>}
-            {<ScriptController previousLine={previousLine} nextLine={nextLine} start={start} stop={stop} pause={pause} save={saveBlob} review={review} nextContent={"Review"} reviewState={currentState.review}></ScriptController>}
-            {/* {!currentState.review && <ScriptController previousLine={previousLine} nextLine={nextLine} start={start} stop={stop} pause={pause} save={saveBlob} review={review} nextContent={"Review"} reviewState={currentState.review}></ScriptController>} */}
-            {/* {currentState.review && <ScriptController previousLine={previousLine} nextLine={nextLine} start={start} stop={stop} pause={pause} save={saveBlob} review={nextLine} nextContent={"next line"}></ScriptController>} */}
-        </div></>
-    )
+        <>
+        {render()}
+        </>
+    );
+
 }
 
 export default RecordingModal

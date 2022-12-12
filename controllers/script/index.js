@@ -8,7 +8,7 @@ router.get('/', (_, res) => {
 });
 
 router.post('/create', ctrl.create_script);
-router.get('/findOneID', ctrl.get_one_script_by_id);
+router.post('/findScriptID', ctrl.get_one_script_by_id);
 router.get('/getScriptNum', ctrl.get_script_total_number);
 
 module.exports = router;
