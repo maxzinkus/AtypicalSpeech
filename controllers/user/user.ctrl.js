@@ -108,6 +108,17 @@ exports.fetch_assigned_tasks_per_user = async (req, res) => {
     }
 }
 
+exports.get_total_user_num = async (_, res) => {
+    try {
+        
+        return res.json(await User.count());
+
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json(err)
+    }
+}
+
 // exports.name = async (req, res) => {
 //     try {
 //     } catch (err) {
