@@ -90,6 +90,7 @@ exports.create_user = async (req, res) => {
 
 exports.fetch_assigned_tasks_per_user = async (req, res) => {
     const {user_id} = req.body
+    console.log("backend user id: ", user_id)
     try {
         const user = await User.findByPk(user_id)
 
@@ -99,6 +100,7 @@ exports.fetch_assigned_tasks_per_user = async (req, res) => {
         }
 
         const assigned_scripts = user.assignedTasks
+        console.log("response: ", assigned_scripts)
         return res.json(assigned_scripts)
     } catch (err) {
         console.log(err)

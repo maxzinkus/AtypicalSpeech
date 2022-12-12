@@ -5,10 +5,11 @@ import { Card } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 function DashboardCard({script_id}) {
+    console.log("script id: ", script_id)
   return (
     <div class="card text-center">
     <div class="card-header">
-        Script {script_id}
+        Script #{script_id}
     </div>
     <div class="card-body">
         <h3 class="card-title">Script {script_id}</h3>

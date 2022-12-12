@@ -36,7 +36,7 @@ function LoginForm({Login, error}) {
                 </h1>
             </div>
             
-            <Link to="/dashboard">
+            <Link to={{pathname: "/dashboard", state:{accessCode: loginDetails.accessCode}}}>
                 <div class="col-md-4 col-md-offset-4 text-center">
                     <Button type="submit" class="btn btn-primary">
                         Submit

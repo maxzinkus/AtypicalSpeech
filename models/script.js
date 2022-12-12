@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     utterances: {
-      type: DataTypes.STRING,
+      type: DataTypes.JSON,
       allowNull: false,
     }
   }, {

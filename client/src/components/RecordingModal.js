@@ -7,7 +7,7 @@ import AudioPlayer from './AudioPlayer';
 import ReviewPage from './ReviewPage';
 import { useLocation } from 'react-router-dom';
 
-function RecordingModal(props) {
+function RecordingModal() {
 
     const location = useLocation();
     const accessCode = location.state.accessCode;
