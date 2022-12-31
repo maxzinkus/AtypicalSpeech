@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import LoginForm from '../components/LoginForm';
 import RecordingModal from '../components/RecordingModal';
+import "../../src/App.css"
 
 function Home() {
 
@@ -26,10 +27,12 @@ function Home() {
   }
 
   return (
-    <>
-      <div>AtypicalSpeech</div>
+    <div className="general_background">
+      <div className="center">
+        <p>AtypicalSpeech</p>
+      </div>
       {renderLoginForm()}
-    </>
+    </div>
   )
 }
 

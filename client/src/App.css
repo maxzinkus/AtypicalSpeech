@@ -1,0 +1,14 @@
+.center {
+    text-align: center;
+    justify-content: center;
+}
+
+.general_background {
+    background-image: url("https://ep.jhu.edu/wp-content/uploads/2021/01/zoom-option1.jpg");
+    background-position: 'center';
+    background-size: 'cover';
+    background-repeat: 'no-repeat';
+    width: 100vw;
+    height: 100vh;
+    opacity: 0.92
+}
