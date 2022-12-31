@@ -8,6 +8,7 @@ router.get('/', (_, res) => {
 
 router.get('/get_total_user', ctrl.get_total_user_num);
 router.get('/get_all_users', ctrl.get_all_users);
+router.post('/get_user_by_id', ctrl.get_user_by_id);
 
 router.post('/assign_task', ctrl.assign_task_to_user);
 router.post('/assign_mandatory_scripts', ctrl.assign_mandatory_scripts);

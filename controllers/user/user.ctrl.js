@@ -125,6 +125,17 @@ exports.create_user = async (req, res) => {
     }
 }
 
+exports.get_user_by_id = async (req, res) => {
+    const {user_id} = req.body
+    try {
+        const user = await User.findByPk(user_id)
+        return res.json(user)
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json(err)
+    }
+}
+
 exports.fetch_assigned_tasks_per_user = async (req, res) => {
     const {user_id} = req.body
     console.log("backend user id: ", user_id)
