@@ -16,7 +16,7 @@ function RecordingModal() {
 
     console.log("script id in modal: ", scriptID);
 
-    const [currentState, setCurrentState] = useState({currentLine: 0, recordState: null, audioData: null, review: false})
+    const [currentState, setCurrentState] = useState({currentLine: 0, recordState: null, audioData: null, review: false, totalLines: 0})
     const [currentUtterances, setCurrentUtterances] = useState([]);
     const [isFetched, setIsFetched] = useState(false);
     const [error, setError] = useState("");
@@ -28,6 +28,8 @@ function RecordingModal() {
             const script = await axios.post('http://localhost:3000/script/findScriptID/', {script_id: scriptID});
             console.log(script.data.utterances.utterances)
             setCurrentUtterances(script.data.utterances.utterances)
+            console.log("numLines: ", script.data.utterances.utterances.length)
+            setCurrentState({...currentState, totalLines: script.data.utterances.utterances.length})
             console.log("after setting utterances: ", currentUtterances)
             setIsFetched(true)
         }
@@ -181,7 +183,7 @@ function RecordingModal() {
         return <UtteranceDisplayer line={currentUtterances[currentState.currentLine]}></UtteranceDisplayer>
     }
 
-    const render = () => {
+    const renderRecording = () => {
         return (
             <><div>
                 {UtteranceDisplayerRendering()}
@@ -193,13 +195,20 @@ function RecordingModal() {
         )
     }
 
+    const renderComplete = () => {
+        return (
+            <div>Complete!</div>
+        )
+    }
+
     if (!isFetched) {
         return <div className="App">Loading...</div>;
     }
     
     return (
         <>
-        {render()}
+        {currentState.totalLines !== currentState.currentLine && renderRecording()}
+        {currentState.totalLines === currentState.currentLine && renderComplete()}
         </>
     );
 
