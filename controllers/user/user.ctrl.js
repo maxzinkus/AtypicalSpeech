@@ -1,4 +1,41 @@
 const {models, User, Script} = require('../../models')
+const mandatory_script_ids = [100]
+
+exports.assign_mandatory_scripts = async (req, res) => {
+    const {user_id} = req.body
+    try {
+        const user = await User.findByPk(user_id)
+
+        // if user not found, show error
+        if (user === null) {
+            console.log("user not found!")
+        }
+
+        const original_assigned_tasks = user.assignedTasks.tasks
+        console.log("original: ", original_assigned_tasks)
+
+        for (var i = 0; i < mandatory_script_ids.length; i++) {
+            var current_mandatory_script_id = mandatory_script_ids[i]
+            if (!original_assigned_tasks.includes(current_mandatory_script_id)) {
+                var mandatory_script = await Script.findByPk(current_mandatory_script_id)
+                // if script not found, show error
+                if (mandatory_script === null) {
+                    console.log("mandatory script not found!")
+                }
+                original_assigned_tasks.push(current_mandatory_script_id)
+            }
+        }
+    
+        user.assignedTasks.tasks = original_assigned_tasks
+        user.changed('assignedTasks', true)
+        await user.save()
+    
+        return res.json(user)
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json(err)
+    }
+}
 
 exports.assign_task_to_user = async (req, res) => {
     const {user_id, script_id} = req.body
