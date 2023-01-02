@@ -18,15 +18,35 @@ function LoginForm({Login, error}) {
         setLoginDetails({
             accessCode: event.target.value
         })
-        console.log(loginDetails.accessCode)
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
+
+        // const user_search_result = await axios.post("http://localhost:3000/user/get_user_by_id", {user_id: loginDetails.accessCode});
+        // console.log("user search result: ", user_search_result)
+        // alert(user_search_result);
+
         event.preventDefault();
-        Login(loginDetails);
-        navigate('/dashboard', {
-            state: {
-                accessCode: loginDetails.accessCode
+
+        fetch("http://localhost:3000/user/get_user_by_id", {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({
+                'user_id': loginDetails.accessCode
+            })
+        })
+        .then((res) => res.json())
+        .then((user_search_result) => {
+            if (user_search_result === null) {
+                alert("incorrect credentials");
+                return
+            } else {
+                Login(loginDetails);
+                navigate('/dashboard', {
+                    state: {
+                        accessCode: loginDetails.accessCode
+                    }
+                })
             }
         })
     }

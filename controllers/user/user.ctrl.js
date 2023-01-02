@@ -129,6 +129,7 @@ exports.get_user_by_id = async (req, res) => {
     const {user_id} = req.body
     try {
         const user = await User.findByPk(user_id)
+        console.log("get user by id", user_id)
         return res.json(user)
     } catch (err) {
         console.log(err)
