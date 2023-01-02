@@ -16,12 +16,6 @@ function Dashboard() {
     const accessCode = location.state.accessCode;
 
     useEffect(() => {
-        // GET request using fetch inside useEffect React hook
-        // async function fetchScriptCount() {
-        //     const scriptCount = await axios.get('http://localhost:3000/script/getScriptNum');
-        //     setCurrentState({...currentState, scriptCount: scriptCount.data});
-        // }
-        // fetchScriptCount();
 
         async function fetchAssignedTasks() {
 

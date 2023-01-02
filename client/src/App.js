@@ -27,24 +27,20 @@ function App() {
   //   }, []);
 
   return (
-    <Router>
+    // <Router>
       <div className='App'>
         <div className='Content'>
-          <Switch>
-            <Route exact path="/">
-              <Home/>
-            </Route>
+          {/* <Switch> */}
+          <Routes>
+            <Route exact path="/" element={<Home/>}/>
             {/* <Route exact path="/dashboard" element={<Dashboard scriptCount={currentState.scriptCount} />}> */}
-            <Route exact path="/dashboard" element={<Dashboard />}>
-              <Dashboard/>
-            </Route>
-            <Route path="/module1">
-              <RecordingModal/>
-            </Route>
-          </Switch>
+            <Route exact path="/dashboard" element={<Dashboard />}/>
+            <Route path="/module1" element={<RecordingModal/>}/>
+          {/* </Switch> */}
+          </Routes>
         </div>
       </div> 
-    </Router>
+    // </Router>
   )
 }
 
