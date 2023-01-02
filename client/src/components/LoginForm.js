@@ -4,10 +4,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Button } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-// const api = axios.create({
-//     baseURL: `http://localhost:3001/`
-// })
-
 function LoginForm({Login, error}) {
 
     const [loginDetails, setLoginDetails] = useState({accessCode: ""});
@@ -21,10 +17,6 @@ function LoginForm({Login, error}) {
     }
 
     const handleSubmit = async (event) => {
-
-        // const user_search_result = await axios.post("http://localhost:3000/user/get_user_by_id", {user_id: loginDetails.accessCode});
-        // console.log("user search result: ", user_search_result)
-        // alert(user_search_result);
 
         event.preventDefault();
 
