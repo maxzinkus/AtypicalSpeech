@@ -55,14 +55,14 @@ function LoginForm({Login, error}) {
                     </input>
                 </h1>
             </div>
+
+            <br/>
             
-            {/* <Link to={{pathname: "/dashboard", state:{accessCode: loginDetails.accessCode}}}> */}
-                <div class="col-md-4 col-md-offset-4 text-center">
-                    <Button type="submit" class="btn btn-primary">
-                        Submit
-                    </Button>
-                </div>
-            {/* </Link> */}
+            <div class="login_button">
+                <Button type="submit" class="btn btn-primary">
+                    Submit
+                </Button>
+            </div>
         </form>
     )
 }

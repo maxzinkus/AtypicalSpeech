@@ -1,11 +1,24 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import RecordingModal from './RecordingModal'
 import { Card } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-function DashboardCard({script_id}) {
+function DashboardCard({script_id, accessCode}) {
     console.log("script id: ", script_id)
+    console.log("card access code: ", accessCode)
+
+    const navigate = useNavigate();
+
+    const handleClick = (event) => {
+        navigate('/module1', {
+            state: {
+                accessCode: accessCode,
+                script_id: script_id
+            }
+        })
+    }
+
   return (
     <div class="card text-center">
     <div class="card-header">
@@ -14,13 +27,7 @@ function DashboardCard({script_id}) {
     <div class="card-body">
         <h3 class="card-title">Script {script_id}</h3>
         <p class="card-text">Script Text</p>
-        {/* <Link to="/module1"> */}
-        <Link to={{pathname:'/module1', state:{accessCode:"abc", script_id: script_id}}}>
-            <a class="btn btn-primary">Start</a>
-        </Link>
-        {/* <Link to={`/module/${script_id}`}>
-            <a class="btn btn-primary">Start</a>
-        </Link> */}
+        <button class="btn btn-primary" onClick={handleClick}>Start</button>
     </div>
     <div class="card-footer text-muted">
         {/* 2 days ago */}

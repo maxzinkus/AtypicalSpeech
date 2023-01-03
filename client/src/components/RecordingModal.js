@@ -11,10 +11,13 @@ import axios from 'axios'
 function RecordingModal() {
 
     const location = useLocation();
+    console.log("location: ", location)
+
     const accessCode = location.state.accessCode;
     const scriptID = location.state.script_id;
 
     console.log("script id in modal: ", scriptID);
+    console.log("access code: ", accessCode)
 
     const [currentState, setCurrentState] = useState({currentLine: 0, recordState: null, audioData: null, review: false, totalLines: 0})
     const [currentUtterances, setCurrentUtterances] = useState([]);

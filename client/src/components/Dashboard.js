@@ -28,7 +28,7 @@ function Dashboard() {
 
             var cards = [];
             for (var i = 0; i < assignedTasks.data.tasks.length; i++) {
-                cards.push(<DashboardCard script_id={assignedTasks.data.tasks[i]}/>)
+                cards.push(<DashboardCard script_id={assignedTasks.data.tasks[i]} accessCode={accessCode}/>)
             }
             setCurrentState({...currentState, assignedTasks: assignedTasks.data.tasks, cards: cards});
 

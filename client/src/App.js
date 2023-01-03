@@ -14,18 +14,6 @@ const api = axios.create({
 
 function App() {
 
-  // const [currentState, setCurrentState] = useState(null)
-
-  //   useEffect(() => {
-  //       // GET request using fetch inside useEffect React hook
-  //       fetch('http://localhost:3000/script/getScriptNum')
-  //           .then(response => response.json())
-  //           .then(data => console.log(data))
-  //           .then(data => setCurrentState({scriptCount: data}));
-    
-  //       // console.log("script num app.js: ", currentState.scriptCount)
-  //   }, []);
-
   return (
     // <Router>
       <div className='App'>

@@ -31,7 +31,9 @@ function Home() {
       <div className="center">
         <p>AtypicalSpeech</p>
       </div>
-      {renderLoginForm()}
+      <div className='right'>
+        {renderLoginForm()}
+        </div>
     </div>
   )
 }
