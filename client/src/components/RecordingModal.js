@@ -198,9 +198,30 @@ function RecordingModal() {
         )
     }
 
+    const handleComplete = async (event) => {
+        event.preventDefault();
+
+        fetch("http://localhost:3000/user/mark_task_complete", {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({
+                'user_id': accessCode,
+                'script_id': scriptID
+            })
+        })
+        .then((res) => res.json())
+        .then((user_search_result) => {
+            // console.log("result: ", user_search_result["completedTasks"]["tasks"])
+            // alert(user_search_result["completedTasks"]["tasks"])
+            alert("Script #" + scriptID + " complete!")
+        })
+    }
+
     const renderComplete = () => {
         return (
-            <div>Complete!</div>
+            <div>
+                <button onClick={handleComplete}>Exit</button>
+            </div>
         )
     }
 
