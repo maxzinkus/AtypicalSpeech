@@ -192,10 +192,12 @@ function RecordingModal() {
             <div className='utterance_display'>
                 {UtteranceDisplayerRendering()}
             </div>
+            <br/>
             <div className='center'>
                 {<AudioReactRecorder state={currentState.recordState} onStop={onStop}></AudioReactRecorder>}
                 {currentState.review && <audio id="audio" controls src={currentState.audioData ? currentState.audioData.url : null}></audio>}
                 {currentState.review && <ReviewPage audioData={currentState.audioData}></ReviewPage>}
+                <br/>
                 {<ScriptController previousLine={previousLine} nextLine={nextLine} start={start} stop={stop} pause={pause} save={saveBlob} review={review} nextContent={"Review"} reviewState={currentState.review}></ScriptController>}
             </div>
             </>
