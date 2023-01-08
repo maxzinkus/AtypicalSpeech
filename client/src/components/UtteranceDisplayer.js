@@ -10,7 +10,7 @@ function UtteranceDisplayer({line}) {
   
 
   return (
-    <h2 style={mystyle}>Current utterance: {line}</h2>
+    <div style={mystyle}>Current utterance: {line}</div>
   )
 }
 

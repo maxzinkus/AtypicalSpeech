@@ -3,6 +3,14 @@
     justify-content: center;
 }
 
+.utterance_display {
+    font-size: 30px;
+    font-family: Arial;
+    color: white;
+    background-color: dodgerblue;
+    padding: 10px;
+}
+
 .general_background {
     /* background-image: url("https://ep.jhu.edu/wp-content/uploads/2021/01/zoom-option1.jpg"); */
     background-image: url("../src/images/wse\ logo\ image.webp");

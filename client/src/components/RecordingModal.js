@@ -188,13 +188,17 @@ function RecordingModal() {
 
     const renderRecording = () => {
         return (
-            <><div>
+            <>
+            <div className='utterance_display'>
                 {UtteranceDisplayerRendering()}
+            </div>
+            <div className='center'>
                 {<AudioReactRecorder state={currentState.recordState} onStop={onStop}></AudioReactRecorder>}
                 {currentState.review && <audio id="audio" controls src={currentState.audioData ? currentState.audioData.url : null}></audio>}
                 {currentState.review && <ReviewPage audioData={currentState.audioData}></ReviewPage>}
                 {<ScriptController previousLine={previousLine} nextLine={nextLine} start={start} stop={stop} pause={pause} save={saveBlob} review={review} nextContent={"Review"} reviewState={currentState.review}></ScriptController>}
-            </div></>
+            </div>
+            </>
         )
     }
 
@@ -230,10 +234,10 @@ function RecordingModal() {
     }
     
     return (
-        <>
-        {currentState.totalLines !== currentState.currentLine && renderRecording()}
-        {currentState.totalLines === currentState.currentLine && renderComplete()}
-        </>
+        <div>
+            {currentState.totalLines !== currentState.currentLine && renderRecording()}
+            {currentState.totalLines === currentState.currentLine && renderComplete()}
+        </div>
     );
 
 }
