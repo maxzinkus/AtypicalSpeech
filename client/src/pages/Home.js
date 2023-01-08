@@ -34,7 +34,6 @@ function Home() {
       <div className='right'>
         {renderLoginForm()}
       </div>
-      <img src="./jhu_som_logo_transparent_white.png" alt="Johns Hopkins School of Medicine"></img>
     </div>
   )
 }
