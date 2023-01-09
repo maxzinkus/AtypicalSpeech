@@ -31,18 +31,12 @@ function Dashboard() {
                 cards.push(<DashboardCard script_id={assignedTasks.data.tasks[i]} accessCode={accessCode}/>)
             }
             setCurrentState({...currentState, assignedTasks: assignedTasks.data.tasks, cards: cards});
-
-            // setCurrentState({...currentState, assignedTasks: assignedTasks.data.tasks});
             setIsFetched(true);
         }
 
         fetchAssignedTasks();
 
     }, []);
-
-    // useEffect(() => {
-    //     setIsCardsCreated(true);
-    // }, [isFetched])
 
     if (!isFetched) {
         return (
@@ -58,7 +52,9 @@ function Dashboard() {
 
     return (
         <>
-        <div>Welcome, {accessCode} {currentState.assignedTasks.length}</div>
+        <br></br>
+        <div className='center'>Welcome, {accessCode}. You have {currentState.assignedTasks.length} tasks to complete.</div>
+        <br></br>
         {currentState.cards}
         </>
     )

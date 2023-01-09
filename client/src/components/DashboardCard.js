@@ -30,8 +30,8 @@ function DashboardCard({script_id, accessCode}) {
         <button class="btn btn-primary" onClick={handleClick}>Start</button>
     </div>
     <div class="card-footer text-muted">
-        {/* 2 days ago */}
     </div>
+    <br></br>
     </div>
   )
 }
