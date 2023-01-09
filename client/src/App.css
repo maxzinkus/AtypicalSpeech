@@ -28,13 +28,10 @@
 }
 
 .jhu_som_logo {
-    background-image: url("../src/images/rounded_jhu_som_logo_transparent_white.png");
-    background-position: 'center';
-    background-size: 'cover';
-    background-repeat: 'no-repeat';
-    width: 10vw;
-    height: 10vh;
-    opacity: 0.92
+    width: 45vw;
+    height: 45vh;
+    opacity: 0.92;
+    margin-top: 350px;
 }
 
 .right {
