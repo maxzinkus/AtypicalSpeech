@@ -5,13 +5,14 @@ import UtteranceDisplayer from './UtteranceDisplayer';
 import AudioReactRecorder, { RecordState } from 'audio-react-recorder'
 import AudioPlayer from './AudioPlayer';
 import ReviewPage from './ReviewPage';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios'
 
 function RecordingModal() {
 
     const location = useLocation();
     console.log("location: ", location)
+    const navigate = useNavigate();
 
     const accessCode = location.state.accessCode;
     const scriptID = location.state.script_id;
@@ -221,6 +222,24 @@ function RecordingModal() {
             // alert(user_search_result["completedTasks"]["tasks"])
             alert("Script #" + scriptID + " complete!")
         })
+
+        fetch("http://localhost:3000/script/unassign_task", {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({
+                'user_id': accessCode,
+                'script_id': scriptID
+            })
+        })
+        .then((res) => res.json())
+        .then((user_search_result) => {
+            alert("Script #" + scriptID + " unassigned! Redirecting to dashboard.")
+        })
+        .then(() => navigate('/dashboard', {
+            state: {
+                accessCode: accessCode
+            }
+        }))
     }
 
     const renderComplete = () => {
