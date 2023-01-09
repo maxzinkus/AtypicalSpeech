@@ -11,6 +11,11 @@
     padding: 10px;
 }
 
+.logo {
+    width: 30%;
+    height: 30%;
+}
+
 .general_background {
     /* background-image: url("https://ep.jhu.edu/wp-content/uploads/2021/01/zoom-option1.jpg"); */
     background-image: url("../src/images/wse\ logo\ image.webp");

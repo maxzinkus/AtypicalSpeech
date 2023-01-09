@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import LoginForm from '../components/LoginForm';
 import RecordingModal from '../components/RecordingModal';
 import "../../src/App.css"
+import Logo from "./../images/logo1.png"
 
 function Home() {
 
@@ -28,8 +29,9 @@ function Home() {
 
   return (
     <div className="general_background">
+      <br></br>
       <div className="center">
-        <p>AtypicalSpeech</p>
+        <img className="logo" src={Logo} alt="logo1"></img>
       </div>
       <div className='right'>
         {renderLoginForm()}
