@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import LoginForm from '../components/LoginForm';
 import RecordingModal from '../components/RecordingModal';
 import "../../src/App.css"
-import Logo from "./../images/logo1.png"
+import Logo from "./../images/logo2.png"
 import SOM_Logo from "./../images/rounded_jhu_som_logo_transparent_white.png"
 
 function Home() {
