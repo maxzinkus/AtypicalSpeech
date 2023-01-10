@@ -46,7 +46,7 @@ function LoginForm({Login, error}) {
     return (
         <form onSubmit={handleSubmit}>
             <div>
-                <h1 class="text-center">
+                <h1 className='access_code'>
                     Access Code:
                     <input
                         type='text'
