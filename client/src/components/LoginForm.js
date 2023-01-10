@@ -48,7 +48,6 @@ function LoginForm({Login, error}) {
             <div>
                 <h1 className='access_code'>
                     Access Code:
-                    <br></br>
                     <input
                         type='text'
                         value={loginDetails.accessCode}
