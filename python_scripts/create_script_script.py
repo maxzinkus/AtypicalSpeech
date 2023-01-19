@@ -46,5 +46,7 @@ scriptID2utterances['LR5vdbQgp3tlMBzB']
 create_script_url = "http://localhost:3000/script/create"
 
 for scriptID, utterances in scriptID2utterances.items():
-  request_data = {"id": scriptID, "utterances": {"utterances", utterances}}
-  r = requests.post(create_script_url, data=json.dumps(request_data), headers={"Content-Type": "application/json"})
+  # inner_data = json.dumps({"utterances", utterances})
+  request_data = json.dumps({"id": scriptID, "utterances": {"utterances": utterances}})
+  res = requests.post(create_script_url, data=request_data, headers={"Content-Type": "application/json"})
+  print(res.json())
