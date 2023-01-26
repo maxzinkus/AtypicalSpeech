@@ -66,3 +66,11 @@
     text-align: center;
     color:lightsteelblue;
 }
+
+.review_recording {
+    font-size: 15px;
+    font-family: Arial;
+    color: blue;
+    /* background-color: dodgerblue; */
+    /* padding: 20px; */
+}
