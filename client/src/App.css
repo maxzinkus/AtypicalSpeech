@@ -4,11 +4,20 @@
 }
 
 .utterance_display {
-    font-size: 30px;
+    font-size: 25px;
     font-family: Arial;
     color: white;
     background-color: dodgerblue;
-    padding: 10px;
+    padding: 20px;
+}
+
+.utterance_display_bold {
+    font-size: 40px;
+    font-family: Arial;
+    color: white;
+    background-color: dodgerblue;
+    padding: 20px;
+    font-weight: bolder;
 }
 
 .logo {
@@ -56,4 +65,12 @@
 .access_code {
     text-align: center;
     color:lightsteelblue;
+}
+
+.review_recording {
+    font-size: 15px;
+    font-family: Arial;
+    color: blue;
+    /* background-color: dodgerblue; */
+    /* padding: 20px; */
 }

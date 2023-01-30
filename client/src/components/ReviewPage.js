@@ -3,7 +3,7 @@ import AudioPlayer from './AudioPlayer';
 
 function ReviewPage(audioData) {
   return (
-    <><div>ReviewPage</div><AudioPlayer source={audioData}></AudioPlayer></>
+    <><div className='review_recording'>Please Review Your Recording</div><AudioPlayer source={audioData}></AudioPlayer></>
   )
 }
 
