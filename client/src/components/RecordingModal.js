@@ -120,13 +120,15 @@ function RecordingModal() {
 
     const stop = async (event) => {
         await new Promise(resolve => setTimeout(resolve, RECORDING_DELAY))
-        .then(() => {setCurrentState({
-            ...currentState,
-            recordState: RecordState.STOP,
-            review: true
-        })
-        console.log("stope")
-        console.log(currentState)});
+        .then(() => {
+            setCurrentState({
+                ...currentState,
+                recordState: RecordState.STOP,
+                review: true
+            })
+            console.log("stope")
+            console.log(currentState)
+        });
     }
 
     const saveBlob = (event) => {
