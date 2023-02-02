@@ -188,6 +188,20 @@ function RecordingModal() {
         return <UtteranceDisplayer line={currentUtterances[currentState.currentLine]}></UtteranceDisplayer>
     }
 
+    const restart = async (event) => {
+        console.log("start recording after one second")
+        // await new Promise(resolve => setTimeout(resolve, RECORDING_DELAY));
+
+        setCurrentState({
+            ...currentState,
+            currentLine: currentState.currentLine,
+            recordState: RecordState.START,
+            review: false
+        })
+
+        console.log(currentState)
+    }
+
     const renderRecording = () => {
         console.log("current record state: ", currentState.recordState)
         return (
@@ -201,7 +215,7 @@ function RecordingModal() {
                 {currentState.review && <audio id="audio" controls src={currentState.audioData ? currentState.audioData.url : null}></audio>}
                 {currentState.review && <ReviewPage audioData={currentState.audioData}></ReviewPage>}
                 <br/>
-                {<ScriptController previousLine={previousLine} nextLine={nextLine} start={start} stop={stop} pause={pause} save={saveBlob} review={review} nextContent={"Review"} reviewState={currentState.review} recordingState={currentState.recordState}></ScriptController>}
+                {<ScriptController previousLine={previousLine} nextLine={nextLine} start={start} stop={stop} pause={pause} restart={restart} save={saveBlob} review={review} nextContent={"Review"} reviewState={currentState.review} recordingState={currentState.recordState}></ScriptController>}
             </div>
             </>
         )
