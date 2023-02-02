@@ -133,7 +133,7 @@ function RecordingModal() {
 
     const saveBlob = (event) => {
         var blob = currentState.audioData.blob
-        var fileName =  accessCode + "_script" + scriptID + "_line#" + currentState.currentLine.toString()
+        var fileName =  accessCode + "_script" + scriptID + "_line#" + currentState.currentLine.toString().padStart(4, '0')
         console.log("file name: ", fileName);
         var a = document.createElement("a");
         document.body.appendChild(a);
@@ -272,7 +272,7 @@ function RecordingModal() {
 
     if (!currentState.startState) {
         return (
-        <div>
+        <div className='vertical_center'>
             <div className='large_font_blue_center'>
             You are about to start script # {scriptID}.
             <br />
