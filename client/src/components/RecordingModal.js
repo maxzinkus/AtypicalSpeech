@@ -8,6 +8,7 @@ import ReviewPage from './ReviewPage';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import { Button } from 'react-bootstrap';
+import renderProgressBar from './ProgressBar';
 
 function RecordingModal() {
 
@@ -278,7 +279,8 @@ function RecordingModal() {
             <br />
             Please press START when you are ready to begin/resume.
             </div>
-
+            <br />
+            
             <div className='login_button'>
                 <button class="btn btn-primary" onClick={startModule}>Start</button>
             </div>
@@ -288,6 +290,8 @@ function RecordingModal() {
     
     return (
         <div>
+            {renderProgressBar({current: currentState.currentLine, total: currentState.totalLines})}
+
             {currentState.totalLines !== currentState.currentLine && renderRecording()}
             {currentState.totalLines === currentState.currentLine && renderComplete()}
         </div>

@@ -24,7 +24,7 @@
     font-size: 25px;
     font-family: "Gill Sans Extrabold", sans-serif;
     color: dodgerblue;
-    padding: 20px;
+    padding: 19px;
     text-align: center;
     justify-content: center;
     font-weight: bolder;
@@ -88,4 +88,11 @@
 
 .vertical_center {
     padding: 20% 0;
+}
+
+.progress_bar {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    overflow: hidden; 
 }
