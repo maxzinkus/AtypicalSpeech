@@ -20,6 +20,17 @@
     font-weight: bolder;
 }
 
+.large_font_blue_center {
+    font-size: 25px;
+    font-family: "Gill Sans Extrabold", sans-serif;
+    color: dodgerblue;
+    padding: 20px;
+    text-align: center;
+    justify-content: center;
+    font-weight: bolder;
+    line-height: normal;
+}
+
 .logo {
     width: 30%;
     height: 30%;

@@ -7,6 +7,7 @@ import AudioPlayer from './AudioPlayer';
 import ReviewPage from './ReviewPage';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios'
+import { Button } from 'react-bootstrap';
 
 function RecordingModal() {
 
@@ -259,7 +260,19 @@ function RecordingModal() {
     }
 
     if (!currentState.startState) {
-        return <button onClick={startModule}>Start</button> 
+        return (
+        <div>
+            <div className='large_font_blue_center'>
+            You are about to start script # {scriptID}.
+            <br />
+            Please press START when you are ready to begin/resume.
+            </div>
+
+            <div className='login_button'>
+                <button class="btn btn-primary" onClick={startModule}>Start</button>
+            </div>
+        </div>
+        )
     }
     
     return (
