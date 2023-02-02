@@ -27,6 +27,7 @@ function RecordingModal() {
     const [error, setError] = useState("");
 
     const RECORDING_DELAY = 1000;
+    const RECORDING_DELAY_HALF = 500;
 
     useEffect(() => {
         async function fetchScript() {
@@ -103,7 +104,7 @@ function RecordingModal() {
 
     const start = async (event) => {
         console.log("start recording after one second")
-        await new Promise(resolve => setTimeout(resolve, RECORDING_DELAY));
+        // await new Promise(resolve => setTimeout(resolve, RECORDING_DELAY));
 
         setCurrentState({
             ...currentState,
