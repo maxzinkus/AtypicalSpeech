@@ -64,16 +64,10 @@ function RecordingModal() {
     }
 
     const review = async (event) => {
-        console.log("review")
-        setCurrentState({
-            ...currentState,
-            review: true
-        })
-        console.log("after review:", currentState)
-
         console.log("stop recording after one second")
+        
         await new Promise(resolve => setTimeout(resolve, RECORDING_DELAY_HALF));
-        console.log("one second delay")
+        console.log("half a second delay")
         stop()
     }
 
@@ -125,15 +119,14 @@ function RecordingModal() {
     }
 
     const stop = async (event) => {
-        await new Promise(resolve => setTimeout(resolve, RECORDING_DELAY));
-
-        setCurrentState({
+        await new Promise(resolve => setTimeout(resolve, RECORDING_DELAY))
+        .then(() => {setCurrentState({
             ...currentState,
             recordState: RecordState.STOP,
             review: true
         })
         console.log("stope")
-        console.log(currentState)
+        console.log(currentState)});
     }
 
     const saveBlob = (event) => {
