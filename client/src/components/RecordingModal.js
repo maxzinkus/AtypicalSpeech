@@ -20,7 +20,7 @@ function RecordingModal() {
     console.log("script id in modal: ", scriptID);
     console.log("access code: ", accessCode)
 
-    const [currentState, setCurrentState] = useState({currentLine: 0, recordState: null, audioData: null, review: false, totalLines: 0})
+    const [currentState, setCurrentState] = useState({currentLine: 0, recordState: null, audioData: null, review: false, totalLines: 0, startState: false})
     const [currentUtterances, setCurrentUtterances] = useState([]);
     const [isFetched, setIsFetched] = useState(false);
     const [error, setError] = useState("");
@@ -242,6 +242,10 @@ function RecordingModal() {
         }))
     }
 
+    const startModule = () => {
+        setCurrentState({...currentState, startState: true})
+    }
+
     const renderComplete = () => {
         return (
             <div>
@@ -252,6 +256,10 @@ function RecordingModal() {
 
     if (!isFetched) {
         return <div className="App">Loading...</div>;
+    }
+
+    if (!currentState.startState) {
+        return <button onClick={startModule}>Start</button> 
     }
     
     return (

@@ -3,7 +3,7 @@ import { Button } from 'semantic-ui-react'
 
 const ScriptController = ({previousLine, nextLine, start, stop, pause, save, review, nextContent, reviewState}) => (
   <div className="center">
-    <Button content='Back' onClick={previousLine}/>
+    {/* <Button content='Back' onClick={previousLine}/> */}
     {/* <Button labelPosition='left' icon='left chevron' content='Back' onClick={previousLine}/> */}
     {!reviewState && <Button icon='play' content='Start Recording' onClick={start}/>}
     {reviewState && <Button icon='play' content='Review Recording' onClick={start}/>}
