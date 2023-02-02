@@ -72,7 +72,7 @@ function RecordingModal() {
         console.log("after review:", currentState)
 
         console.log("stop recording after one second")
-        await new Promise(resolve => setTimeout(resolve, RECORDING_DELAY));
+        await new Promise(resolve => setTimeout(resolve, RECORDING_DELAY_HALF));
         console.log("one second delay")
         stop()
     }
