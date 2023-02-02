@@ -189,6 +189,7 @@ function RecordingModal() {
     }
 
     const renderRecording = () => {
+        console.log("current record state: ", currentState.recordState)
         return (
             <>
             <div className='utterance_display'>
@@ -200,7 +201,7 @@ function RecordingModal() {
                 {currentState.review && <audio id="audio" controls src={currentState.audioData ? currentState.audioData.url : null}></audio>}
                 {currentState.review && <ReviewPage audioData={currentState.audioData}></ReviewPage>}
                 <br/>
-                {<ScriptController previousLine={previousLine} nextLine={nextLine} start={start} stop={stop} pause={pause} save={saveBlob} review={review} nextContent={"Review"} reviewState={currentState.review}></ScriptController>}
+                {<ScriptController previousLine={previousLine} nextLine={nextLine} start={start} stop={stop} pause={pause} save={saveBlob} review={review} nextContent={"Review"} reviewState={currentState.review} recordingState={currentState.recordState}></ScriptController>}
             </div>
             </>
         )
