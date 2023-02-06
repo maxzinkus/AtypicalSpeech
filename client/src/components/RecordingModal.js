@@ -95,7 +95,7 @@ function RecordingModal() {
         })
     }
 
-    const nextLine = (event) => {
+    const nextLine = async (event) => {
         console.log("next line")
         var originalLineNumber = currentState.currentLine
         if (currentState.currentLine >= 0) {
@@ -108,8 +108,9 @@ function RecordingModal() {
         }
         console.log("next line: ", currentState.currentLine)
 
-        saveBlob()
-        start()
+        await new Promise(async resolve => await saveBlob())
+        .then(start())
+    
     }
 
     const start = async (event) => {
@@ -147,7 +148,7 @@ function RecordingModal() {
         });
     }
 
-    const saveBlob = (event) => {
+    const saveBlob = async (event) => {
         var blob = currentState.audioData.blob
         var fileName =  accessCode + "_script" + scriptID + "_line#" + currentState.currentLine.toString().padStart(4, '0')
         console.log("file name: ", fileName);
