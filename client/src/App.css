@@ -96,3 +96,8 @@
     bottom: 0;
     overflow: hidden; 
 }
+
+.button_right_align {
+    position: absolute;
+    right: 30px;
+}

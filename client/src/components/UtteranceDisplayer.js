@@ -1,6 +1,7 @@
 import React from 'react'
+import SaveProgressButton from './SaveProgressButton';
 
-function UtteranceDisplayer({line}) {
+function UtteranceDisplayer({user_id, script_id, line, current_line}) {
   const mystyle = {
     color: "white",
     backgroundColor: "DodgerBlue",
@@ -10,7 +11,10 @@ function UtteranceDisplayer({line}) {
   
 
   return (
-    <div style={mystyle}>Current utterance: <a className='utterance_display_bold'>{line}</a></div>
+    <div style={mystyle}>
+      Current utterance: <a className='utterance_display_bold'>{line}</a>
+      {SaveProgressButton({user_id: user_id, script_id: script_id, current_line: current_line})}
+      </div>
   )
 }
 

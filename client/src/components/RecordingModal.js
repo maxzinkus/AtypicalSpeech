@@ -9,7 +9,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import { Button } from 'react-bootstrap';
 import renderProgressBar from './ProgressBar';
-import SaveProgressButton from './SaveProgressButton';
 
 function RecordingModal() {
 
@@ -183,7 +182,7 @@ function RecordingModal() {
     const UtteranceDisplayerRendering = () => {
         // await new Promise(resolve => setTimeout(resolve, RECORDING_DELAY));
         // if (currentUtterances.utterances === ) return
-        return <UtteranceDisplayer line={currentUtterances[currentState.currentLine]}></UtteranceDisplayer>
+        return <UtteranceDisplayer line={currentUtterances[currentState.currentLine]} user_id={accessCode} script_id={scriptID} current_line={currentState.currentLine}></UtteranceDisplayer>
     }
 
     const restart = async (event) => {
@@ -295,8 +294,7 @@ function RecordingModal() {
 
             {currentState.totalLines !== currentState.currentLine && renderRecording()}
             {currentState.totalLines === currentState.currentLine && renderComplete()}
-            
-            {SaveProgressButton({user_id: accessCode, script_id: scriptID, current_line: currentState.currentLine})}
+
         </div>
     );
 
