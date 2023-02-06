@@ -197,7 +197,7 @@ function RecordingModal() {
     const UtteranceDisplayerRendering = () => {
         // await new Promise(resolve => setTimeout(resolve, RECORDING_DELAY));
         // if (currentUtterances.utterances === ) return
-        return <UtteranceDisplayer line={currentUtterances[currentState.currentLine]} user_id={accessCode} script_id={scriptID} current_line={currentState.currentLine}></UtteranceDisplayer>
+        return <UtteranceDisplayer currentRecordState={currentState.recordState} line={currentUtterances[currentState.currentLine]} user_id={accessCode} script_id={scriptID} current_line={currentState.currentLine}></UtteranceDisplayer>
     }
 
     const restart = async (event) => {
