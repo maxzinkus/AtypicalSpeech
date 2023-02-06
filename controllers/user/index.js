@@ -15,6 +15,7 @@ router.post('/assign_mandatory_scripts', ctrl.assign_mandatory_scripts);
 router.post('/mark_task_complete', ctrl.mark_task_complete);
 router.post('/create', ctrl.create_user);
 router.post('/get_assigned_tasks', ctrl.fetch_assigned_tasks_per_user);
+router.post('/update_task_progress', ctrl.update_task_progress);
 
 
 module.exports = router;

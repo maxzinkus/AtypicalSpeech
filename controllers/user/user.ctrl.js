@@ -116,7 +116,8 @@ exports.create_user = async (req, res) => {
             id: user_id,
             name: "",
             assignedTasks: {"tasks":[]},
-            completedTasks: {"tasks":[]}
+            completedTasks: {"tasks":[]},
+            taskProgress: {}
         })
         return res.json(user)
     } catch (err) {
@@ -169,6 +170,65 @@ exports.get_total_user_num = async (_, res) => {
 exports.get_all_users = async (_, res) => {
     try {
         return res.json(await User.findAll());
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json(err)
+    }
+}
+
+exports.update_task_progress = async (req, res) => {
+    const {user_id, script_id, current_line} = req.body
+    console.log("backend user id: ", user_id)
+    try {
+        const user = await User.findByPk(user_id)
+
+        // if user not found, show error
+        if (user === null) {
+            console.log("user not found!")
+            return;
+        }
+
+        const script = await Script.findByPk(script_id)
+
+        // if script not found, show error
+        if (user === null) {
+            console.log("script not found!")
+            return;
+        }
+
+        // current line must be a number
+        if (typeof current_line !== "number") {
+            console.log("current_line param must be a number.")
+            console.log("current_line type: ", typeof current_line)
+            return;
+        }
+
+        // line number must be a positive number
+        if (current_line < 0) {
+            console.log("current line param cannot be a negative number")
+            return;
+        }
+
+        const task_progress = user.taskProgress
+        console.log("task_progress: ", task_progress)
+
+        // if user already has saved progress for this script, update
+        if (task_progress.hasOwnProperty(script_id.toString())) {
+            console.log("has script progress")
+
+            task_progress[script_id.toString()] = current_line
+        } else {
+            console.log("doesn't have script progress")
+
+            task_progress[script_id.toString()] = current_line
+        }
+
+        // if user has no progress saved, add
+
+        user.changed('taskProgress', true)
+        await user.save()
+    
+        return res.json(user)
     } catch (err) {
         console.log(err)
         return res.status(500).json(err)

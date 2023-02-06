@@ -30,6 +30,10 @@ module.exports = (sequelize, DataTypes) => {
     completedTasks: {
       type: DataTypes.JSON,
       allowNull: true,
+    },
+    taskProgress: {
+      type: DataTypes.JSON,
+      allowNull: true,
     }
   }, {
     sequelize,
