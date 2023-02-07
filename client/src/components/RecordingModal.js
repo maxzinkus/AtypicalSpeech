@@ -106,15 +106,15 @@ function RecordingModal() {
                 currentLine: originalLineNumber + 1
             })
         }
-        console.log("next line: ", currentState.currentLine)
+        // console.log("next line: ", currentState.currentLine)
 
-        await new Promise(async resolve => await saveBlob())
-        .then(start())
+        const blob_promise = new Promise(async resolve => await saveBlob())
+        blob_promise.then(start());
     
     }
 
     const start = async (event) => {
-        console.log("start recording after one second")
+        // console.log("start recording after one second")
         // await new Promise(resolve => setTimeout(resolve, RECORDING_DELAY));
 
         setCurrentState({
@@ -124,11 +124,11 @@ function RecordingModal() {
             review: false
         })
 
-        console.log(currentState)
+        // console.log(currentState)
     }
 
     const pause = (event) => {
-        console.log("Pause")
+        // console.log("Pause")
         setCurrentState({
             ...currentState,
             recordState: RecordState.PAUSE,
@@ -143,7 +143,7 @@ function RecordingModal() {
                 recordState: RecordState.STOP,
                 review: true
             })
-            console.log("stope")
+            // console.log("stope")
             console.log(currentState)
         });
     }
@@ -151,7 +151,7 @@ function RecordingModal() {
     const saveBlob = async (event) => {
         var blob = currentState.audioData.blob
         var fileName =  accessCode + "_script" + scriptID + "_line#" + currentState.currentLine.toString().padStart(4, '0')
-        console.log("file name: ", fileName);
+        // console.log("file name: ", fileName);
         var a = document.createElement("a");
         document.body.appendChild(a);
         a.style = "display: none";
@@ -185,7 +185,7 @@ function RecordingModal() {
     }
 
     const ReviewPageRendering = () => {
-        console.log("review page rendering: ", currentState.review)
+        // console.log("review page rendering: ", currentState.review)
         if (currentState.review) {
             return <ReviewPage audioData={currentState.audioData}></ReviewPage>
         }
@@ -196,13 +196,11 @@ function RecordingModal() {
     }
 
     const UtteranceDisplayerRendering = () => {
-        // await new Promise(resolve => setTimeout(resolve, RECORDING_DELAY));
-        // if (currentUtterances.utterances === ) return
         return <UtteranceDisplayer currentRecordState={currentState.recordState} line={currentUtterances[currentState.currentLine]} user_id={accessCode} script_id={scriptID} current_line={currentState.currentLine}></UtteranceDisplayer>
     }
 
     const restart = async (event) => {
-        console.log("start recording after one second")
+        // console.log("start recording after one second")
         // await new Promise(resolve => setTimeout(resolve, RECORDING_DELAY));
 
         setCurrentState({
@@ -216,7 +214,7 @@ function RecordingModal() {
     }
 
     const renderRecording = () => {
-        console.log("current record state: ", currentState.recordState)
+        // console.log("current record state: ", currentState.recordState)
         return (
             <>
             <div className='utterance_display'>
