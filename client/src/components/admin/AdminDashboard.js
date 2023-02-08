@@ -1,8 +1,7 @@
 import React from 'react'
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-// import UserTab from './createUserModal';
-import CreateUserModal from './CreateUserModal';
+import UserTab from './UserTab';
 
 function AdminDashboard() {
     return (
@@ -13,7 +12,7 @@ function AdminDashboard() {
           className="mb-3"
         >
           <Tab eventKey="users" title="Users">
-            {CreateUserModal()}
+            {UserTab()}
           </Tab>
           <Tab eventKey="scripts" title="Scripts">
             #2
