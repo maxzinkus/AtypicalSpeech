@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 import ReactDOM from 'react-dom';
 
-function UserTab() {
+function CreateUserModal() {
     const [currentState, setCurrentState] = useState({accessCode: null});
     const [show, setShow] = useState(false);
   
@@ -19,12 +20,6 @@ function UserTab() {
     }
 
     const handleCreateUser = async () => {
-        // await new Promise(async () => {
-        //      await axios.post('http://localhost:3000/user/create', {user_id: accessCode});
-        // })
-        // .then(() => {
-        //     handleClose()
-        // })
 
         console.log("handleCreateUser accessCode: ", currentState.accessCode)
 
@@ -83,4 +78,4 @@ function UserTab() {
     );
   }
 
-export default UserTab
+export default CreateUserModal
