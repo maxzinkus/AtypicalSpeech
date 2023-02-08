@@ -11,7 +11,7 @@ function DashboardCard({script_id, accessCode}) {
     const navigate = useNavigate();
 
     const handleClick = (event) => {
-        navigate('/module1', {
+        navigate('/module', {
             state: {
                 accessCode: accessCode,
                 script_id: script_id

@@ -21,9 +21,9 @@ function App() {
           {/* <Switch> */}
           <Routes>
             <Route exact path="/" element={<Home/>}/>
-            {/* <Route exact path="/dashboard" element={<Dashboard scriptCount={currentState.scriptCount} />}> */}
             <Route exact path="/dashboard" element={<Dashboard />}/>
-            <Route path="/module1" element={<RecordingModal/>}/>
+            <Route path="/module" element={<RecordingModal/>}/>
+            {/* <Route path="/" element={<RecordingModal/>}/> */}
           {/* </Switch> */}
           </Routes>
         </div>
