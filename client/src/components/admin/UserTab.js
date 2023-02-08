@@ -2,48 +2,77 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
+import axios from 'axios';
+import ReactDOM from 'react-dom';
 
 function UserTab() {
+    const [currentState, setCurrentState] = useState({accessCode: null});
     const [show, setShow] = useState(false);
   
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const handleAccessCodeChange = (event) => {
+        setCurrentState({
+            accessCode: event.target.value
+        })
+    }
+
+    const handleCreateUser = async () => {
+        // await new Promise(async () => {
+        //      await axios.post('http://localhost:3000/user/create', {user_id: accessCode});
+        // })
+        // .then(() => {
+        //     handleClose()
+        // })
+
+        console.log("handleCreateUser accessCode: ", currentState.accessCode)
+
+        fetch("http://localhost:3000/user/create", {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({
+                'user_id': currentState.accessCode
+            })
+        })
+    }
   
     return (
       <>
         <Button variant="primary" onClick={handleShow}>
-          Launch demo modal
+            Create user
         </Button>
   
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
+            <Modal.Title>Create user</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form>
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label>Email address</Form.Label>
+              <Form.Group className="mb-3" controlId="accessCode">
+                <Form.Label>Access Code</Form.Label>
                 <Form.Control
-                  type="email"
-                  placeholder="name@example.com"
+                  type="accessCode"
+                  placeholder="3Kgnq!P"
+                  onChange={handleAccessCodeChange}
                   autoFocus
                 />
               </Form.Group>
-              <Form.Group
+              {/* <Form.Group
                 className="mb-3"
                 controlId="exampleForm.ControlTextarea1"
               >
                 <Form.Label>Example textarea</Form.Label>
                 <Form.Control as="textarea" rows={3} />
-              </Form.Group>
+              </Form.Group> */}
             </Form>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <Button variant="primary" onClick={handleClose}>
-              Save Changes
+            <Button variant="primary" onClick={handleCreateUser}>
+              Confirm
             </Button>
           </Modal.Footer>
         </Modal>
