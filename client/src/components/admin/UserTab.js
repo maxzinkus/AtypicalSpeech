@@ -35,6 +35,9 @@ function UserTab() {
                 'user_id': currentState.accessCode
             })
         })
+        .then(() => {
+            handleClose()
+        })
     }
   
     return (
