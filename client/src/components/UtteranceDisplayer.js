@@ -26,10 +26,22 @@ function UtteranceDisplayer({user_id, script_id, line, current_line, currentReco
   }, [current_line])
   
   return (
-    <div className='utterance_display_whole'>
-      Current utterance: {currentRecordState !== null && <a id='utterence_line_display' className='utterance_display_bold'>{line}</a>}
-      {SaveProgressButton({user_id: user_id, script_id: script_id, current_line: current_line})}
+    <div className='float-container'>
+      <div className='float-left-child'>
+        Current utterance:
+        {/* <div>{SaveProgressButton({user_id: user_id, script_id: script_id, current_line: current_line})}</div> */}
+      </div>
+      <div className='float-right-child'>
+        {/* <a className='utterance_display_bold'> */}
+          {/* {currentRecordState !== null && {line}} */}
+          {line}
+        {/* </a> */}
+      </div>
     </div>
+    // <div className='utterance_display_whole'>
+    //   Current utterance: {currentRecordState !== null && <a id='utterence_line_display' className='utterance_display_bold'>{line}</a>}
+    //   {SaveProgressButton({user_id: user_id, script_id: script_id, current_line: current_line})}
+    // </div>
   )
 }
 

@@ -8,6 +8,8 @@
     background-color: dodgerblue;
     padding: 10px;
     font-family: Arial;
+    height: max-content;
+    width: max-content;
 }
 
 .utterance_display {
@@ -15,16 +17,18 @@
     font-family: Arial;
     color: white;
     background-color: dodgerblue;
-    padding: 20px;
+    padding: 30px;
 }
 
 .utterance_display_bold {
+    overflow-wrap: break-word;
     font-size: 40px;
     font-family: Arial;
     color: white;
     background-color: dodgerblue;
-    padding: 10px;
     font-weight: bolder;
+    /* padding-right: 10px; */
+    /* inline-size: 150px; */
 }
 
 .large_font_blue_center {
@@ -108,3 +112,33 @@
     position: absolute;
     right: 30px;
 }
+
+.float-container {
+    /* border: 3px solid #fff; */
+    padding: 10px;
+    height: max-content;
+    width: 100%;
+    overflow-x: hidden;
+    position: relative;
+}
+
+.float-left-child {
+    width: 20%;
+    float: left;
+    padding: 10px;
+    /* border: 2px solid green; */
+} 
+
+.float-right-child {
+    width: 75%;
+    float: right;
+    overflow-wrap: break-word;
+    font-size: 40px;
+    font-family: Arial;
+    color: white;
+    background-color: dodgerblue;
+    font-weight: bolder;
+    /* padding: 10px; */
+    /* border: 2px solid red; */
+    line-height: 50px;
+} 
