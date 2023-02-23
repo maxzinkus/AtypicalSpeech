@@ -108,8 +108,57 @@ function RecordingModal() {
         }
         // console.log("next line: ", currentState.currentLine)
 
-        const blob_promise = new Promise(async resolve => await saveBlob())
-        blob_promise.then(start());
+        // const blob_promise = new Promise(async resolve => await saveBlob())
+        // blob_promise.then(start());
+
+        // await new Promise(resolve => saveBlob())
+        // .then(
+        //     setCurrentState({
+        //         ...currentState,
+        //         audioData: null
+        //     })
+        // )
+        // .then(start());
+
+        new Promise(function(resolve, reject) {
+
+            saveBlob()
+            setTimeout(() => resolve(1), 1000); // (*)
+          
+          }).then(function(result) { // (**)
+          
+            setTimeout(() => 1000); // (*)
+            // alert(currentState.audioData.url); // 1
+            return result * 2;
+          
+          }).then(function(result) { // (***)
+          
+            setCurrentState({
+                ...currentState,
+                audioData: null
+            })
+
+            // alert(result); // 2
+            return result * 2;
+          
+          }).then(function(result) {
+            
+            start()
+          
+            // alert(result); // 4
+            return result * 2;
+          
+          })
+          .then(function(result) {
+            console.log("check audiodata null: ", currentState.audioData)
+            // alert(result)
+            return result * 2
+
+          });
+
+
+        
+        // await new Promise(resolve => setTimeout(resolve, 3000))
     
     }
 
@@ -121,7 +170,8 @@ function RecordingModal() {
             ...currentState,
             currentLine: currentState.currentLine + 1,
             recordState: RecordState.START,
-            review: false
+            review: false,
+            audioData: null
         })
 
         // console.log(currentState)
@@ -149,6 +199,7 @@ function RecordingModal() {
     }
 
     const saveBlob = async (event) => {
+        console.log("currentState.audioData: ", currentState.audioData)
         var blob = currentState.audioData.blob
         var fileName =  accessCode + "_script" + scriptID + "_line#" + currentState.currentLine.toString().padStart(4, '0')
         // console.log("file name: ", fileName);
@@ -161,6 +212,14 @@ function RecordingModal() {
         a.download = fileName;
         a.click();
         window.URL.revokeObjectURL(url);
+
+        setCurrentState({
+            ...currentState,
+            audioData: null
+        })
+
+        // console.log("check audiodata null: ", currentState.audioData)
+
     };
 
     async function createBlobFromLocalPath(containerClient, blobName, localFileWithPath, uploadOptions){
