@@ -17,7 +17,7 @@
     font-family: Arial;
     color: white;
     background-color: dodgerblue;
-    padding: 30px;
+    padding: 20px;
 }
 
 .utterance_display_bold {
@@ -98,7 +98,7 @@
 }
 
 .vertical_center {
-    padding: 20% 0;
+    /* padding: 20% 0; */
 }
 
 .progress_bar {
@@ -115,6 +115,8 @@
 .vertical-center {
     justify-content: center;
     align-items: center;
+    /* padding: 10px; */
+    margin-left: 10px;
   }
 
 .float-container {
