@@ -3,6 +3,13 @@
     justify-content: center;
 }
 
+.utterance_display_whole {
+    color: white;
+    background-color: dodgerblue;
+    padding: 10px;
+    font-family: Arial;
+}
+
 .utterance_display {
     font-size: 25px;
     font-family: Arial;
