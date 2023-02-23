@@ -6,7 +6,7 @@
 .utterance_display_whole {
     color: white;
     background-color: dodgerblue;
-    padding: 10px;
+    /* padding: 10px; */
     font-family: Arial;
     height: max-content;
     width: max-content;
@@ -109,13 +109,17 @@
 }
 
 .button_right_align {
-    position: absolute;
     right: 30px;
 }
 
+.vertical-center {
+    justify-content: center;
+    align-items: center;
+  }
+
 .float-container {
     /* border: 3px solid #fff; */
-    padding: 10px;
+    /* padding: 10px; */
     height: max-content;
     width: 100%;
     overflow-x: hidden;
@@ -126,11 +130,12 @@
     width: 20%;
     float: left;
     padding: 10px;
+    height: max-content;
     /* border: 2px solid green; */
 } 
 
 .float-right-child {
-    width: 75%;
+    width: 80%;
     float: right;
     overflow-wrap: break-word;
     font-size: 40px;

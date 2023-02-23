@@ -28,8 +28,10 @@ function UtteranceDisplayer({user_id, script_id, line, current_line, currentReco
   return (
     <div className='float-container'>
       <div className='float-left-child'>
-        Current utterance:
-        {/* <div>{SaveProgressButton({user_id: user_id, script_id: script_id, current_line: current_line})}</div> */}
+        <div>Current utterance:</div>
+        <br></br>
+        <div>{SaveProgressButton({user_id: user_id, script_id: script_id, current_line: current_line})}</div>
+
       </div>
       <div className='float-right-child'>
         {/* <a className='utterance_display_bold'> */}
@@ -37,6 +39,7 @@ function UtteranceDisplayer({user_id, script_id, line, current_line, currentReco
           {line}
         {/* </a> */}
       </div>
+
     </div>
     // <div className='utterance_display_whole'>
     //   Current utterance: {currentRecordState !== null && <a id='utterence_line_display' className='utterance_display_bold'>{line}</a>}

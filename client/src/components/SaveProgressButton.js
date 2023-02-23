@@ -18,7 +18,7 @@ function SaveProgressButton({user_id, script_id, current_line}) {
     }
 
   return (
-    <Button className='button_right_align' onClick={() => saveProgress(user_id, script_id, current_line - 1)}>
+    <Button className='vertical-center' onClick={() => saveProgress(user_id, script_id, current_line - 1)}>
         Save Progress
     </Button>
   )
