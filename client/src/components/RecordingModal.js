@@ -32,6 +32,7 @@ function RecordingModal() {
     const RECORDING_DELAY_HALF = 500;
 
     useEffect(() => {
+
         async function fetchScript() {
             const script = await axios.post('http://localhost:3000/script/findScriptID/', {script_id: scriptID});
             console.log(script.data.utterances.utterances)
@@ -332,10 +333,14 @@ function RecordingModal() {
         setCurrentState({...currentState, startState: true})
     }
 
+    const createCSVReceipt = () => {
+
+    }
+
     const renderComplete = () => {
         return (
             <div>
-                <button onClick={handleComplete}>Exit</button>
+                <Button onClick={handleComplete}>Exit</Button>
             </div>
         )
     }
