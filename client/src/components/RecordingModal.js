@@ -199,10 +199,15 @@ function RecordingModal() {
         });
     }
 
+    const createFileName = () => {
+        var fileName =  accessCode + "_script" + scriptID + "_line#" + currentState.currentLine.toString().padStart(4, '0')
+        return fileName;
+    }
+
     const saveBlob = async (event) => {
         console.log("currentState.audioData: ", currentState.audioData)
         var blob = currentState.audioData.blob
-        var fileName =  accessCode + "_script" + scriptID + "_line#" + currentState.currentLine.toString().padStart(4, '0')
+        var fileName = createFileName()
         // console.log("file name: ", fileName);
         var a = document.createElement("a");
         document.body.appendChild(a);
@@ -333,7 +338,8 @@ function RecordingModal() {
         setCurrentState({...currentState, startState: true})
     }
 
-    const createCSVReceipt = () => {
+    const createCSVReceipt = async () => {
+        var filenames = []
 
     }
 
