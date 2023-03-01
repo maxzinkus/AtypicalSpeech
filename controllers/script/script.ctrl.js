@@ -79,18 +79,20 @@ exports.update_script = async (req, res) => {
 
     const {script_id, utterances} = req.body
 
-    const isScriptIDUnique = async (script_id) => {
+    const isScriptIDUnique = async () => {
+        console.log("script_id: ", script_id)
         return await Script.count({ where: { id: script_id } });
     };
 
     try {
         const checkExistID = await isScriptIDUnique(script_id)
-        console.log("checkExistID: ", checkExistID)
+        // console.log("checkExistID: ", checkExistID)
 
         // a script of this script id already exists
         if (checkExistID > 0) {
 
             try {
+                console.log("update script")
 
                 const script = await Script.findByPk(script_id)
                 script.utterances = utterances
@@ -105,9 +107,10 @@ exports.update_script = async (req, res) => {
                 return res.status(500).json(err)
 
             }
-            
+
         } else { // a script of this script id does not yet exist
             try {
+                console.log("create new script")
                 const script = await Script.create({id, utterances})
                 return res.json(script)
             } catch (err) {
