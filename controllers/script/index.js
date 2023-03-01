@@ -10,6 +10,9 @@ router.get('/', (_, res) => {
 router.post('/create', ctrl.create_script);
 router.post('/findScriptID', ctrl.get_one_script_by_id);
 router.post('/unassign_task', ctrl.unassign_task);
+
 router.get('/getScriptNum', ctrl.get_script_total_number);
+
+router.put('/update_script', ctrl.update_script);
 
 module.exports = router;

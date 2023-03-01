@@ -75,19 +75,52 @@ exports.unassign_task = async (req, res) => {
     }
 }
 
-// exports.update_script = async (req, res) => {
+exports.update_script = async (req, res) => {
 
-//     const {script_id, utterarnce, details} = req.body
+    const {script_id, utterances} = req.body
 
-//     try {
-//         const script = await Script.create({id, utterances})
-//         return res.json(script)
-//     } catch (err) {
-//         console.log(err)
-//         return res.status(500).json(err)
-//     }
+    const isScriptIDUnique = async (script_id) => {
+        return await Script.count({ where: { id: script_id } });
+    };
 
-// }
+    try {
+        const checkExistID = await isScriptIDUnique(script_id)
+        console.log("checkExistID: ", checkExistID)
+
+        // a script of this script id already exists
+        if (checkExistID > 0) {
+
+            try {
+
+                const script = await Script.findByPk(script_id)
+                script.utterances = utterances
+
+                await script.save()
+
+                return res.json(script)
+
+            } catch (err) {
+
+                console.log(err)
+                return res.status(500).json(err)
+
+            }
+            
+        } else { // a script of this script id does not yet exist
+            try {
+                const script = await Script.create({id, utterances})
+                return res.json(script)
+            } catch (err) {
+                console.log(err)
+                return res.status(500).json(err)
+            }
+        }
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json(err)
+    }
+
+}
 
 // exports.name = async (req, res) => {
 //     try {
