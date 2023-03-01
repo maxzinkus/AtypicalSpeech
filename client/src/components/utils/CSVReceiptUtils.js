@@ -19,28 +19,29 @@ function format_header_rows (rows) {
     }
     header += '\n'
     console.log("header: ", header)
+    return header
 }
 
-//create a user-defined function to download CSV file   
+// create a user-defined function to download CSV file   
 exports.create_csv_receipt = (data, rows, title) => {  
        
-    //define the heading for each row of the data  
+    // define the heading for each row of the data  
     var csv = format_header_rows(rows)
       
-    //merge the data with CSV  
+    // merge the data with CSV  
     data.forEach(function(row) {  
             csv += row.join(',');  
             csv += "\n";  
     });  
    
-    //display the created CSV data on the web browser   
+    // display the created CSV data on the web browser   
     document.write(csv);  
   
     var hiddenElement = document.createElement('a');  
     hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);  
     hiddenElement.target = '_blank';  
       
-    //provide the name for the CSV file to be downloaded  
+    // provide the name for the CSV file to be downloaded  
     hiddenElement.download = title + '.csv';  
     hiddenElement.click();  
 }  

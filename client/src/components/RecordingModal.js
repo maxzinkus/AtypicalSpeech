@@ -9,6 +9,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import { Button } from 'react-bootstrap';
 import renderProgressBar from './ProgressBar';
+import { create_csv_receipt } from './utils/CSVReceiptUtils';
 
 function RecordingModal() {
 
@@ -25,6 +26,7 @@ function RecordingModal() {
 
     const [currentState, setCurrentState] = useState({currentLine: 0, recordState: null, audioData: null, review: false, totalLines: 0, startState: false})
     const [currentUtterances, setCurrentUtterances] = useState([]);
+    const [currentUtteranceDetails, setCurrentUtteranceDetails] = useState([]);
     const [isFetched, setIsFetched] = useState(false);
     const [error, setError] = useState("");
 
@@ -37,6 +39,7 @@ function RecordingModal() {
             const script = await axios.post('http://localhost:3000/script/findScriptID/', {script_id: scriptID});
             console.log(script.data.utterances.utterances)
             setCurrentUtterances(script.data.utterances.utterances)
+            setCurrentUtteranceDetails(script.data.utterances.details)
             console.log("numLines: ", script.data.utterances.utterances.length)
 
             const progress = await fetchProgress();
@@ -200,7 +203,12 @@ function RecordingModal() {
     }
 
     const createFileName = () => {
-        var fileName =  accessCode + "_script" + scriptID + "_line#" + currentState.currentLine.toString().padStart(4, '0')
+        var fileName =  accessCode + "_script" + scriptID + "_line" + currentState.currentLine.toString().padStart(4, '0')
+        return fileName;
+    }
+
+    const createFileNameWithLineNumber = (lineNumber) => {
+        var fileName =  accessCode + "_script" + scriptID + "_line" + lineNumber.toString().padStart(4, '0')
         return fileName;
     }
 
@@ -279,6 +287,7 @@ function RecordingModal() {
     }
 
     const renderRecording = () => {
+        console.log("render recording utterance detail: ", currentUtteranceDetails)
         // console.log("current record state: ", currentState.recordState)
         return (
             <>
@@ -313,7 +322,9 @@ function RecordingModal() {
             // console.log("result: ", user_search_result["completedTasks"]["tasks"])
             // alert(user_search_result["completedTasks"]["tasks"])
             alert("Script #" + scriptID + " complete!")
-        })
+        });
+
+        await createCSVReceipt();
 
         fetch("http://localhost:3000/script/unassign_task", {
             method: 'POST',
@@ -339,7 +350,35 @@ function RecordingModal() {
     }
 
     const createCSVReceipt = async () => {
-        var filenames = []
+        // format : accessCode | scriptID | line number | utterance | file name | detail
+        
+        // prepare recording file names and username
+        var data = []
+        console.log("total lines: ", currentState.totalLines)
+
+        for (var i = 1; i < currentState.totalLines; i++) {
+            var temp = []
+            console.log("details: ", currentUtteranceDetails)
+            console.log("current line: ", i)
+            var utterance_detail = currentUtteranceDetails[i]
+
+            console.log("utterance_detail: ", utterance_detail["action"])
+
+            temp.push(accessCode) // access code
+            temp.push(scriptID) // script id
+            temp.push(i.toString()) // line number
+            temp.push(currentUtterances[i]) // utterance
+            temp.push(createFileNameWithLineNumber(i)) // recording file name
+            temp.push(utterance_detail["action"].toString()) // detail - action
+            temp.push(utterance_detail["object"].toString()) // detail - object
+            temp.push(utterance_detail["location"].toString()) // detail - location
+
+            data.push(temp)
+        }
+
+        var rows = ["access code", "script ID", "line number", "sentence", "file name", "action", "object", "location"]
+
+        create_csv_receipt(data, rows, "test")
 
     }
 
