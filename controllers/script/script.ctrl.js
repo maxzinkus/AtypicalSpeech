@@ -75,6 +75,20 @@ exports.unassign_task = async (req, res) => {
     }
 }
 
+// exports.update_script = async (req, res) => {
+
+//     const {script_id, utterarnce, details} = req.body
+
+//     try {
+//         const script = await Script.create({id, utterances})
+//         return res.json(script)
+//     } catch (err) {
+//         console.log(err)
+//         return res.status(500).json(err)
+//     }
+
+// }
+
 // exports.name = async (req, res) => {
 //     try {
 //     } catch (err) {

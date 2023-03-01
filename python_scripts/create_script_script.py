@@ -22,7 +22,7 @@ test_data = pd.read_csv(test_data_csv_url)
 valid_data = pd.read_csv(valid_data_csv_url)
 
 scriptID2utterances = defaultdict(list)
-utterance2details = defaultdict(dict)
+scriptID2utteranceDetails = defaultdict(list)
 
 for data in [train_data, test_data, valid_data]:
   for index, row in data.iterrows():
@@ -35,18 +35,18 @@ for data in [train_data, test_data, valid_data]:
     # print("details: ", details)
 
     scriptID2utterances[scriptID].append(utterance)
-
-    utterance2details[utterance] = details
-
+    scriptID2utteranceDetails[scriptID].append(details)
+   
 for scriptID, utterance in scriptID2utterances.items():
   scriptID2utterances[scriptID].insert(0, "")
+  scriptID2utteranceDetails[scriptID].insert(0, dict())
 
-scriptID2utterances['LR5vdbQgp3tlMBzB']
+# print(len(scriptID2utterances["2BqVo8kVB2Skwgyb"]))
+# print(len(scriptID2utteranceDetails["2BqVo8kVB2Skwgyb"]))
 
 create_script_url = "http://localhost:3000/script/create"
 
 for scriptID, utterances in scriptID2utterances.items():
-  # inner_data = json.dumps({"utterances", utterances})
-  request_data = json.dumps({"id": scriptID, "utterances": {"utterances": utterances}})
+  request_data = json.dumps({"id": scriptID, "utterances": {"utterances": utterances, "details": scriptID2utteranceDetails[scriptID]}})
   res = requests.post(create_script_url, data=request_data, headers={"Content-Type": "application/json"})
   print(res.json())
