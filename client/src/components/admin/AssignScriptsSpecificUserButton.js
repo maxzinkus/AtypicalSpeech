@@ -6,40 +6,41 @@ import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 import ReactDOM from 'react-dom';
 
-function CreateUserModal() {
-    const [currentState, setCurrentState] = useState({accessCode: null});
+function AssignScriptsSpecificUserButton({accessCode}) {
+    // const [currentState, setCurrentState] = useState({accessCode: null});
     const [show, setShow] = useState(false);
+
+    const assign_task_url = "http://localhost:3000/user/assign_task"
   
-    const handleClose = () => {
-      setShow(false);
-      console.log("show: ", show)
-      
-    }
-    const handleShow = () => {
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
-      setShow(true)
-      console.log("show: ", show)
-    };
+    // const handleAccessCodeChange = (event) => {
+    //     setCurrentState({
+    //         accessCode: event.target.value
+    //     })
+    // }
 
-    const handleAccessCodeChange = (event) => {
-        setCurrentState({
-            accessCode: event.target.value
-        })
-    }
+    const handleAssignTask = async (script_id) => {
 
-    const handleCreateUser = async () => {
+        console.log("handleAssignScriptsSpecificUser accessCode: ", accessCode)
 
-        console.log("handleCreateUser accessCode: ", currentState.accessCode)
-
-        fetch("http://localhost:3000/user/create", {
+        fetch(assign_task_url, {
             method: 'POST',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({
-                'user_id': currentState.accessCode
+                'user_id': accessCode,
+                'script_id': script_id
             })
         })
         .then(() => {
             handleClose()
+        })
+    }
+
+    const handleAssignMultipleTasks = async (script_ids) => {
+        script_ids.map((script_id) => {
+            handleAssignTask(script_id)
         })
     }
   
@@ -57,12 +58,12 @@ function CreateUserModal() {
             <Form>
               <Form.Group className="mb-3" controlId="accessCode">
                 <Form.Label>Access Code</Form.Label>
-                <Form.Control
+                {/* <Form.Control
                   type="accessCode"
                   placeholder="3Kgnq!P"
-                  onChange={handleAccessCodeChange}
+                  onChange={handleAssignMultipleTasks}
                   autoFocus
-                />
+                /> */}
               </Form.Group>
               {/* <Form.Group
                 className="mb-3"
@@ -77,13 +78,15 @@ function CreateUserModal() {
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <Button variant="primary" onClick={handleCreateUser}>
+            <Button variant="primary" 
+            // onClick={handleAssignTask}
+            >
               Confirm
             </Button>
           </Modal.Footer>
         </Modal>
       </>
     );
-  }
+}
 
-export default CreateUserModal
+export default AssignScriptsSpecificUserButton

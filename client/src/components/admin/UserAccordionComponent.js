@@ -1,10 +1,87 @@
 import { useEffect, useState } from 'react';
 import Accordion from 'react-bootstrap/Accordion';
 import axios from 'axios';
+import Form from 'react-bootstrap/Form';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+
+import Select from 'react-select';
+import makeAnimated from 'react-select/animated';
+// import { colourOptions } from '../data';
 
 function UserAccordionComponent() {
 
-    const [currentState, setCurrentState] = useState({users: null, accordionItems: null})
+    const [currentState, setCurrentState] = useState({users: null, accordionItems: null, available_scripts: null});
+
+    const [show, setShow] = useState(false);
+
+    const assign_task_url = "http://localhost:3000/user/assign_task"
+  
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    const handleAssignTask = async (accessCode, script_id) => {
+
+        console.log("handleAssignScriptsSpecificUser accessCode: ", accessCode)
+
+        fetch(assign_task_url, {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({
+                'user_id': accessCode,
+                'script_id': script_id
+            })
+        })
+        .then(() => {
+            handleClose()
+        })
+    }
+
+    const handleAssignMultipleTasks = async (script_ids) => {
+        script_ids.map((script_id) => {
+            handleAssignTask(script_id)
+        })
+    }
+
+    const animatedComponents = makeAnimated();
+
+    const renderAssignScriptsSpecificUserButton = () => {
+        return (
+            <>
+              <Button variant="primary" onClick={handleShow}>
+                  Assign scripts
+              </Button>
+        
+              <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                  <Modal.Title>Assign Scripts</Modal.Title>
+                </Modal.Header>
+
+                <Modal.Body>
+                    Select scripts
+                    <Select
+                        closeMenuOnSelect={false}
+                        components={animatedComponents}
+                        defaultValue={[]}
+                        isMulti
+                        options={[{ value: 'one', label: 'One' },
+                        { value: 'two', label: 'Two' }]}
+                    />
+                </Modal.Body>
+
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleClose}>
+                    Close
+                  </Button>
+                  <Button variant="primary" onClick={handleAssignTask}>
+                    Confirm
+                  </Button>
+                </Modal.Footer>
+              </Modal>
+            </>
+          );
+    }
+  
 
     const renderAccordionItem = (eventKey, header, user_data) => {
         return (
@@ -19,10 +96,10 @@ function UserAccordionComponent() {
 
         return (
             <div>
-                <p>Created on {user_data.createdAt.substring(0, 10)}, Last active on {user_data.updatedAt.substring(0, 10)}</p>
-                <p>{formatAssignedTasksSection(user_data.assignedTasks.tasks, user_data.taskProgress)}</p>
-                <p>{formatCompletedTasksSection(user_data.completedTasks.tasks)}</p>
-                
+                <div>Created on {user_data.createdAt.substring(0, 10)}, Last active on {user_data.updatedAt.substring(0, 10)}</div>
+                <div>{formatAssignedTasksSection(user_data.assignedTasks.tasks, user_data.taskProgress)}</div>
+                <div>{formatCompletedTasksSection(user_data.completedTasks.tasks)}</div>
+                {renderAssignScriptsSpecificUserButton()}
             </div>
         )
     }
@@ -33,16 +110,17 @@ function UserAccordionComponent() {
         }
 
         return (
-            <div>
-                {tasks.length} script completed
+            <>
+                {tasks.length} script(s) completed
                 <ul>
-                    {tasks.map((task) =>
-                        <li key={task}>
+                    {tasks.map((task, index) =>
+                        <li key={index}>
                         {task}
                         </li>
                     )}
                 </ul>
-            </div>)
+            </>
+            )
     }
 
     const formatAssignedTasksSection = (tasks, progress) => {
@@ -52,15 +130,15 @@ function UserAccordionComponent() {
 
         return (
             <div>
-                {tasks.length} script assigned
+                {tasks.length} script(s) assigned
                 <ul>
-                    {tasks.map((task) => {
+                    {tasks.map((task, index) => {
                         if (!progress.hasOwnProperty(task)) {
-                            return (<li key={task}>
+                            return (<li key={index}>
                                 {task} - Not in progress
                             </li>)
                         } else {
-                            return (<li key={task}>
+                            return (<li key={index}>
                             {task} - In progress
                             </li>)
                         }
@@ -71,24 +149,37 @@ function UserAccordionComponent() {
     }
 
     useEffect(() => {
-        async function fetchUsers() {
+        async function fetchData() {
+
+            // fetch all users to display all users on admin page
             const users = await axios.get('http://localhost:3000/user/get_all_users');
 
             setCurrentState({...currentState, users: users})
-            console.log("users: ", users)
-            console.log("currentState.users: ", currentState.users)
 
-            var accordionItems = [];
-            for (var i = 0; i < users.data.length; i++) {
-                console.log(users.data[i].id)
-                accordionItems.push(renderAccordionItem(users.data[i].id.toString() , users.data[i].id.toString(), users.data[i]))
-            }
+            var accordionItems = users.data.map((user_data) => {
+                return renderAccordionItem(user_data.id.toString() , user_data.id.toString(), user_data)
+            })
 
-            setCurrentState({users: users, accordionItems: accordionItems})
+            // fetch all users to display all users on admin page
+            const result = await axios.get('http://localhost:3000/script/get_all_script_ids');
+
+            const all_script_ids = result.data.map((script) => {
+                return {value: script.id, label: script.id};
+            })
+
+            setCurrentState({users: users, accordionItems: accordionItems, available_scripts: all_script_ids})
         }
 
-        fetchUsers();
-    }, [])
+        fetchData();
+
+        // async function fetchAllScripts() {
+            
+        //     setCurrentState({...currentState, available_scripts: all_script_ids})
+        // }
+
+        // fetchAllScripts();
+
+    }, [show])
 
   return (
     <Accordion>

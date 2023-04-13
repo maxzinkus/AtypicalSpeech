@@ -20,6 +20,24 @@ exports.get_script_total_number = async (_, res) => {
     }
 }
 
+exports.get_all_scripts = async (_, res) => {
+    try {
+        return res.json(await Script.findAll());
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json(err)
+    }
+}
+
+exports.get_all_script_ids = async (_, res) => {
+    try {
+        return res.json(await Script.findAll({attributes: ['id']}));
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json(err)
+    }
+}
+
 exports.create_script = async (req, res) => {
     const {id, utterances} = req.body
     console.log(req.body)
