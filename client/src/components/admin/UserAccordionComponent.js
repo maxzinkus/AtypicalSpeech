@@ -14,6 +14,7 @@ function UserAccordionComponent() {
     const [currentState, setCurrentState] = useState({users: null, accordionItems: null, available_scripts: null});
 
     const [show, setShow] = useState(false);
+    const [selectedScripts, setSelectedScripts] = useState([]);
 
     const assign_task_url = "http://localhost:3000/user/assign_task"
   
@@ -37,15 +38,16 @@ function UserAccordionComponent() {
         })
     }
 
-    const handleAssignMultipleTasks = async (script_ids) => {
-        script_ids.map((script_id) => {
-            handleAssignTask(script_id)
-        })
+    const handleAssignMultipleTasks = (user_id) => {
+        console.log("handleAssignMultipleTasks: ", selectedScripts)
+        const res = Promise.all(
+            selectedScripts.map(async script_id => await handleAssignTask(user_id, script_id.value))
+        )
     }
 
     const animatedComponents = makeAnimated();
 
-    const renderAssignScriptsSpecificUserButton = () => {
+    const renderAssignScriptsSpecificUserButton = (user_data) => {
         return (
             <>
               <Button variant="primary" onClick={handleShow}>
@@ -60,12 +62,15 @@ function UserAccordionComponent() {
                 <Modal.Body>
                     Select scripts
                     <Select
+                        onChange={(selectedOption) => {
+                            console.log(selectedOption);
+                            setSelectedScripts(selectedOption);
+                        }}
                         closeMenuOnSelect={false}
                         components={animatedComponents}
                         defaultValue={[]}
                         isMulti
-                        options={[{ value: 'one', label: 'One' },
-                        { value: 'two', label: 'Two' }]}
+                        options={currentState.available_scripts}
                     />
                 </Modal.Body>
 
@@ -73,7 +78,7 @@ function UserAccordionComponent() {
                   <Button variant="secondary" onClick={handleClose}>
                     Close
                   </Button>
-                  <Button variant="primary" onClick={handleAssignTask}>
+                  <Button variant="primary" onClick={handleAssignMultipleTasks(user_data.id)}>
                     Confirm
                   </Button>
                 </Modal.Footer>
@@ -99,7 +104,7 @@ function UserAccordionComponent() {
                 <div>Created on {user_data.createdAt.substring(0, 10)}, Last active on {user_data.updatedAt.substring(0, 10)}</div>
                 <div>{formatAssignedTasksSection(user_data.assignedTasks.tasks, user_data.taskProgress)}</div>
                 <div>{formatCompletedTasksSection(user_data.completedTasks.tasks)}</div>
-                {renderAssignScriptsSpecificUserButton()}
+                {renderAssignScriptsSpecificUserButton(user_data)}
             </div>
         )
     }
@@ -171,13 +176,6 @@ function UserAccordionComponent() {
         }
 
         fetchData();
-
-        // async function fetchAllScripts() {
-            
-        //     setCurrentState({...currentState, available_scripts: all_script_ids})
-        // }
-
-        // fetchAllScripts();
 
     }, [show])
 
