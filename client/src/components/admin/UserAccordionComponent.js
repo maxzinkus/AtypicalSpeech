@@ -20,7 +20,7 @@ function UserAccordionComponent() {
         return (
             <div>
                 <p>Created on {user_data.createdAt.substring(0, 10)}, Last active on {user_data.updatedAt.substring(0, 10)}</p>
-                <p>{formatAssignedTasksSection(user_data.assignedTasks.tasks)}</p>
+                <p>{formatAssignedTasksSection(user_data.assignedTasks.tasks, user_data.taskProgress)}</p>
                 <p>{formatCompletedTasksSection(user_data.completedTasks.tasks)}</p>
                 
             </div>
@@ -45,7 +45,7 @@ function UserAccordionComponent() {
             </div>)
     }
 
-    const formatAssignedTasksSection = (tasks) => {
+    const formatAssignedTasksSection = (tasks, progress) => {
         if (tasks.length === 0) {
             return <div>No scripts assigned</div>
         }
@@ -54,10 +54,17 @@ function UserAccordionComponent() {
             <div>
                 {tasks.length} script assigned
                 <ul>
-                    {tasks.map((task) =>
-                        <li key={task}>
-                        {task}
-                        </li>
+                    {tasks.map((task) => {
+                        if (!progress.hasOwnProperty(task)) {
+                            return (<li key={task}>
+                                {task} - Not in progress
+                            </li>)
+                        } else {
+                            return (<li key={task}>
+                            {task} - In progress
+                            </li>)
+                        }
+                    }
                     )}
                 </ul>
             </div>)
