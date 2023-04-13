@@ -6,13 +6,40 @@ function UserAccordionComponent() {
 
     const [currentState, setCurrentState] = useState({users: null, accordionItems: null})
 
-    const renderAccordionItem = (eventKey, header, body) => {
+    const renderAccordionItem = (eventKey, header, user_data) => {
         return (
             <Accordion.Item eventKey={eventKey}>
                 <Accordion.Header>{header}</Accordion.Header>
-                <Accordion.Body>{body}</Accordion.Body>
+                <Accordion.Body>{formatUserDetailsSection(user_data)}</Accordion.Body>
             </Accordion.Item>
         )
+    }
+
+    const formatUserDetailsSection = (user_data) => {
+
+        return (
+            <div>
+                <p>{formatAssignedTasksSection(user_data.assignedTasks.tasks)}</p>
+            </div>
+        )
+    }
+
+    const formatAssignedTasksSection = (tasks) => {
+        if (tasks.length === 0) {
+            return <div>No scripts assigned</div>
+        }
+
+        return (
+            <div>
+                {tasks.length} script assigned
+                <ul>
+                    {tasks.map((task) =>
+                        <li key={task}>
+                        {task}
+                        </li>
+                    )}
+                </ul>
+            </div>)
     }
 
     useEffect(() => {
@@ -26,7 +53,7 @@ function UserAccordionComponent() {
             var accordionItems = [];
             for (var i = 0; i < users.data.length; i++) {
                 console.log(users.data[i].id)
-                accordionItems.push(renderAccordionItem(users.data[i].id.toString() , users.data[i].id.toString(), (i+1).toString()))
+                accordionItems.push(renderAccordionItem(users.data[i].id.toString() , users.data[i].id.toString(), users.data[i]))
             }
 
             setCurrentState({users: users, accordionItems: accordionItems})
