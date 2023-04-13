@@ -19,9 +19,30 @@ function UserAccordionComponent() {
 
         return (
             <div>
+                <p>Created on {user_data.createdAt.substring(0, 10)}, Last active on {user_data.updatedAt.substring(0, 10)}</p>
                 <p>{formatAssignedTasksSection(user_data.assignedTasks.tasks)}</p>
+                <p>{formatCompletedTasksSection(user_data.completedTasks.tasks)}</p>
+                
             </div>
         )
+    }
+
+    const formatCompletedTasksSection = (tasks) => {
+        if (tasks.length === 0) {
+            return <div>No scripts completed yet</div>
+        }
+
+        return (
+            <div>
+                {tasks.length} script completed
+                <ul>
+                    {tasks.map((task) =>
+                        <li key={task}>
+                        {task}
+                        </li>
+                    )}
+                </ul>
+            </div>)
     }
 
     const formatAssignedTasksSection = (tasks) => {
