@@ -38,7 +38,7 @@ function AssignScriptsSpecificUserModal() {
 
   const assign_task_url = "http://localhost:3000/user/assign_multiple_tasks"
 
-  const handleAssignTask = async () => {
+  const handleAssignMultipleTasks = async () => {
 
       console.log("handleAssignScriptsSpecificUser accessCode: ", accessCode)
       console.log("handleAssignScriptsSpecificUser script id: ", selectedScripts)
@@ -57,22 +57,6 @@ function AssignScriptsSpecificUserModal() {
       }).then(() => {
         handleClose()
       })
-  }
-
-  const handleAssignMultipleTasks = async () => {
-      console.log("handleAssignMultipleTasks: ", selectedScripts)
-      // const res = Promise.all(
-      //     selectedScripts.map(async script_id => await handleAssignTask(script_id.value))
-      // )
-      
-      const promises = selectedScripts.map(async script_id => {
-        const result = await handleAssignTask(script_id.value);
-        return result;
-      })
-
-      const results = await Promise.all(promises);
-      console.log("results: ", results);
-      handleClose();
   }
 
   const navigate = useNavigate();
@@ -113,7 +97,7 @@ function AssignScriptsSpecificUserModal() {
                   <Button variant="secondary" onClick={handleClose}>
                     Close
                   </Button>
-                  <Button variant="primary" onClick={handleAssignTask}>
+                  <Button variant="primary" onClick={handleAssignMultipleTasks}>
                     Confirm
                   </Button>
                 </Modal.Footer>
