@@ -39,7 +39,11 @@ exports.assign_mandatory_scripts = async (req, res) => {
 
 exports.assign_multiple_tasks = async (req, res) => {
     const {user_id, script_ids} = req.body
+
+    console.log("assign_multiple_tasks | ", script_ids)
+
     try {
+
         const user = await User.findByPk(user_id)
 
         // if user not found, show error
@@ -47,34 +51,62 @@ exports.assign_multiple_tasks = async (req, res) => {
             console.log("user not found!")
         }
 
-        const scripts = await Script.findAll({
-            where : {
-                id : script_ids
-            }
-        })
-
-        console.log("assign_multiple_tasks scripts: ", scripts)
-
-        // if script not found, show error
-        // if (script === null) {
-        //     console.log("script not found!")
-        // }
-
         const original_assigned_tasks = user.assignedTasks.tasks
+        console.log("original: ", original_assigned_tasks)
 
-        scripts.map((script_id) => {
+        for (var i = 0; i < script_ids.length; i++) {
+            var script_id = script_ids[i]
             if (!original_assigned_tasks.includes(script_id)) {
+                var script = await Script.findByPk(script_id)
+                // if script not found, show error
+                if (script === null) {
+                    console.log("script not found!")
+                }
                 original_assigned_tasks.push(script_id)
             }
-        })
-
-        console.log("original_assigned_tasks: ", original_assigned_tasks);
-
+        }
+    
         user.assignedTasks.tasks = original_assigned_tasks
         user.changed('assignedTasks', true)
         await user.save()
     
         return res.json(user)
+
+        // const user = await User.findByPk(user_id)
+
+        // // if user not found, show error
+        // if (user === null) {
+        //     console.log("user not found!")
+        // }
+
+        // const scripts = await Script.findAll({
+        //     where : {
+        //         id : script_ids
+        //     }
+        // })
+
+        // console.log("assign_multiple_tasks scripts: ", scripts)
+
+        // // if script not found, show error
+        // // if (script === null) {
+        // //     console.log("script not found!")
+        // // }
+
+        // const original_assigned_tasks = user.assignedTasks.tasks
+
+        // console.log("original_assigned_tasks: ", original_assigned_tasks);
+
+        // scripts.map((script_id) => {
+        //     if (!original_assigned_tasks.includes(script_id)) {
+        //         original_assigned_tasks.push(script_id)
+        //     }
+        // })
+
+        // user.assignedTasks.tasks = original_assigned_tasks
+        // user.changed('assignedTasks', true)
+        // await user.save()
+    
+        // return res.json(user)
     } catch (err) {
         console.log(err)
         return res.status(500).json(err)

@@ -36,20 +36,26 @@ function AssignScriptsSpecificUserModal() {
 
   }, [])
 
-  const assign_task_url = "http://localhost:3000/user/assign_task"
+  const assign_task_url = "http://localhost:3000/user/assign_multiple_tasks"
 
-  const handleAssignTask = async (script_id) => {
+  const handleAssignTask = async () => {
 
       console.log("handleAssignScriptsSpecificUser accessCode: ", accessCode)
-      console.log("handleAssignScriptsSpecificUser script id: ", script_id)
+      console.log("handleAssignScriptsSpecificUser script id: ", selectedScripts)
+
+      const selectedScriptIDs = selectedScripts.map((script) => {
+        return script.value;
+      })
 
       fetch(assign_task_url, {
           method: 'POST',
           headers: {'Content-Type':'application/json'},
           body: JSON.stringify({
               'user_id': accessCode,
-              'script_id': script_id
+              'script_ids': selectedScriptIDs
           })
+      }).then(() => {
+        handleClose()
       })
   }
 
@@ -107,7 +113,7 @@ function AssignScriptsSpecificUserModal() {
                   <Button variant="secondary" onClick={handleClose}>
                     Close
                   </Button>
-                  <Button variant="primary" onClick={handleAssignMultipleTasks}>
+                  <Button variant="primary" onClick={handleAssignTask}>
                     Confirm
                   </Button>
                 </Modal.Footer>
