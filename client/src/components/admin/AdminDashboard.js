@@ -1,6 +1,7 @@
 import React from 'react'
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
+import ScriptTab from './ScriptTab';
 import UserTab from './UserTab';
 
 function AdminDashboard() {
@@ -15,7 +16,7 @@ function AdminDashboard() {
             {UserTab()}
           </Tab>
           <Tab eventKey="scripts" title="Scripts">
-            #2
+            {ScriptTab()}
           </Tab>
           {/* <Tab eventKey="contact" title="Contact" disabled>
             #3
