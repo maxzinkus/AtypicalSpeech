@@ -5,16 +5,17 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 import ReactDOM from 'react-dom';
+import { useNavigate } from 'react-router-dom'
+
 
 function CreateUserModal() {
     const [currentState, setCurrentState] = useState({accessCode: null});
     const [show, setShow] = useState(false);
-  
+
     const handleClose = () => {
       setShow(false);
-      console.log("show: ", show)
-      
     }
+
     const handleShow = () => {
 
       setShow(true)
@@ -64,13 +65,6 @@ function CreateUserModal() {
                   autoFocus
                 />
               </Form.Group>
-              {/* <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlTextarea1"
-              >
-                <Form.Label>Example textarea</Form.Label>
-                <Form.Control as="textarea" rows={3} />
-              </Form.Group> */}
             </Form>
           </Modal.Body>
           <Modal.Footer>

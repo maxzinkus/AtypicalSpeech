@@ -17,9 +17,9 @@ function AdminDashboard() {
           <Tab eventKey="scripts" title="Scripts">
             #2
           </Tab>
-          <Tab eventKey="contact" title="Contact" disabled>
+          {/* <Tab eventKey="contact" title="Contact" disabled>
             #3
-          </Tab>
+          </Tab> */}
         </Tabs>
         </div>
       );
