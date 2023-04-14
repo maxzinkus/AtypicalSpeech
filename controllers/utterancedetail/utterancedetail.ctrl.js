@@ -16,6 +16,22 @@ exports.create_utterance_detail = async (req, res) => {
     }
 }
 
+exports.fetch_utterance_detail = async (req, res) => {
+    const {utterance} = req.body
+    try {
+        const utteranceDetail = await UtteranceDetail.create({
+            utterance: utterance,
+            action: detail['action'],
+            object: detail['object'],
+            location: detail['location']
+        })
+        return res.json(utteranceDetail)
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json(err)
+    }
+}
+
 // exports.name = async (req, res) => {
 //     try {
 //     } catch (err) {

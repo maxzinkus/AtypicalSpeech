@@ -5,21 +5,13 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
-import Select from 'react-select';
-import makeAnimated from 'react-select/animated';
-// import { colourOptions } from '../data';
+import { Link, useNavigate } from 'react-router-dom'
 
 function UserAccordionComponent() {
 
-    const [currentState, setCurrentState] = useState({users: null, accordionItems: null, available_scripts: null});
-
-    const [show, setShow] = useState(false);
-    const [selectedScripts, setSelectedScripts] = useState([]);
+    const [currentState, setCurrentState] = useState({users: null, accordionItems: null});
 
     const assign_task_url = "http://localhost:3000/user/assign_task"
-  
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
 
     const handleAssignTask = async (accessCode, script_id) => {
 
@@ -33,60 +25,7 @@ function UserAccordionComponent() {
                 'script_id': script_id
             })
         })
-        .then(() => {
-            handleClose()
-        })
     }
-
-    const handleAssignMultipleTasks = (user_id) => {
-        console.log("handleAssignMultipleTasks: ", selectedScripts)
-        const res = Promise.all(
-            selectedScripts.map(async script_id => await handleAssignTask(user_id, script_id.value))
-        )
-    }
-
-    const animatedComponents = makeAnimated();
-
-    const renderAssignScriptsSpecificUserButton = (user_data) => {
-        return (
-            <>
-              <Button variant="primary" onClick={handleShow}>
-                  Assign scripts
-              </Button>
-        
-              <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                  <Modal.Title>Assign Scripts</Modal.Title>
-                </Modal.Header>
-
-                <Modal.Body>
-                    Select scripts
-                    <Select
-                        onChange={(selectedOption) => {
-                            console.log(selectedOption);
-                            setSelectedScripts(selectedOption);
-                        }}
-                        closeMenuOnSelect={false}
-                        components={animatedComponents}
-                        defaultValue={[]}
-                        isMulti
-                        options={currentState.available_scripts}
-                    />
-                </Modal.Body>
-
-                <Modal.Footer>
-                  <Button variant="secondary" onClick={handleClose}>
-                    Close
-                  </Button>
-                  <Button variant="primary" onClick={handleAssignMultipleTasks(user_data.id)}>
-                    Confirm
-                  </Button>
-                </Modal.Footer>
-              </Modal>
-            </>
-          );
-    }
-  
 
     const renderAccordionItem = (eventKey, header, user_data) => {
         return (
@@ -97,6 +36,27 @@ function UserAccordionComponent() {
         )
     }
 
+    const navigate = useNavigate();
+
+    const handleClick = (user_data) => {
+
+        console.log("handleClick user_data.id: ", user_data.id);
+
+        navigate('/assign-script-specific', {
+            state: {
+                accessCode: user_data.id
+            }
+        })
+    }
+
+    const renderAssignScriptsSpecificUserModalButton = (user_data) => {
+        return (
+            <Button variant="primary" onClick={() => handleClick(user_data)}>
+                Open modal
+            </Button>
+        )
+    }
+
     const formatUserDetailsSection = (user_data) => {
 
         return (
@@ -104,7 +64,7 @@ function UserAccordionComponent() {
                 <div>Created on {user_data.createdAt.substring(0, 10)}, Last active on {user_data.updatedAt.substring(0, 10)}</div>
                 <div>{formatAssignedTasksSection(user_data.assignedTasks.tasks, user_data.taskProgress)}</div>
                 <div>{formatCompletedTasksSection(user_data.completedTasks.tasks)}</div>
-                {renderAssignScriptsSpecificUserButton(user_data)}
+                {renderAssignScriptsSpecificUserModalButton(user_data)}
             </div>
         )
     }
@@ -165,19 +125,12 @@ function UserAccordionComponent() {
                 return renderAccordionItem(user_data.id.toString() , user_data.id.toString(), user_data)
             })
 
-            // fetch all users to display all users on admin page
-            const result = await axios.get('http://localhost:3000/script/get_all_script_ids');
-
-            const all_script_ids = result.data.map((script) => {
-                return {value: script.id, label: script.id};
-            })
-
-            setCurrentState({users: users, accordionItems: accordionItems, available_scripts: all_script_ids})
+            setCurrentState({users: users, accordionItems: accordionItems})
         }
 
         fetchData();
 
-    }, [show])
+    }, [])
 
   return (
     <Accordion>

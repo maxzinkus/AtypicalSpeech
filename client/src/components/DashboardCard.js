@@ -1,7 +1,8 @@
 import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
 import RecordingModal from './RecordingModal'
 import { Card } from 'react-bootstrap'
+import { Link, useNavigate } from 'react-router-dom'
+
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 function DashboardCard({script_id, accessCode}) {
