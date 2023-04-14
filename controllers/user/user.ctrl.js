@@ -37,6 +37,50 @@ exports.assign_mandatory_scripts = async (req, res) => {
     }
 }
 
+exports.assign_multiple_tasks = async (req, res) => {
+    const {user_id, script_ids} = req.body
+    try {
+        const user = await User.findByPk(user_id)
+
+        // if user not found, show error
+        if (user === null) {
+            console.log("user not found!")
+        }
+
+        const scripts = await Script.findAll({
+            where : {
+                id : script_ids
+            }
+        })
+
+        console.log("assign_multiple_tasks scripts: ", scripts)
+
+        // if script not found, show error
+        // if (script === null) {
+        //     console.log("script not found!")
+        // }
+
+        const original_assigned_tasks = user.assignedTasks.tasks
+
+        scripts.map((script_id) => {
+            if (!original_assigned_tasks.includes(script_id)) {
+                original_assigned_tasks.push(script_id)
+            }
+        })
+
+        console.log("original_assigned_tasks: ", original_assigned_tasks);
+
+        user.assignedTasks.tasks = original_assigned_tasks
+        user.changed('assignedTasks', true)
+        await user.save()
+    
+        return res.json(user)
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json(err)
+    }
+}
+
 exports.assign_task_to_user = async (req, res) => {
     const {user_id, script_id} = req.body
     try {
@@ -131,6 +175,17 @@ exports.get_user_by_id = async (req, res) => {
     try {
         const user = await User.findByPk(user_id)
         console.log("get user by id", user_id)
+        return res.json(user)
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json(err)
+    }
+}
+
+exports.delete_user = async (req, res) => {
+    const {user_id} = req.body
+    try {
+        const user = await User.destroy({where : {id : user_id}})
         return res.json(user)
     } catch (err) {
         console.log(err)

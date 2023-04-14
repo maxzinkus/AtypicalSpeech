@@ -41,6 +41,7 @@ function AssignScriptsSpecificUserModal() {
   const handleAssignTask = async (script_id) => {
 
       console.log("handleAssignScriptsSpecificUser accessCode: ", accessCode)
+      console.log("handleAssignScriptsSpecificUser script id: ", script_id)
 
       fetch(assign_task_url, {
           method: 'POST',
@@ -52,13 +53,20 @@ function AssignScriptsSpecificUserModal() {
       })
   }
 
-  const handleAssignMultipleTasks = () => {
+  const handleAssignMultipleTasks = async () => {
       console.log("handleAssignMultipleTasks: ", selectedScripts)
-      const res = Promise.all(
-          selectedScripts.map(async script_id => await handleAssignTask(script_id.value))
-      ).then(() => {
-        handleClose()
+      // const res = Promise.all(
+      //     selectedScripts.map(async script_id => await handleAssignTask(script_id.value))
+      // )
+      
+      const promises = selectedScripts.map(async script_id => {
+        const result = await handleAssignTask(script_id.value);
+        return result;
       })
+
+      const results = await Promise.all(promises);
+      console.log("results: ", results);
+      handleClose();
   }
 
   const navigate = useNavigate();
