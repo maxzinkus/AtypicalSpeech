@@ -1,8 +1,12 @@
 import React from 'react'
+import ScriptTabbedList from './ScriptTabbedList'
 
 function ScriptTab() {
   return (
-    <div>ScriptTab</div>
+    <div>
+        ScriptTab
+        {ScriptTabbedList()}
+    </div>
   )
 }
 
