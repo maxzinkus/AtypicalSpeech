@@ -9,7 +9,7 @@ import Tab from 'react-bootstrap/Tab';
 
 function ScriptTabbedList() {
 
-    const get_all_script_ids_URL = "http://localhost:3000/script/get_all_script_ids";
+    const get_all_script_ids_URL = "http://localhost:3000/script/get_all_scripts";
 
     const [currentState, setCurrentState] = useState({all_scripts: null, tabbedlist: null});
 
@@ -25,10 +25,10 @@ function ScriptTabbedList() {
                     <Col sm={2}>
                       <ListGroup>
                         {all_scripts.map((script) => {
-                            var href = "#" + script
+                            var href = "#" + script.id
                             return (
                                 <ListGroup.Item action href={href}>
-                                    {script}
+                                    {script.id}
                                 </ListGroup.Item>
                             )
                         })}
@@ -38,10 +38,10 @@ function ScriptTabbedList() {
                     <Col sm={8}>
                       <Tab.Content>
                         {all_scripts.map((script) => {
-                            var href = "#" + script
+                            var href = "#" + script.id
                             return (
                                 <Tab.Pane eventKey={href}>
-                                    {script}
+                                    {script.utterances.utterances}
                                 </Tab.Pane>
                             )
                         })}
@@ -58,7 +58,7 @@ function ScriptTabbedList() {
             const fetched_scripts = (await axios.get(get_all_script_ids_URL));
 
             const all_scripts = fetched_scripts.data.map((script) => {
-                return script.id;
+                return script;
             })
 
             const renderedTabbedList = renderScriptsTabbedList(all_scripts);
