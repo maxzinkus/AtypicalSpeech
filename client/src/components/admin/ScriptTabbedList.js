@@ -2,6 +2,8 @@ import React from 'react'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
+import { Link, useNavigate } from 'react-router-dom'
+
 import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
@@ -30,13 +32,23 @@ function ScriptTabbedList() {
         return zipped;
      };
 
+    const navigate = useNavigate();
+
+    const handleClickAssignScript = (script_id) => {
+        navigate('/assign-script-multiple-users', {
+            state: {
+                script_id : script_id
+            }
+        })
+     }
+
     useEffect(() => {
 
-        function renderScriptModalButton() {
+        function renderScriptModalButton(script_id) {
             return (
                 <div className='padding_bottom_20'>
-                    <Button>
-                        Script Modal
+                    <Button onClick={() => {handleClickAssignScript(script_id)}}>
+                        Assign this script to users
                     </Button>
                 </div>
             )
@@ -109,7 +121,7 @@ function ScriptTabbedList() {
                                     <div className='large_font_blue_left'>
                                         Script #{script.id}
                                     </div>
-                                    {renderScriptModalButton()}
+                                    {renderScriptModalButton(script.id)}
                                     {renderScriptDetailsTable(script)}
                                 </Tab.Pane>
                             )
