@@ -49,27 +49,28 @@ function AssignScriptMultipleUsersModal() {
 
     const animatedComponents = makeAnimated();
 
-    // const assign_task_url = "http://localhost:3000/user/assign_multiple_tasks"
+    const assign_task_to_multiple_users_url = "http://localhost:3000/script/assign_task_to_multiple_users"
 
-    // const handleAssignMultipleTasks = async () => {
+    const handleAssignMultipleTasks = async () => {
 
-    //     const selectedUserIDs = selectedUsers.map((user) => {
-    //         return user.value;
-    //     })
+        const selectedUserIDs = selectedUsers.map((user) => {
+            return user.value;
+        })
 
-    //     console.log("selectedUserIDs: ", selectedUserIDs);
+        console.log("selectedUserIDs: ", selectedUserIDs);
 
-    //     fetch(assign_task_url, {
-    //         method: 'POST',
-    //         headers: {'Content-Type':'application/json'},
-    //         body: JSON.stringify({
-    //             'user_id': accessCode,
-    //             'script_ids': selectedScriptIDs
-    //         })
-    //     }).then(() => {
-    //         handleClose()
-    //     })
-    // }
+        fetch(assign_task_to_multiple_users_url, {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({
+                'user_ids': selectedUserIDs,
+                'script_id': script_id
+            })
+        })
+        .then(() => {
+            handleClose()
+        })
+    }
   
     return (
       <>
@@ -97,9 +98,7 @@ function AssignScriptMultipleUsersModal() {
                   <Button variant="secondary" onClick={handleClose}>
                     Close
                   </Button>
-                  <Button variant="primary" 
-                //   onClick={handleAssignMultipleTasks}
-                  >
+                  <Button variant="primary" onClick={handleAssignMultipleTasks}>
                     Confirm
                   </Button>
                 </Modal.Footer>
