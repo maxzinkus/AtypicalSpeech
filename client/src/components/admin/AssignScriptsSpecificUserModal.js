@@ -13,7 +13,6 @@ import makeAnimated from 'react-select/animated';
 function AssignScriptsSpecificUserModal() {
 
     const location = useLocation();
-    console.log("location: ", location)
     const accessCode = location.state.accessCode;
 
     const [currentState, setCurrentState] = useState({available_scripts: null})
@@ -40,9 +39,6 @@ function AssignScriptsSpecificUserModal() {
 
   const handleAssignMultipleTasks = async () => {
 
-      console.log("handleAssignScriptsSpecificUser accessCode: ", accessCode)
-      console.log("handleAssignScriptsSpecificUser script id: ", selectedScripts)
-
       const selectedScriptIDs = selectedScripts.map((script) => {
         return script.value;
       })
@@ -62,7 +58,6 @@ function AssignScriptsSpecificUserModal() {
   const navigate = useNavigate();
 
   const handleClose = (event) => {
-
     navigate('/admin', {
       state: {}
     })

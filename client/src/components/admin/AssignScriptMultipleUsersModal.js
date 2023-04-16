@@ -14,9 +14,13 @@ import makeAnimated from 'react-select/animated';
 function AssignScriptMultipleUsersModal() {
 
     const get_all_users_url = 'http://localhost:3000/user/get_all_users';
+
     const location = useLocation();
-    const [currentState, setCurrentState] = useState({all_users: null})
     const script_id = location.state.script_id;
+    const navigate = useNavigate();
+
+    const [currentState, setCurrentState] = useState({all_users: null})
+    const [selectedUsers, setSelectedUsers] = useState([]);
 
     console.log("Script id: ", script_id)
 
@@ -37,9 +41,71 @@ function AssignScriptMultipleUsersModal() {
   
     }, [])
 
-  return (
-    <div>AssignScriptMultipleUsersModal</div>
-  )
+    const handleClose = (event) => {
+        navigate('/admin', {
+        state: {}
+        })
+    }
+
+    const animatedComponents = makeAnimated();
+
+    // const assign_task_url = "http://localhost:3000/user/assign_multiple_tasks"
+
+    // const handleAssignMultipleTasks = async () => {
+
+    //     const selectedUserIDs = selectedUsers.map((user) => {
+    //         return user.value;
+    //     })
+
+    //     console.log("selectedUserIDs: ", selectedUserIDs);
+
+    //     fetch(assign_task_url, {
+    //         method: 'POST',
+    //         headers: {'Content-Type':'application/json'},
+    //         body: JSON.stringify({
+    //             'user_id': accessCode,
+    //             'script_ids': selectedScriptIDs
+    //         })
+    //     }).then(() => {
+    //         handleClose()
+    //     })
+    // }
+  
+    return (
+      <>
+        <Modal show={true}>
+          <Modal.Header closeButton onClick={handleClose}>
+            <Modal.Title>Assign Scripts</Modal.Title>
+          </Modal.Header>
+
+          <Modal.Body>
+            Select scripts
+            <Select
+              onChange={(selectedOption) => {
+                console.log(selectedOption);
+                setSelectedUsers(selectedOption);
+              }}
+              closeMenuOnSelect={false}
+              components={animatedComponents}
+              defaultValue={[]}
+              isMulti
+              options={currentState.all_users}
+            />
+          </Modal.Body>
+
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleClose}>
+                    Close
+                  </Button>
+                  <Button variant="primary" 
+                //   onClick={handleAssignMultipleTasks}
+                  >
+                    Confirm
+                  </Button>
+                </Modal.Footer>
+              </Modal>
+            </>
+    );
 }
 
 export default AssignScriptMultipleUsersModal
