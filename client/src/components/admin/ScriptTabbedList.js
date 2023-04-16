@@ -34,9 +34,11 @@ function ScriptTabbedList() {
 
         function renderScriptModalButton() {
             return (
-                <Button>
-                    Script Modal
-                </Button>
+                <div className='padding_bottom_20'>
+                    <Button>
+                        Script Modal
+                    </Button>
+                </div>
             )
         }
 

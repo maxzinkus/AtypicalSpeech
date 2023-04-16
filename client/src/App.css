@@ -113,6 +113,10 @@
     padding: 20% 0;
 }
 
+.padding_bottom_20 {
+    padding-bottom: 20px;
+}
+
 .progress_bar {
     width: 100%;
     position: fixed;
