@@ -104,8 +104,10 @@ function ScriptTabbedList() {
                             var href = "#" + script.id
                             return (
                                 <Tab.Pane eventKey={href}>
+                                    <div className='large_font_blue_left'>
+                                        Script #{script.id}
+                                    </div>
                                     {renderScriptModalButton()}
-                                    {/* {script.utterances.utterances} */}
                                     {renderScriptDetailsTable(script)}
                                 </Tab.Pane>
                             )
