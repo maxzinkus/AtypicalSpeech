@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
+import { Button, Table } from 'react-bootstrap';
 
 function ScriptTabbedList() {
 
@@ -13,7 +14,69 @@ function ScriptTabbedList() {
 
     const [currentState, setCurrentState] = useState({all_scripts: null, tabbedlist: null});
 
+    const zip = (...arr) => {
+        const zipped = [];
+        arr.forEach((element, ind) => {
+           element.forEach((el, index) => {
+              if(!zipped[index]){
+                 zipped[index] = [];
+              };
+              if(!zipped[index][ind]){
+                 zipped[index][ind] = [];
+              }
+              zipped[index][ind] = el || '';
+           })
+        });
+        return zipped;
+     };
+
     useEffect(() => {
+
+        function renderScriptModalButton() {
+            return (
+                <Button>
+                    Script Modal
+                </Button>
+            )
+        }
+
+        function renderScriptDetailsTable(script) {
+            return (
+                <Table striped bordered hover>
+                    <thead>
+                    <tr>
+                      <th>Line #</th>
+                      <th>Utterance</th>
+                      <th>Action</th>
+                      <th>Object</th>
+                      <th>Location</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {zip(script.utterances.utterances, script.utterances.details).map((utterance, index) => {
+                        if (index === 0) {
+                            return;
+                        }
+
+                        var text = utterance[0];
+                        var details = utterance[1];
+
+                        return (
+                            <tr>
+                                <td>{index}</td>
+                                <td>{text}</td>
+                                <td>{details.action}</td>
+                                <td>{details.object}</td>
+                                <td>{details.location}</td>
+                            </tr>
+                        )
+                    })}
+                    
+                  </tbody>
+                </Table>
+              );
+        }
 
         function renderScriptsTabbedList(all_scripts) {
 
@@ -41,7 +104,9 @@ function ScriptTabbedList() {
                             var href = "#" + script.id
                             return (
                                 <Tab.Pane eventKey={href}>
-                                    {script.utterances.utterances}
+                                    {renderScriptModalButton()}
+                                    {/* {script.utterances.utterances} */}
+                                    {renderScriptDetailsTable(script)}
                                 </Tab.Pane>
                             )
                         })}

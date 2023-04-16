@@ -11,6 +11,17 @@ exports.get_one_script_by_id = async (req, res) => {
     }
 }
 
+exports.delete_script = async (req, res) => {
+    const {script_id} = req.body
+    try {
+        const script = await Script.destroy({where : {id : script_id}})
+        return res.json(script)
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json(err)
+    }
+}
+
 exports.get_script_total_number = async (_, res) => {
     try {
         return res.json(await Script.count());
