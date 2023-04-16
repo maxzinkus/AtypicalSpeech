@@ -11,6 +11,42 @@ exports.get_one_script_by_id = async (req, res) => {
     }
 }
 
+exports.assign_task_to_multiple_users = async (req, res) => {
+    const {user_ids, script_id} = req.body
+
+    console.log("user_ids: ", user_ids)
+    console.log("assign_multiple_tasks: ", script_id)
+
+    try {
+        const return_users = []
+
+        for (var i = 0; i < user_ids.length; i++) {
+            var user_id = user_ids[i]
+            console.log("user_id: ", user_id)
+            const user = await User.findByPk(user_id)
+
+            // if user not found, show error
+            if (user === null) {
+                console.log("user not found!")
+            }
+            
+            const original_assigned_tasks = user.assignedTasks.tasks
+            console.log("original: ", original_assigned_tasks)
+
+            original_assigned_tasks.push(script_id)
+            user.assignedTasks.tasks = original_assigned_tasks
+            user.changed('assignedTasks', true)
+            await user.save()
+            return_users.push(user)
+        }
+    
+        return res.json(return_users)
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json(err)
+    }
+}
+
 exports.delete_script = async (req, res) => {
     const {script_id} = req.body
     try {
