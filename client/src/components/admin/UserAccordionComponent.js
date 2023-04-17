@@ -62,16 +62,18 @@ function UserAccordionComponent() {
 
         return (
             <div>
-                <div className='padding_bottom_20'>
-                    Created on {user_data.createdAt.substring(0, 10)}, Last active on {user_data.updatedAt.substring(0, 10)}
+                <div>
+                    <Alert key="info" variant="info" className='font_black'>
+                        Created on {user_data.createdAt.substring(0, 10)}, Last active on {user_data.updatedAt.substring(0, 10)}
+                    </Alert>
                 </div>
-                <div className='padding_bottom_20'>
+                <div>
                     {formatAssignedTasksSection(user_data.assignedTasks.tasks, user_data.taskProgress)}
                 </div>
-                <div className='padding_bottom_20'>
+                <div>
                     {formatCompletedTasksSection(user_data.completedTasks.tasks)}
                 </div>
-                <div className='padding_bottom_20'>
+                <div>
                     {renderAssignScriptsSpecificUserModalButton(user_data)}
                 </div>
             </div>
@@ -107,7 +109,7 @@ function UserAccordionComponent() {
         }
 
         return (
-            <Alert key="info" variant="info" className='font_black'>
+            <Alert key="primary" variant="primary" className='font_black'>
                 {tasks.length} script(s) assigned
                 <ul>
                     {tasks.map((task, index) => {
