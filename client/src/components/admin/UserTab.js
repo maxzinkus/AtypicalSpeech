@@ -5,8 +5,9 @@ import UserAccordionComponent from './UserAccordionComponent'
 function UserTab() {
   return (
     <div>
+      <div className='padding_bottom_20'>
         {CreateUserModal()}
-        <br></br>
+      </div>
         {UserAccordionComponent()}
     </div>
   )

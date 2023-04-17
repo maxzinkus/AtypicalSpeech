@@ -109,6 +109,10 @@
     /* padding: 20px; */
 }
 
+.font_black {
+    color: black;
+}
+
 .vertical_center {
     padding: 20% 0;
 }

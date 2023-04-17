@@ -4,6 +4,7 @@ import axios from 'axios';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
 
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -61,21 +62,33 @@ function UserAccordionComponent() {
 
         return (
             <div>
-                <div>Created on {user_data.createdAt.substring(0, 10)}, Last active on {user_data.updatedAt.substring(0, 10)}</div>
-                <div>{formatAssignedTasksSection(user_data.assignedTasks.tasks, user_data.taskProgress)}</div>
-                <div>{formatCompletedTasksSection(user_data.completedTasks.tasks)}</div>
-                {renderAssignScriptsSpecificUserModalButton(user_data)}
+                <div className='padding_bottom_20'>
+                    Created on {user_data.createdAt.substring(0, 10)}, Last active on {user_data.updatedAt.substring(0, 10)}
+                </div>
+                <div className='padding_bottom_20'>
+                    {formatAssignedTasksSection(user_data.assignedTasks.tasks, user_data.taskProgress)}
+                </div>
+                <div className='padding_bottom_20'>
+                    {formatCompletedTasksSection(user_data.completedTasks.tasks)}
+                </div>
+                <div className='padding_bottom_20'>
+                    {renderAssignScriptsSpecificUserModalButton(user_data)}
+                </div>
             </div>
         )
     }
 
     const formatCompletedTasksSection = (tasks) => {
         if (tasks.length === 0) {
-            return <div>No scripts completed yet</div>
+            return (
+                <Alert key="success" variant="success">
+                    No scripts completed yet
+                </Alert>
+            )
         }
 
         return (
-            <>
+            <Alert key="success" variant="success">
                 {tasks.length} script(s) completed
                 <ul>
                     {tasks.map((task, index) =>
@@ -84,7 +97,7 @@ function UserAccordionComponent() {
                         </li>
                     )}
                 </ul>
-            </>
+            </Alert>
             )
     }
 
@@ -94,7 +107,7 @@ function UserAccordionComponent() {
         }
 
         return (
-            <div>
+            <Alert key="info" variant="info" className='font_black'>
                 {tasks.length} script(s) assigned
                 <ul>
                     {tasks.map((task, index) => {
@@ -110,8 +123,8 @@ function UserAccordionComponent() {
                     }
                     )}
                 </ul>
-            </div>)
-    }
+            </Alert>
+        )}
 
     useEffect(() => {
         async function fetchData() {
