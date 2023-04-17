@@ -46,11 +46,17 @@ function ScriptTabbedList() {
 
         function renderScriptModalButton(script_id) {
             return (
-                <div className='padding_bottom_20'>
-                    <Button onClick={() => {handleClickAssignScript(script_id)}}>
-                        Assign this script to users
-                    </Button>
-                </div>
+                <Button onClick={() => {handleClickAssignScript(script_id)}}>
+                    Assign this script to users
+                </Button>
+            )
+        }
+
+        function renderEditScriptButton(script_id) {
+            return (
+                <Button onClick={() => {handleClickAssignScript(script_id)}}>
+                    Edit this script
+                </Button>
             )
         }
 
@@ -121,7 +127,11 @@ function ScriptTabbedList() {
                                     <div className='large_font_blue_left'>
                                         Script #{script.id}
                                     </div>
-                                    {renderScriptModalButton(script.id)}
+
+                                    <div className='padding_bottom_20'>
+                                        {renderScriptModalButton(script.id)} {renderEditScriptButton(script.id)} 
+                                    </div>
+
                                     {renderScriptDetailsTable(script)}
                                 </Tab.Pane>
                             )
