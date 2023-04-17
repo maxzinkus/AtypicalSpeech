@@ -52,7 +52,7 @@ function UserAccordionComponent() {
     const renderAssignScriptsSpecificUserModalButton = (user_data) => {
         return (
             <Button variant="primary" onClick={() => handleClick(user_data)}>
-                Open modal
+                Assign scripts to this user
             </Button>
         )
     }
