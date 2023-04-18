@@ -4,6 +4,8 @@ import { Button, Modal } from 'react-bootstrap'
 import CSVReader from 'react-csv-reader';
 import UploadService from "../utils/UploadService";
 
+import axios from 'axios';
+
 import Papa from "papaparse";
 
 function AddScriptButton() {
@@ -47,7 +49,7 @@ function AddScriptButton() {
 
     const process_file = (file, onUploadProgress) => {
         return readCSV(file)
-        .then((data) => {
+        .then(async (data) => {
 
             console.log("promise data 1: ", data)
             // dict (key : scriptID, value : dict( utterances : List[str], details : List[dict] ) )
@@ -61,19 +63,31 @@ function AddScriptButton() {
                     scriptID2utterances[scriptID] = {"utterances" : [""], "details": [{}]}
                 }
 
+                // console.log("scriptID2utterances[scriptID][utterances]: ", scriptID2utterances[scriptID]["utterances"])
+
                 var utterance_detail = {"action": data[i]['action'], "object": data[i]['object'], "location": data[i]['location']}
 
                 // eslint-disable-next-line no-unused-expressions
-                scriptID2utterances[scriptID]["utterances"].push[data[i]["transcription"]];
+                scriptID2utterances[scriptID]["utterances"].push(data[i]["transcription"]);
                 // eslint-disable-next-line no-unused-expressions
-                scriptID2utterances[scriptID]["utterances"].push[utterance_detail];
+                scriptID2utterances[scriptID]["details"].push(utterance_detail);
 
             }
 
             console.log("scriptID2utterances: ", scriptID2utterances)
 
-            for (const key in scriptID2utterances) {
-                console.log("key: ", key);
+            for (const scriptID in scriptID2utterances) {
+              var params = {"id": scriptID, "utterances": {"utterances": scriptID2utterances[scriptID]["utterances"], "details": scriptID2utterances[scriptID]["utterances"]}}
+              
+              // fetch("http://localhost:3000/script/create", {
+              //   method: 'POST',
+              //   headers: {'Content-Type':'application/json'},
+              //   body: JSON.stringify({
+              //       'data': params
+              //   })
+              // })
+
+              await axios.post("http://localhost:3000/script/create", params);
             }
 
             return data;

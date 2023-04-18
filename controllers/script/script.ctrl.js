@@ -88,6 +88,9 @@ exports.get_all_script_ids = async (_, res) => {
 }
 
 exports.create_script = async (req, res) => {
+
+    console.log("create script")
+
     const {id, utterances} = req.body
     console.log(req.body)
     try {
