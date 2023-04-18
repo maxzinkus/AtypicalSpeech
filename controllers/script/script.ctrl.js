@@ -1,4 +1,6 @@
 const {models, Script, User} = require('../../models')
+const fs = require("fs");
+const { parse } = require("csv-parse");
 
 exports.get_one_script_by_id = async (req, res) => {
     const {script_id} = req.body
@@ -29,7 +31,7 @@ exports.assign_task_to_multiple_users = async (req, res) => {
             if (user === null) {
                 console.log("user not found!")
             }
-            
+
             const original_assigned_tasks = user.assignedTasks.tasks
             console.log("original: ", original_assigned_tasks)
 
@@ -138,6 +140,33 @@ exports.unassign_task = async (req, res) => {
         console.log(err)
         return res.status(500).json(err)
     }
+}
+
+exports.process_script = async (req, res) => {
+
+    const {data} = req.body
+
+    console.log("req.body: ", req.body)
+    console.log("process_script data: ", data)
+
+
+
+    // try {
+    //     fs.createReadStream(file.name)
+    //     .pipe(parse({ delimiter: ",", from_line: 2 }))
+    //     .on("data", function (row) {
+    //         console.log(row);
+    //     })
+    //     .on("error", function (error) {
+    //         console.log(error.message);
+    //     })
+    //     .on("end", function () {
+    //         console.log("finished");
+    //     });
+    // } catch (err) {
+    //     console.log(err)
+    //     return res.status(500).json(err)
+    // }
 }
 
 exports.update_script = async (req, res) => {

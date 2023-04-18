@@ -13,6 +13,8 @@ router.post('/findScriptID', ctrl.get_one_script_by_id);
 router.post('/unassign_task', ctrl.unassign_task);
 router.post('/assign_task_to_multiple_users', ctrl.assign_task_to_multiple_users);
 
+router.post('/process_script', ctrl.process_script);
+
 router.get('/getScriptNum', ctrl.get_script_total_number);
 router.get('/get_all_scripts', ctrl.get_all_scripts);
 router.get('/get_all_script_ids', ctrl.get_all_script_ids);
