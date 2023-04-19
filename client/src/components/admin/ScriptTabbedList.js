@@ -13,6 +13,7 @@ import { Button, Table } from 'react-bootstrap';
 function ScriptTabbedList() {
 
     const get_all_script_ids_URL = "http://localhost:3000/script/get_all_scripts";
+    const delete_script_URL = "http://localhost:3000/script/delete_script";
 
     const [currentState, setCurrentState] = useState({all_scripts: null, tabbedlist: null});
 
@@ -40,7 +41,17 @@ function ScriptTabbedList() {
                 script_id : script_id
             }
         })
-     }
+    }
+
+    const handleClickDeleteScript = async (script_id) => {
+        fetch(delete_script_URL, {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({
+                'script_id': script_id
+            })
+        })
+    }
 
     useEffect(() => {
 
@@ -56,6 +67,14 @@ function ScriptTabbedList() {
             return (
                 <Button onClick={() => {handleClickAssignScript(script_id)}}>
                     Edit this script
+                </Button>
+            )
+        }
+
+        function renderDeleteScriptButton(script_id) {
+            return (
+                <Button variant="outline-danger" onClick={() => {handleClickDeleteScript(script_id)}}>
+                    Delete
                 </Button>
             )
         }
@@ -129,7 +148,7 @@ function ScriptTabbedList() {
                                     </div>
 
                                     <div className='padding_bottom_20'>
-                                        {renderScriptModalButton(script.id)} {renderEditScriptButton(script.id)} 
+                                        {renderScriptModalButton(script.id)} {renderEditScriptButton(script.id)} {renderDeleteScriptButton(script.id)}
                                     </div>
 
                                     {renderScriptDetailsTable(script)}
