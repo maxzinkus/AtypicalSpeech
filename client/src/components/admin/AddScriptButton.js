@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { Button, Modal } from 'react-bootstrap'
 
-import CSVReader from 'react-csv-reader';
 import UploadService from "../utils/UploadService";
 
 import axios from 'axios';
@@ -77,7 +76,7 @@ function AddScriptButton() {
             console.log("scriptID2utterances: ", scriptID2utterances)
 
             for (const scriptID in scriptID2utterances) {
-              var params = {"id": scriptID, "utterances": {"utterances": scriptID2utterances[scriptID]["utterances"], "details": scriptID2utterances[scriptID]["utterances"]}}
+              var params = {"id": scriptID, "utterances": {"utterances": scriptID2utterances[scriptID]["utterances"], "details": scriptID2utterances[scriptID]["details"]}}
 
               await axios.post("http://localhost:3000/script/create", params);
             }
