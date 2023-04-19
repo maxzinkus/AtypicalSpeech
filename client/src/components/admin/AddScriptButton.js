@@ -78,14 +78,6 @@ function AddScriptButton() {
 
             for (const scriptID in scriptID2utterances) {
               var params = {"id": scriptID, "utterances": {"utterances": scriptID2utterances[scriptID]["utterances"], "details": scriptID2utterances[scriptID]["utterances"]}}
-              
-              // fetch("http://localhost:3000/script/create", {
-              //   method: 'POST',
-              //   headers: {'Content-Type':'application/json'},
-              //   body: JSON.stringify({
-              //       'data': params
-              //   })
-              // })
 
               await axios.post("http://localhost:3000/script/create", params);
             }
