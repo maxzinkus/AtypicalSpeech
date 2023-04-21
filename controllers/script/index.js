@@ -20,5 +20,6 @@ router.get('/get_all_scripts', ctrl.get_all_scripts);
 router.get('/get_all_script_ids', ctrl.get_all_script_ids);
 
 router.put('/update_script', ctrl.update_script);
+router.put('/add_utterances', ctrl.add_utterances);
 
 module.exports = router;
