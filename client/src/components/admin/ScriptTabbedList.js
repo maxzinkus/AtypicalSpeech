@@ -8,7 +8,7 @@ import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
-import { Button, Table } from 'react-bootstrap';
+import { Button, Table, Modal } from 'react-bootstrap';
 
 function ScriptTabbedList() {
 
@@ -16,6 +16,11 @@ function ScriptTabbedList() {
     const delete_script_URL = "http://localhost:3000/script/delete_script";
 
     const [currentState, setCurrentState] = useState({all_scripts: null, tabbedlist: null});
+
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     const zip = (...arr) => {
         const zipped = [];
@@ -43,17 +48,32 @@ function ScriptTabbedList() {
         })
     }
 
-    const handleClickDeleteScript = async (script_id) => {
-        fetch(delete_script_URL, {
-            method: 'POST',
-            headers: {'Content-Type':'application/json'},
-            body: JSON.stringify({
-                'script_id': script_id
-            })
-        })
-    }
-
     useEffect(() => {
+
+        const handleClickDeleteScript = async (script_id) => {
+            if (window.confirm('Are you sure you wish to delete this script?')) {
+                fetch(delete_script_URL, {
+                    method: 'POST',
+                    headers: {'Content-Type':'application/json'},
+                    body: JSON.stringify({
+                        'script_id': script_id
+                    })
+                })
+                .then(() => {
+    
+    
+                    // var new_scripts = currentState.all_scripts;
+                    // var script_idx = 0;
+                    // for (var i = 0; i < new_scripts.size(); i++) {
+                    //     if (new_scripts[i]["id"] === script_id) {
+                    //         script_idx = i;
+                    //     }
+                    // }
+                    // delete new_scripts[script_idx];
+                    // setCurrentState({...currentState, all_scripts: new_scripts})
+                })
+            }
+        }
 
         function renderScriptModalButton(script_id) {
             return (
@@ -185,7 +205,6 @@ function ScriptTabbedList() {
         </div>
     )
         
-
 }
 
 export default ScriptTabbedList

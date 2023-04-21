@@ -44,7 +44,9 @@ function ScriptTab() {
 
   return (
     <div>
+      <div className='padding_bottom_20'>
         {renderAddScriptModal()}
+      </div>
         {ScriptTabbedList()}
     </div>
   )
