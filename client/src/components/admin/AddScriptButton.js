@@ -177,11 +177,11 @@ function AddScriptButton() {
     
             <div className="col-4">
               <button
-                className="btn btn-success btn-sm"
+                className="btn btn-success btm-lg"
                 disabled={!selectedFiles}
                 onClick={uploadFiles}
               >
-                Upload
+                Generate
               </button>
             </div>
           </div>

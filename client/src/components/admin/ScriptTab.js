@@ -32,10 +32,12 @@ function ScriptTab() {
             {AddScriptButton()}
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
+            {/* <Button variant="secondary" onClick={handleClose}>
               Close
+            </Button> */}
+            <Button variant="primary" onClick={handleClose}>
+              Exit
             </Button>
-            <Button variant="primary">Generate</Button>
           </Modal.Footer>
         </Modal>
       </>
