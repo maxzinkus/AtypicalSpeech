@@ -14,6 +14,7 @@ function AddScriptButton() {
     const [message, setMessage] = useState([]);
     const [fileInfos, setFileInfos] = useState([]);
     const progressInfosRef = useRef(null)
+    const [onetime, setOnetime] = useState(false);
 
     const selectFiles = (event) => {
         setSelectedFiles(event.target.files);
@@ -109,6 +110,7 @@ function AddScriptButton() {
               ...prevMessage,
               "Processed the file successfully: " + file.name,
             ]));
+            setOnetime(true);
           })
           .catch(() => {
             _progressInfos[idx].percentage = 0;
@@ -178,7 +180,7 @@ function AddScriptButton() {
             <div className="col-4">
               <button
                 className="btn btn-success btm-lg"
-                disabled={!selectedFiles}
+                disabled={!selectedFiles || onetime}
                 onClick={uploadFiles}
               >
                 Generate
