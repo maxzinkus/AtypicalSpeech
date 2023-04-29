@@ -100,41 +100,90 @@ function ScriptTabbedList() {
         }
 
         function renderScriptDetailsTable(script) {
-            return (
-                <Table striped bordered hover>
-                    <thead>
-                    <tr>
-                      <th>Line #</th>
-                      <th>Utterance</th>
-                      <th>Action</th>
-                      <th>Object</th>
-                      <th>Location</th>
-                    </tr>
-                  </thead>
+            var action_type_script = script.utterances.details[1].hasOwnProperty("action")
+            if (action_type_script) {
+                return (
+                    <Table striped bordered hover>
+                        <thead>
+                        <tr>
+                        <th>Line #</th>
+                        <th>Utterance</th>
+                        <th>Action</th>
+                        <th>Object</th>
+                        <th>Location</th>
+                        </tr>
+                    </thead>
 
-                  <tbody>
-                    {zip(script.utterances.utterances, script.utterances.details).map((utterance, index) => {
-                        if (index === 0) {
-                            return;
-                        }
+                    <tbody>
+                        {zip(script.utterances.utterances, script.utterances.details).map((utterance, index) => {
+                            if (index === 0) {
+                                return;
+                            }
 
-                        var text = utterance[0];
-                        var details = utterance[1];
+                            var text = utterance[0];
+                            var details = utterance[1];
 
-                        return (
-                            <tr>
-                                <td>{index}</td>
-                                <td>{text}</td>
-                                <td>{details.action}</td>
-                                <td>{details.object}</td>
-                                <td>{details.location}</td>
-                            </tr>
-                        )
-                    })}
-                    
-                  </tbody>
-                </Table>
-              );
+                            return (
+                                <tr>
+                                    <td>{index}</td>
+                                    <td>{text}</td>
+                                    <td>{details.action}</td>
+                                    <td>{details.object}</td>
+                                    <td>{details.location}</td>
+                                </tr>
+                            )
+                        })}
+                        
+                    </tbody>
+                    </Table>
+                );
+            }
+
+            else {
+                return (
+                    <Table striped bordered hover>
+                        <thead>
+                        <tr>
+                        <th>Line #</th>
+                        <th>Utterance</th>
+                        <th>field1</th>
+                        <th>field2</th>
+                        <th>field3</th>
+                        <th>field4</th>
+                        <th>field5</th>
+                        <th>field6</th>
+                        <th>field7</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {zip(script.utterances.utterances, script.utterances.details).map((utterance, index) => {
+                            if (index === 0) {
+                                return;
+                            }
+
+                            var text = utterance[0];
+                            var details = utterance[1];
+
+                            return (
+                                <tr>
+                                    <td>{index}</td>
+                                    <td>{text}</td>
+                                    <td>{details.field1}</td>
+                                    <td>{details.field2}</td>
+                                    <td>{details.field3}</td>
+                                    <td>{details.field4}</td>
+                                    <td>{details.field5}</td>
+                                    <td>{details.field6}</td>
+                                    <td>{details.field7}</td>
+                                </tr>
+                            )
+                        })}
+                        
+                    </tbody>
+                    </Table>
+                );
+            }
         }
 
         function renderScriptsTabbedList(all_scripts) {
