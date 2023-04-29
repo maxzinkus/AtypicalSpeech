@@ -65,7 +65,21 @@ function AddScriptButton() {
 
                 // console.log("scriptID2utterances[scriptID][utterances]: ", scriptID2utterances[scriptID]["utterances"])
 
-                var utterance_detail = {"action": data[i]['action'], "object": data[i]['object'], "location": data[i]['location']}
+                // var utterance_detail = {
+                //   "action": data[i]['action'], 
+                //   "object": data[i]['object'], 
+                //   "location": data[i]['location']
+                // }
+
+                var utterance_detail = {
+                  "field1": data[i]['field1'], 
+                  "field2": data[i]['field2'], 
+                  "field3": data[i]['field3'],
+                  "field4": data[i]['field4'],
+                  "field5": data[i]['field5'],
+                  "field6": data[i]['field6'],
+                  "field7": data[i]['field7'],
+                }
 
                 // eslint-disable-next-line no-unused-expressions
                 scriptID2utterances[scriptID]["utterances"].push(data[i]["transcription"]);
