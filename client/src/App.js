@@ -27,6 +27,7 @@ function App() {
             <Route exact path="/dashboard" element={<Dashboard />}/>
             <Route path="/module" element={<RecordingModal/>}/>
             <Route path="/assign-script-specific" element={<AssignScriptsSpecificUserModal/>}/>
+            <Route path="/unassign_script_specific_user" element={<AssignScriptsSpecificUserModal/>}/>
             <Route path="/assign-script-multiple-users" element={<AssignScriptMultipleUsersModal/>}/>
             <Route path="/admin" element={<AdminDashboard/>}/>
           {/* </Switch> */}

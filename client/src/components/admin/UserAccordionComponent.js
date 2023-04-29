@@ -39,9 +39,7 @@ function UserAccordionComponent() {
 
     const navigate = useNavigate();
 
-    const handleClick = (user_data) => {
-
-        console.log("handleClick user_data.id: ", user_data.id);
+    const handleAssignScriptClick = (user_data) => {
 
         navigate('/assign-script-specific', {
             state: {
@@ -50,10 +48,27 @@ function UserAccordionComponent() {
         })
     }
 
+    const handleUnassignScriptClick = (user_data) => {
+
+        navigate('/unassign_script_specific_user', {
+            state: {
+                accessCode: user_data.id
+            }
+        })
+    }
+
     const renderAssignScriptsSpecificUserModalButton = (user_data) => {
         return (
-            <Button variant="primary" onClick={() => handleClick(user_data)}>
+            <Button variant="primary" onClick={() => handleAssignScriptClick(user_data)}>
                 Assign scripts to this user
+            </Button>
+        )
+    }
+
+    const renderUnAssignScriptsModalButton = (user_data) => {
+        return (
+            <Button variant="warning" onClick={() => handleUnassignScriptClick(user_data)}>
+                Unassign scripts from this user
             </Button>
         )
     }
@@ -75,6 +90,7 @@ function UserAccordionComponent() {
                 </div>
                 <div>
                     {renderAssignScriptsSpecificUserModalButton(user_data)}
+                    {renderUnAssignScriptsModalButton(user_data)}
                 </div>
             </div>
         )
