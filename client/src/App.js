@@ -10,6 +10,7 @@ import RecordingModal from './components/RecordingModal'
 import AdminDashboard from './components/admin/AdminDashboard'
 import AssignScriptsSpecificUserModal from './components/admin/AssignScriptsSpecificUserModal'
 import AssignScriptMultipleUsersModal from './components/admin/AssignScriptMultipleUsersModal'
+import UnassignScriptSpecificUserModal from './components/admin/UnassignScriptSpecificUserModal'
 
 const api = axios.create({
   baseURL: `http://localhost:3001/`
@@ -27,7 +28,7 @@ function App() {
             <Route exact path="/dashboard" element={<Dashboard />}/>
             <Route path="/module" element={<RecordingModal/>}/>
             <Route path="/assign-script-specific" element={<AssignScriptsSpecificUserModal/>}/>
-            <Route path="/unassign_script_specific_user" element={<AssignScriptsSpecificUserModal/>}/>
+            <Route path="/unassign_script_specific_user" element={<UnassignScriptSpecificUserModal/>}/>
             <Route path="/assign-script-multiple-users" element={<AssignScriptMultipleUsersModal/>}/>
             <Route path="/admin" element={<AdminDashboard/>}/>
           {/* </Switch> */}
