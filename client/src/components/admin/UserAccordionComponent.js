@@ -105,7 +105,11 @@ function UserAccordionComponent() {
 
     const formatAssignedTasksSection = (tasks, progress) => {
         if (tasks.length === 0) {
-            return <div>No scripts assigned</div>
+            return (
+                <Alert key="primary" variant="primary" className='font_black'>
+                    No scripts assigned
+                </Alert>
+            )
         }
 
         return (
