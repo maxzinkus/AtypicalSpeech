@@ -32,7 +32,8 @@ function UnassignScriptSpecificUserModal() {
                       Unselect scripts
                       <Select
                         onChange={(selectedOption) => {
-                          setSelectedScripts(selectedOption);
+                            console.log("onChange selectedOption: ", selectedOption)
+                            setSelectedScripts(selectedOption);
                         }}
                         closeMenuOnSelect={false}
                         components={animatedComponents}
@@ -46,7 +47,7 @@ function UnassignScriptSpecificUserModal() {
                             <Button variant="secondary" onClick={handleClose}>
                               Close
                             </Button>
-                            <Button variant="primary" onClick={handleAssignMultipleTasks}>
+                            <Button variant="primary" onClick={handleUnAssignScripts}>
                               Confirm
                             </Button>
                           </Modal.Footer>
@@ -84,17 +85,20 @@ function UnassignScriptSpecificUserModal() {
 
       fetchData();
 
-  }, [])
+  }, [selectedScripts])
 
-  const assign_task_url = "http://localhost:3000/user/assign_multiple_tasks"
+  const unassign_script_url = "http://localhost:3000/script/update_assigned_task"
 
-  const handleAssignMultipleTasks = async () => {
+  const handleUnAssignScripts = async () => {
+    console.log("handleUnAssignScripts selectedScripts: ", selectedScripts)
 
       const selectedScriptIDs = selectedScripts.map((script) => {
         return script.value;
       })
 
-      fetch(assign_task_url, {
+      console.log("selectedScriptIDs: ", selectedScriptIDs);
+
+      fetch(unassign_script_url, {
           method: 'POST',
           headers: {'Content-Type':'application/json'},
           body: JSON.stringify({
