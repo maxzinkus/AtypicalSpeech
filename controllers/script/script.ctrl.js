@@ -69,6 +69,48 @@ exports.get_script_total_number = async (_, res) => {
     }
 }
 
+exports.update_assigned_task = async (req, res) => {
+    const {user_id, script_ids} = req.body
+
+    try {
+        const user = await User.findByPk(user_id)
+        console.log("user: ", user)
+
+        // if user not found, show error
+        if (user === null) {
+            console.log("user not found!")
+        }
+
+        const scripts_to_update = await Promise.all(
+            script_ids.map(async (script_id) => {
+                var script = await Script.findByPk(script_id);
+
+                // if script not found, show error
+                if (script === null) {
+                    console.log("script not found!")
+                    return;
+                }
+
+                return script_id;
+            })
+        )
+
+        console.log("scripts_to_update: ", scripts_to_update);
+
+        const original_assigned_tasks = user.assignedTasks.tasks
+        console.log(original_assigned_tasks)
+
+        user.assignedTasks.tasks = scripts_to_update
+        user.changed('assignedTasks', true)
+        await user.save()
+    
+        return res.json(user)
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json(err)
+    }
+}
+
 exports.get_all_scripts = async (_, res) => {
     try {
         return res.json(await Script.findAll());

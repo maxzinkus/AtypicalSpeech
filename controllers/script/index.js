@@ -12,6 +12,7 @@ router.post('/delete_script', ctrl.delete_script);
 router.post('/findScriptID', ctrl.get_one_script_by_id);
 router.post('/unassign_task', ctrl.unassign_task);
 router.post('/assign_task_to_multiple_users', ctrl.assign_task_to_multiple_users);
+router.post('/update_assigned_task', ctrl.update_assigned_task);
 
 router.post('/process_script', ctrl.process_script);
 
