@@ -25,11 +25,11 @@ function UnassignScriptSpecificUserModal() {
                 <>
                   <Modal show={true}>
                     <Modal.Header closeButton onClick={handleClose}>
-                      <Modal.Title>Assign Scripts</Modal.Title>
+                      <Modal.Title>Unassign Scripts</Modal.Title>
                     </Modal.Header>
           
                     <Modal.Body>
-                      Select scripts
+                      Unselect scripts
                       <Select
                         onChange={(selectedOption) => {
                           setSelectedScripts(selectedOption);
