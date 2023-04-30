@@ -59,7 +59,7 @@ function UserAccordionComponent() {
 
     const renderAssignScriptsSpecificUserModalButton = (user_data) => {
         return (
-            <Button variant="primary" onClick={() => handleAssignScriptClick(user_data)}>
+            <Button variant="success" onClick={() => handleAssignScriptClick(user_data)}>
                 Assign scripts to this user
             </Button>
         )
@@ -89,8 +89,7 @@ function UserAccordionComponent() {
                     {formatCompletedTasksSection(user_data.completedTasks.tasks)}
                 </div>
                 <div>
-                    {renderAssignScriptsSpecificUserModalButton(user_data)}
-                    {renderUnAssignScriptsModalButton(user_data)}
+                    {renderAssignScriptsSpecificUserModalButton(user_data)}  {renderUnAssignScriptsModalButton(user_data)}
                 </div>
             </div>
         )
@@ -99,7 +98,7 @@ function UserAccordionComponent() {
     const formatCompletedTasksSection = (tasks) => {
         if (tasks.length === 0) {
             return (
-                <Alert key="success" variant="success">
+                <Alert key="secondary" variant="secondary">
                     No scripts completed yet
                 </Alert>
             )
