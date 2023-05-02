@@ -57,7 +57,7 @@ function AddScriptButton() {
 
             // preprocessing
             for (var i = 0; i < data.length; i++) {
-                var scriptID = data[i]['speakerId'];
+                var scriptID = data[i]['scriptID'];
 
                 if (!(scriptID in scriptID2utterances)) {
                     scriptID2utterances[scriptID] = {"utterances" : [""], "details": [{}]}
