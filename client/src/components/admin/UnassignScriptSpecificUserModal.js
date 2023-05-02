@@ -29,7 +29,7 @@ function UnassignScriptSpecificUserModal() {
                     </Modal.Header>
           
                     <Modal.Body>
-                      Unselect scripts
+                      Unselect scripts you would like to unassign from this user
                       <Select
                         onChange={(selectedOption) => {
                             console.log("onChange selectedOption: ", selectedOption)
