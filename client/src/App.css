@@ -31,6 +31,13 @@
     /* inline-size: 150px; */
 }
 
+.unassign_scripts_select_modal {
+    color: white;
+    background-color: dodgerblue;
+    /* padding: 10px; */
+    font-family: Arial;
+}
+
 .large_font_blue_center {
     font-size: 25px;
     font-family: "Gill Sans Extrabold", sans-serif;
