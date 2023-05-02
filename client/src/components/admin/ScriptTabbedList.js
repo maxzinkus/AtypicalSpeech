@@ -217,7 +217,7 @@ function ScriptTabbedList() {
                                     </div>
 
                                     <div className='padding_bottom_20'>
-                                        {renderScriptModalButton(script.id)} {renderEditScriptButton(script.id)} {renderDeleteScriptButton(script.id)}
+                                        {renderScriptModalButton(script.id)} {renderDeleteScriptButton(script.id)}
                                     </div>
 
                                     {renderScriptDetailsTable(script)}
