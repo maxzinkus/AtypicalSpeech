@@ -349,8 +349,22 @@ function RecordingModal() {
         setCurrentState({...currentState, startState: true})
     }
 
+    const formatCSVReceiptTitle = (scriptID, userID) => {
+        return "receipt_" + userID + "_#" + scriptID;
+    }
+
     const createCSVReceipt = async () => {
         // format : accessCode | scriptID | line number | utterance | file name | detail
+
+        const script_details = [
+            "field1",
+            "field2",
+            "field3",
+            "field4",
+            "field5",
+            "field6",
+            "field7"
+        ];
         
         // prepare recording file names and username
         var data = []
@@ -362,24 +376,25 @@ function RecordingModal() {
             console.log("current line: ", i)
             var utterance_detail = currentUtteranceDetails[i]
 
-            console.log("utterance_detail: ", utterance_detail["action"])
+            console.log("utterance_detail: ", utterance_detail)
 
             temp.push(accessCode) // access code
             temp.push(scriptID) // script id
             temp.push(i.toString()) // line number
             temp.push(currentUtterances[i]) // utterance
             temp.push(createFileNameWithLineNumber(i)) // recording file name
-            temp.push(utterance_detail["action"].toString()) // detail - action
-            temp.push(utterance_detail["object"].toString()) // detail - object
-            temp.push(utterance_detail["location"].toString()) // detail - location
 
+            for (const script_detail of script_details) {
+                console.log("script_detail: ", script_detail);
+                console.log("utterance_detail[script_detail]: ", utterance_detail[script_detail]);
+                temp.push(utterance_detail[script_detail].toString())
+            }
             data.push(temp)
         }
 
-        var rows = ["access code", "script ID", "line number", "sentence", "file name", "action", "object", "location"]
+        var rows = ["access code", "script ID", "line number", "sentence", "file name", ...script_details];
 
-        create_csv_receipt(data, rows, "test")
-
+        create_csv_receipt(data, rows, formatCSVReceiptTitle(scriptID, accessCode));
     }
 
     const renderComplete = () => {
