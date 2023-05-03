@@ -315,6 +315,25 @@ exports.update_script = async (req, res) => {
 
 }
 
+exports.update_script_line = async (req, res) => {
+
+    const {script_id, line_number, new_utterance, new_details} = req.body
+
+    try {
+        const script = await Script.findByPk(script_id);
+
+        script.utterances.utterances[line_number] = new_utterance;
+        script.utterances.details[line_number] = new_details;
+
+        script.changed('utterances', true)
+        await script.save()
+        return res.json(script)
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json(err)
+    }
+}
+
 // exports.name = async (req, res) => {
 //     try {
 //     } catch (err) {

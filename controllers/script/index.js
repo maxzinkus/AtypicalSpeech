@@ -22,5 +22,6 @@ router.get('/get_all_script_ids', ctrl.get_all_script_ids);
 
 router.put('/update_script', ctrl.update_script);
 router.put('/add_utterances', ctrl.add_utterances);
+router.put('/update_script_line', ctrl.update_script_line);
 
 module.exports = router;

@@ -385,8 +385,6 @@ function RecordingModal() {
             temp.push(createFileNameWithLineNumber(i)) // recording file name
 
             for (const script_detail of script_details) {
-                console.log("script_detail: ", script_detail);
-                console.log("utterance_detail[script_detail]: ", utterance_detail[script_detail]);
                 temp.push(utterance_detail[script_detail].toString())
             }
             data.push(temp)

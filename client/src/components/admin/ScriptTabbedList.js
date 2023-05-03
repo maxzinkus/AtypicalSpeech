@@ -8,6 +8,8 @@ import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
+import Form from 'react-bootstrap/Form';
+
 import { Button, Table, Modal } from 'react-bootstrap';
 
 function ScriptTabbedList() {
@@ -20,7 +22,9 @@ function ScriptTabbedList() {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleShow = () => {
+        console.log("handleShow")
+        setShow(true)};
 
     const zip = (...arr) => {
         const zipped = [];
@@ -49,6 +53,66 @@ function ScriptTabbedList() {
     }
 
     useEffect(() => {
+
+        const renderEditLineModal = (script_id, line_number, text, details) => {
+            return (
+                <>
+                  <Modal show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>Edit line</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <Form>
+                        <Form.Group className="mb-3" controlId="text">
+                          <Form.Label>text</Form.Label>
+                          <Form.Control
+                            type="text"
+                            placeholder={text}
+                            // onChange={handleAccessCodeChange}
+                            autoFocus
+                          />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="field1">
+                          <Form.Label>field1</Form.Label>
+                          <Form.Control
+                            type="field1"
+                            placeholder={details["field1"]}
+                            // onChange={handleAccessCodeChange}
+                            autoFocus
+                          />
+                        </Form.Group>
+                        {/* <Form.Group className="mb-3" controlId="accessCode">
+                          <Form.Label>Access Code</Form.Label>
+                          <Form.Control
+                            type="accessCode"
+                            placeholder="3Kgnq!P"
+                            // onChange={handleAccessCodeChange}
+                            autoFocus
+                          />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="accessCode">
+                          <Form.Label>Access Code</Form.Label>
+                          <Form.Control
+                            type="accessCode"
+                            placeholder="3Kgnq!P"
+                            // onChange={handleAccessCodeChange}
+                            autoFocus
+                          />
+                        </Form.Group> */}
+                      </Form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button variant="secondary" onClick={handleClose}>
+                        Close
+                      </Button>
+                      <Button variant="primary">
+                        Confirm
+                      </Button>
+                    </Modal.Footer>
+                  </Modal>
+                </>
+              );
+        }
 
         const handleClickDeleteScript = async (script_id) => {
             if (window.confirm('Are you sure you wish to delete this script?')) {
@@ -99,6 +163,21 @@ function ScriptTabbedList() {
             )
         }
 
+        function handleClickScriptLine(script_id, line_number, text, details) {
+            console.log("handleClickScriptLine")
+
+            // handleShow()
+
+            // navigate('/edit_script_line', {
+            //     state: {
+            //         script_id : script_id,
+            //         line_number: line_number,
+            //         text: text,
+            //         details: details
+            //     }
+            // })
+        }
+
         function renderScriptDetailsTable(script) {
             var action_type_script = script.utterances.details[1].hasOwnProperty("action")
             if (action_type_script) {
@@ -124,13 +203,16 @@ function ScriptTabbedList() {
                             var details = utterance[1];
 
                             return (
-                                <tr>
+                                // <tr onClick={() => handleClickScriptLine(text, details)}>
+                                renderEditLineModal(script.id, index, text, details)
+
+                                (<tr onClick={handleShow}>
                                     <td>{index}</td>
                                     <td>{text}</td>
                                     <td>{details.action}</td>
                                     <td>{details.object}</td>
                                     <td>{details.location}</td>
-                                </tr>
+                                </tr>)
                             )
                         })}
                         
@@ -165,8 +247,11 @@ function ScriptTabbedList() {
                             var text = utterance[0];
                             var details = utterance[1];
 
+                            // {renderEditLineModal(script.id, index, text, details)}
+
                             return (
-                                <tr>
+                                <tr onClick={handleShow}>
+                                {/* <tr onClick={() => handleClickScriptLine(text, details)}> */}
                                     <td>{index}</td>
                                     <td>{text}</td>
                                     <td>{details.field1}</td>
@@ -221,6 +306,9 @@ function ScriptTabbedList() {
                                     </div>
 
                                     {renderScriptDetailsTable(script)}
+
+                                {/* {renderEditLineModal(script.id, index, text, details)} */}
+
                                 </Tab.Pane>
                             )
                         })}
@@ -246,7 +334,7 @@ function ScriptTabbedList() {
         }
 
         fetchData();
-    }, [])
+    }, [show])
 
     return (
         <div>
