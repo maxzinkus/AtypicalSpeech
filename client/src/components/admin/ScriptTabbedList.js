@@ -18,13 +18,34 @@ function ScriptTabbedList() {
     const delete_script_URL = "http://localhost:3000/script/delete_script";
 
     const [currentState, setCurrentState] = useState({all_scripts: null, tabbedlist: null});
-
+    const [overlayScript, setOverlayScript] = useState({overlay_script: null, overlay_data: {utterances: [], details: []}, line_number: null});
     const [show, setShow] = useState(false);
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => {
+    const get_script_URL = "http://localhost:3000/script/findScriptID";
+
+    const handleClose = () => {
+        setOverlayScript({...overlayScript, overlay_script: null})
+        setShow(false)
+    };
+
+    const handleShow = async (script_id, line_number) => {
         console.log("handleShow")
-        setShow(true)};
+
+        await axios.post(
+            get_script_URL,
+            {
+                "script_id": script_id
+            }
+        )
+        .then((response) => {
+            console.log("fetch script data: ", response.data.utterances)
+            setOverlayScript({...overlayScript, overlay_script: script_id, overlay_data: response.data.utterances, line_number: line_number})
+        })
+        .then(() => {
+            setShow(true)
+        })
+
+    };
 
     const zip = (...arr) => {
         const zipped = [];
@@ -54,12 +75,12 @@ function ScriptTabbedList() {
 
     useEffect(() => {
 
-        const renderEditLineModal = (script_id, line_number, text, details) => {
+        const renderEditLineModal = () => {
             return (
                 <>
                   <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
-                      <Modal.Title>Edit line</Modal.Title>
+                      <Modal.Title>Edit line; script #{overlayScript.overlay_script}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                       <Form>
@@ -67,7 +88,7 @@ function ScriptTabbedList() {
                           <Form.Label>text</Form.Label>
                           <Form.Control
                             type="text"
-                            placeholder={text}
+                            placeholder={overlayScript.line_number === null ? "" : overlayScript.overlay_data.utterances[overlayScript.line_number] }
                             // onChange={handleAccessCodeChange}
                             autoFocus
                           />
@@ -76,7 +97,7 @@ function ScriptTabbedList() {
                           <Form.Label>field1</Form.Label>
                           <Form.Control
                             type="field1"
-                            placeholder={details["field1"]}
+                            // placeholder={details["field1"]}
                             // onChange={handleAccessCodeChange}
                             autoFocus
                           />
@@ -204,9 +225,8 @@ function ScriptTabbedList() {
 
                             return (
                                 // <tr onClick={() => handleClickScriptLine(text, details)}>
-                                renderEditLineModal(script.id, index, text, details)
 
-                                (<tr onClick={handleShow}>
+                                (<tr onClick={() => handleShow(script.id, index)}>
                                     <td>{index}</td>
                                     <td>{text}</td>
                                     <td>{details.action}</td>
@@ -250,7 +270,7 @@ function ScriptTabbedList() {
                             // {renderEditLineModal(script.id, index, text, details)}
 
                             return (
-                                <tr onClick={handleShow}>
+                                <tr onClick={() => handleShow(script.id, index)}>
                                 {/* <tr onClick={() => handleClickScriptLine(text, details)}> */}
                                     <td>{index}</td>
                                     <td>{text}</td>
@@ -307,7 +327,7 @@ function ScriptTabbedList() {
 
                                     {renderScriptDetailsTable(script)}
 
-                                {/* {renderEditLineModal(script.id, index, text, details)} */}
+                                {renderEditLineModal(script.id)}
 
                                 </Tab.Pane>
                             )
