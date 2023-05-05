@@ -99,6 +99,14 @@ function RecordingModal() {
         })
     }
 
+    const saveProgress = async (user_id, script_id, line) => {
+        const line_to_update = (line >= 0) ? line : 0;
+        await new Promise(
+            async resolve => 
+                await axios.post('http://localhost:3000/user/update_task_progress', {user_id: user_id, script_id: script_id, current_line: line_to_update})
+            )
+    }
+
     const nextLine = async (event) => {
         console.log("next line")
         var originalLineNumber = currentState.currentLine
@@ -158,10 +166,11 @@ function RecordingModal() {
             // alert(result)
             return result * 2
 
+          })
+          .then(() => {
+            saveProgress(accessCode, scriptID, currentState.currentLine)
           });
 
-
-        
         // await new Promise(resolve => setTimeout(resolve, 3000))
     
     }
