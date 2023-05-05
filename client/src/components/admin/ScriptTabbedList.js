@@ -80,7 +80,7 @@ function ScriptTabbedList() {
                 <>
                   <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
-                      <Modal.Title>Edit line; script #{overlayScript.overlay_script}</Modal.Title>
+                      <Modal.Title>Edit line; script #{overlayScript.overlay_script} line #{overlayScript.line_number}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                       <Form>
