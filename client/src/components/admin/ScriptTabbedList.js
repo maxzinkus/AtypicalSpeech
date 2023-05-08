@@ -208,7 +208,7 @@ function ScriptTabbedList() {
         }
 
         const handleEditScriptLine = async () => {
-            if (window.confirm('Are you sure you wish to delete this script?')) {
+            if (window.confirm('Are you sure you wish to edit this line?')) {
                 fetch(edit_script_line_URL, {
                     method: 'PUT',
                     headers: {'Content-Type':'application/json'},
