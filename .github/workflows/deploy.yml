@@ -1,0 +1,49 @@
+name: deploy
+env:
+  USER: azureuser
+  HOST: hermespeech.wse.jhu.edu
+  REMOTE: ${{ USER }}@${{ HOST }}
+  PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
+on:
+  workflow_dispatch:
+  #push:
+  #  branches:
+  #    - main
+
+jobs:
+  deploy-code:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create SSH key
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$PRIVATE_KEY" > ~/.ssh/private.key
+          chmod 600 ~/.ssh/private.key
+        shell: bash
+
+      - name: Checkout
+        uses: actions/checkout@v3
+        path: Webapp
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 12.22.x
+          cache: npm
+
+      - name: Install and build as a test
+        run: |
+          cd Webapp/client
+          npm ci
+          npm run build
+          
+      - name: Push to server
+        run: |
+          sudo apt install -y rsync ssh
+          cd $GITHUB_WORKSPACE
+          rsync -e "ssh -i ~/.ssh/private.key" -avz Webapp ${{ REMOTE }}:~/
+          ssh -i ~/.ssh/private.key ${{ REMOTE }} -- "kill $(pgrep npm)"
+          ssh -i ~/.ssh/private.key ${{ REMOTE }} -- "cd Webapp/client ; npm run build"
+          ssh -i ~/.ssh/private.key ${{ REMOTE }} -- "cd Webapp/client ; nohup npm start & disown"
+        shell: bash
