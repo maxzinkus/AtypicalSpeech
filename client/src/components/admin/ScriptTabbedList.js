@@ -42,6 +42,20 @@ function ScriptTabbedList() {
         .then((response) => {
             console.log("fetch script data: ", response.data.utterances)
             setOverlayScript({...overlayScript, overlay_script: script_id, overlay_data: response.data.utterances, line_number: line_number})
+            const utterances = response.data.utterances.utterances;
+            const details = response.data.utterances.details;
+            console.log("Details: ", details)
+            setNewDetails({
+                ...newDetails, 
+                text: utterances[line_number], 
+                field1: details[line_number].field1, 
+                field2: details[line_number].field2, 
+                field3: details[line_number].field3, 
+                field4: details[line_number].field4,
+                field5: details[line_number].field5, 
+                field6: details[line_number].field6, 
+                field7: details[line_number].field7
+            })
         })
         .then(() => {
             setShow(true)
@@ -145,6 +159,7 @@ function ScriptTabbedList() {
                             type={field}
                             placeholder={overlayScript.overlay_data.details[overlayScript.line_number] === undefined ? "" : overlayScript.overlay_data.details[overlayScript.line_number][field] }
                             defaultValue={overlayScript.overlay_data.details[overlayScript.line_number] === undefined ? "" : overlayScript.overlay_data.details[overlayScript.line_number][field] }
+                            // value={overlayScript.overlay_data.details[overlayScript.line_number] === undefined ? "" : overlayScript.overlay_data.details[overlayScript.line_number][field] }
                             onChange={(event) => {
                                 handleDetailChange(event, field)
                             }}
