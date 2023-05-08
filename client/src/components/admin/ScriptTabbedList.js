@@ -16,12 +16,14 @@ function ScriptTabbedList() {
 
     const get_all_script_ids_URL = "http://localhost:3000/script/get_all_scripts";
     const delete_script_URL = "http://localhost:3000/script/delete_script";
+    const get_script_URL = "http://localhost:3000/script/findScriptID";
+    const edit_script_line_URL = "http://localhost:3000/script/update_script_line";
+    const generic_fields = ["field1","field2","field3","field4","field5","field6","field7"]
 
     const [currentState, setCurrentState] = useState({all_scripts: null, tabbedlist: null});
     const [overlayScript, setOverlayScript] = useState({overlay_script: null, overlay_data: {utterances: [], details: []}, line_number: null});
     const [show, setShow] = useState(false);
-
-    const get_script_URL = "http://localhost:3000/script/findScriptID";
+    const [newDetails, setNewDetails] = useState({text: "", field1: "", field2: "", field3: "", field4: "", field5: "", field6: "", field7: ""})
 
     const handleClose = () => {
         setOverlayScript({...overlayScript, overlay_script: null})
@@ -75,7 +77,87 @@ function ScriptTabbedList() {
 
     useEffect(() => {
 
+        const handleTextChange = (event) => {
+            setNewDetails({
+                ...newDetails,
+                text: event.target.value
+            })
+        }
+
+        const handleDetailChange = (event, field) => {
+            console.log("handle detail change ")
+            switch (field) {
+                case "field1" :
+                    setNewDetails({
+                        ...newDetails,
+                        field1: event.target.value
+                    })
+                    break;
+                case "field2" :
+                    setNewDetails({
+                        ...newDetails,
+                        field2: event.target.value
+                    })
+                    break;
+                case "field3" :
+                    setNewDetails({
+                        ...newDetails,
+                        field3: event.target.value
+                    })
+                    break;
+                case "field4" :
+                    setNewDetails({
+                        ...newDetails,
+                        field4: event.target.value
+                    })
+                    break;
+                case "field5" :
+                    setNewDetails({
+                        ...newDetails,
+                        field5: event.target.value
+                    })
+                    break;
+                case "field6" :
+                    setNewDetails({
+                        ...newDetails,
+                        field6: event.target.value
+                    })
+                    break;
+                case "field7" :
+                    setNewDetails({
+                        ...newDetails,
+                        field7: event.target.value
+                    })
+                    break;
+                default:
+                    console.log("field: ", field);
+                    console.log(event.target.value);
+                    break;
+            }
+        }
+
+        const renderDetailFieldForm = () => {
+            const forms = generic_fields.map((field) => {
+                return (
+                    <Form.Group className="mb-3" controlId={field}>
+                          <Form.Label>{field}</Form.Label>
+                          <Form.Control
+                            type={field}
+                            placeholder={overlayScript.overlay_data.details[overlayScript.line_number] === undefined ? "" : overlayScript.overlay_data.details[overlayScript.line_number][field] }
+                            defaultValue={overlayScript.overlay_data.details[overlayScript.line_number] === undefined ? "" : overlayScript.overlay_data.details[overlayScript.line_number][field] }
+                            onChange={(event) => {
+                                handleDetailChange(event, field)
+                            }}
+                            autoFocus
+                          />
+                        </Form.Group>
+                )
+            })
+            return forms;
+        }
+
         const renderEditLineModal = () => {
+            // console.log("detail: ", overlayScript.overlay_data.details[overlayScript.line_number]);
             return (
                 <>
                   <Modal show={show} onHide={handleClose}>
@@ -89,50 +171,51 @@ function ScriptTabbedList() {
                           <Form.Control
                             type="text"
                             placeholder={overlayScript.line_number === null ? "" : overlayScript.overlay_data.utterances[overlayScript.line_number] }
-                            // onChange={handleAccessCodeChange}
+                            defaultValue={overlayScript.line_number === null ? "" : overlayScript.overlay_data.utterances[overlayScript.line_number] }
+                            onChange={handleTextChange}
                             autoFocus
                           />
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="field1">
-                          <Form.Label>field1</Form.Label>
-                          <Form.Control
-                            type="field1"
-                            // placeholder={details["field1"]}
-                            // onChange={handleAccessCodeChange}
-                            autoFocus
-                          />
-                        </Form.Group>
-                        {/* <Form.Group className="mb-3" controlId="accessCode">
-                          <Form.Label>Access Code</Form.Label>
-                          <Form.Control
-                            type="accessCode"
-                            placeholder="3Kgnq!P"
-                            // onChange={handleAccessCodeChange}
-                            autoFocus
-                          />
-                        </Form.Group>
-                        <Form.Group className="mb-3" controlId="accessCode">
-                          <Form.Label>Access Code</Form.Label>
-                          <Form.Control
-                            type="accessCode"
-                            placeholder="3Kgnq!P"
-                            // onChange={handleAccessCodeChange}
-                            autoFocus
-                          />
-                        </Form.Group> */}
+                        {renderDetailFieldForm()}
                       </Form>
                     </Modal.Body>
                     <Modal.Footer>
                       <Button variant="secondary" onClick={handleClose}>
                         Close
                       </Button>
-                      <Button variant="primary">
+                      <Button variant="primary" onClick={handleEditScriptLine}>
                         Confirm
                       </Button>
                     </Modal.Footer>
                   </Modal>
                 </>
               );
+        }
+
+        const handleEditScriptLine = async () => {
+            if (window.confirm('Are you sure you wish to delete this script?')) {
+                fetch(edit_script_line_URL, {
+                    method: 'PUT',
+                    headers: {'Content-Type':'application/json'},
+                    body: JSON.stringify({
+                        "script_id": overlayScript.overlay_script,
+                        "line_number": overlayScript.line_number,
+                        "new_utterance": newDetails.text,
+                        "new_details": {
+                            "field1": newDetails.field1,
+                            "field2": newDetails.field2,
+                            "field3": newDetails.field3,
+                            "field4": newDetails.field4,
+                            "field5": newDetails.field5,
+                            "field6": newDetails.field6,
+                            "field7": newDetails.field7
+                        }
+                    })
+                })
+                .then(() => {
+                    handleClose();
+                })
+            }
         }
 
         const handleClickDeleteScript = async (script_id) => {
@@ -354,7 +437,7 @@ function ScriptTabbedList() {
         }
 
         fetchData();
-    }, [show])
+    }, [show, newDetails])
 
     return (
         <div>

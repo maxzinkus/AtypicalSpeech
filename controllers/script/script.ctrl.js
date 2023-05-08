@@ -318,6 +318,8 @@ exports.update_script = async (req, res) => {
 
 exports.update_script_line = async (req, res) => {
 
+    console.log("update_script_line")
+
     const {script_id, line_number, new_utterance, new_details} = req.body
 
     try {
