@@ -13,6 +13,7 @@ function UserAccordionComponent() {
     const [currentState, setCurrentState] = useState({users: null, accordionItems: null});
 
     const assign_task_url = "http://localhost:3000/user/assign_task"
+    const delete_user_url = "http://localhost:3000/user/delete_user"
 
     const handleAssignTask = async (accessCode, script_id) => {
 
@@ -24,6 +25,18 @@ function UserAccordionComponent() {
             body: JSON.stringify({
                 'user_id': accessCode,
                 'script_id': script_id
+            })
+        })
+    }
+
+    const handleDeleteUser = async (user_data) => {
+        console.log("user id: ", user_data.id)
+
+        fetch(delete_user_url, {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({
+                'user_id': user_data.id
             })
         })
     }
@@ -73,6 +86,14 @@ function UserAccordionComponent() {
         )
     }
 
+    const renderDeleteUserButton = (user_data) => {
+        return (
+            <Button variant="danger" onClick={() => handleDeleteUser(user_data)}>
+                Delete user
+            </Button>
+        )
+    }
+
     const formatUserDetailsSection = (user_data) => {
 
         return (
@@ -89,7 +110,7 @@ function UserAccordionComponent() {
                     {formatCompletedTasksSection(user_data.completedTasks.tasks)}
                 </div>
                 <div>
-                    {renderAssignScriptsSpecificUserModalButton(user_data)}  {renderUnAssignScriptsModalButton(user_data)}
+                    {renderAssignScriptsSpecificUserModalButton(user_data)}  {renderUnAssignScriptsModalButton(user_data)} {renderDeleteUserButton(user_data)}
                 </div>
             </div>
         )
