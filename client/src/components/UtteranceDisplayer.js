@@ -32,13 +32,12 @@ function UtteranceDisplayer({user_id, script_id, line, current_line, currentReco
 
       </div>
       <div className='float-right-child'>
-        {/* <a className='utterance_display_bold'> */}
-        {/* {currentRecordState !== null && {line}} */}
         {line}
-        {/* </a> */}
       </div>
 
-    </div><div>{SaveProgressButton({ user_id: user_id, script_id: script_id, current_line: current_line })}</div></>
+    </div>
+    {/* <div>{SaveProgressButton({ user_id: user_id, script_id: script_id, current_line: current_line })}</div>  */}
+    </>
 
   )
 }
