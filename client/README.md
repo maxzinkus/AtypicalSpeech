@@ -2,12 +2,23 @@
 
 Routing can be found in [App.js](src/App.js)
 
-| Path       | Component      | File |   |   |
+Pages
+
+| Path       | Pages      | File |   |   |
 |------------|----------------|------|---|---|
 | /          | [Home](src/pages/Home.js)           |      |   |   |
 | /dashboard | [Dashboard](src/components/Dashboard.js)      |      |   |   |
 | /module    | [RecordingModal](src/components/RecordingModal.js) |      |   |   |
 | /admin     | [AdminDashboard](src/components/admin/AdminDashboard.js) |      |   |   |
+
+Components & Modals
+| Component       | Image      | File |   |   |
+|------------|----------------|------|---|---|
+| [LoginForm](src/components/LoginForm.js)          | [Home](src/pages/Home.js)           |      |   |   |
+| [DashboardCard](src/components/DashboardCard.js) | [Dashboard](src/components/Dashboard.js)      |      |   |   |
+| [RecordingModal](src/components/RecordingModal.js)    | [RecordingModal](src/components/RecordingModal.js) |      |   |   |
+| [ScriptController](src/components/ScriptController.js)    |  |      |   |   |
+| [UtteranceDisplay](src/components/UtteranceDisplayer.js)     | |      |   |   |
 
 ## `npm start`
 
