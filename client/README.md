@@ -1,16 +1,13 @@
-# Getting Started with the Client-Side of HermeSpeech
+# Getting Started with HermeSpeech Client
 
 Routing can be found in [App.js](src/App.js)
 
-```
-<Route exact path="/" element={<Home/>}/>
- <Route exact path="/dashboard" element={<Dashboard />}/>
-<Route path="/module" element={<RecordingModal/>}/>
-<Route path="/assign-script-specific" element={<AssignScriptsSpecificUserModal/>}/>
-<Route path="/unassign_script_specific_user" element={<UnassignScriptSpecificUserModal/>}/>
-<Route path="/assign-script-multiple-users" element={<AssignScriptMultipleUsersModal/>}/>
-<Route path="/admin" element={<AdminDashboard/>}/>
-```
+| Path       | Component      | File |   |   |
+|------------|----------------|------|---|---|
+| /          | [Home](src/pages/Home.js)           |      |   |   |
+| /dashboard | [Dashboard](src/components/Dashboard.js)      |      |   |   |
+| /module    | [RecordingModal](src/components/RecordingModal.js) |      |   |   |
+| /admin     | [AdminDashboard](src/components/admin/AdminDashboard.js) |      |   |   |
 
 ## `npm start`
 
