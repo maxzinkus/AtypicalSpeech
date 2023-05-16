@@ -23,8 +23,6 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          path: Webapp
         
       - name: Setup node
         uses: actions/setup-node@v3
@@ -35,7 +33,9 @@ jobs:
       - name: Install and build as a test
         run: |
           cd $GITHUB_WORKSPACE
-          cd Webapp/client
+          ls
+          pwd
+          cd AtypicalSpeech/client
           npm ci
           npm run build
           
