@@ -2,7 +2,6 @@ name: deploy
 env:
   USER: azureuser
   HOST: hermespeech.wse.jhu.edu
-  REMOTE: ${{ USER }}@${{ HOST }}
   PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
 on:
@@ -43,5 +42,5 @@ jobs:
           sudo apt install -y rsync ssh
           cd $GITHUB_WORKSPACE
           rsync -e "ssh -i ~/.ssh/private.key" -avz Webapp ${{ REMOTE }}:~/
-          ssh -i ~/.ssh/private.key ${{ REMOTE }} -- "killall npm ; cd Webapp/client ; npm run build ; nohup npm start & disown"
+          ssh -i ~/.ssh/private.key ${{ USER }}@${{ HOST }} -- "killall npm ; cd Webapp/client ; npm run build ; nohup npm start & disown"
         shell: bash
