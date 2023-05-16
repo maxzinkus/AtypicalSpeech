@@ -27,22 +27,21 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v3
         with:
-          node-version: 12.22.x
+          node-version: v20.1.0
           cache: npm
 
       - name: Install and build as a test
         run: |
           cd $GITHUB_WORKSPACE
-          ls
-          pwd
-          cd AtypicalSpeech/client
+          cd client
           npm ci
           npm run build
           
       - name: Push to server
         run: |
           sudo apt install -y rsync ssh
-          cd $GITHUB_WORKSPACE
+          cd $GITHUB_WORKSPACE/..
+          mv AtypicalSpeech Webapp
           rsync -e "ssh -i ~/.ssh/private.key" -avz Webapp $USER@$HOST:~/
           ssh -i ~/.ssh/private.key $USER@$HOST -- "killall npm ; cd Webapp/client ; npm run build ; nohup npm start & disown"
         shell: bash
