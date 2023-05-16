@@ -18,7 +18,7 @@ jobs:
       - name: Create SSH key
         run: |
           mkdir -p ~/.ssh/
-          echo "$PRIVATE_KEY" > ~/.ssh/private.key
+          echo "$PRIVATE_KEY" | base64 -d > ~/.ssh/private.key
           chmod 600 ~/.ssh/private.key
         shell: bash
 
@@ -43,7 +43,5 @@ jobs:
           sudo apt install -y rsync ssh
           cd $GITHUB_WORKSPACE
           rsync -e "ssh -i ~/.ssh/private.key" -avz Webapp ${{ REMOTE }}:~/
-          ssh -i ~/.ssh/private.key ${{ REMOTE }} -- "kill $(pgrep npm)"
-          ssh -i ~/.ssh/private.key ${{ REMOTE }} -- "cd Webapp/client ; npm run build"
-          ssh -i ~/.ssh/private.key ${{ REMOTE }} -- "cd Webapp/client ; nohup npm start & disown"
+          ssh -i ~/.ssh/private.key ${{ REMOTE }} -- "killall npm ; cd Webapp/client ; npm run build ; nohup npm start & disown"
         shell: bash
