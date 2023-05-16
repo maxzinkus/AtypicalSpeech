@@ -23,8 +23,7 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v3
-        path: Webapp
-
+        
       - name: Setup node
         uses: actions/setup-node@v3
         with:
@@ -41,6 +40,6 @@ jobs:
         run: |
           sudo apt install -y rsync ssh
           cd $GITHUB_WORKSPACE
-          rsync -e "ssh -i ~/.ssh/private.key" -avz Webapp ${{ REMOTE }}:~/
+          rsync -e "ssh -i ~/.ssh/private.key" -avz AtypicalSpeech ${{ REMOTE }}:~/
           ssh -i ~/.ssh/private.key ${{ USER }}@${{ HOST }} -- "killall npm ; cd Webapp/client ; npm run build ; nohup npm start & disown"
         shell: bash
