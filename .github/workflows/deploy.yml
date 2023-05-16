@@ -32,7 +32,8 @@ jobs:
 
       - name: Install and build as a test
         run: |
-          cd Webapp/client
+          cd $GITHUB_WORKSPACE
+          cd AtypicalSpeech/client
           npm ci
           npm run build
           
@@ -41,5 +42,5 @@ jobs:
           sudo apt install -y rsync ssh
           cd $GITHUB_WORKSPACE
           rsync -e "ssh -i ~/.ssh/private.key" -avz AtypicalSpeech $USER@$HOST:~/
-          ssh -i ~/.ssh/private.key $USER@$HOST -- "killall npm ; cd Webapp/client ; npm run build ; nohup npm start & disown"
+          ssh -i ~/.ssh/private.key $USER@$HOST -- "killall npm ; cd AtypicalSpeech/client ; npm run build ; nohup npm start & disown"
         shell: bash
