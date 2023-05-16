@@ -40,6 +40,6 @@ jobs:
         run: |
           sudo apt install -y rsync ssh
           cd $GITHUB_WORKSPACE
-          rsync -e "ssh -i ~/.ssh/private.key" -avz AtypicalSpeech ${{ USER }}@${{ HOST }}:~/
-          ssh -i ~/.ssh/private.key ${{ USER }}@${{ HOST }} -- "killall npm ; cd Webapp/client ; npm run build ; nohup npm start & disown"
+          rsync -e "ssh -i ~/.ssh/private.key" -avz AtypicalSpeech $USER@$HOST:~/
+          ssh -i ~/.ssh/private.key $USER@$HOST -- "killall npm ; cd Webapp/client ; npm run build ; nohup npm start & disown"
         shell: bash
