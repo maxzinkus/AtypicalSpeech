@@ -23,6 +23,8 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          path: Webapp
         
       - name: Setup node
         uses: actions/setup-node@v3
@@ -33,7 +35,7 @@ jobs:
       - name: Install and build as a test
         run: |
           cd $GITHUB_WORKSPACE
-          cd AtypicalSpeech/client
+          cd Webapp/client
           npm ci
           npm run build
           
@@ -41,6 +43,6 @@ jobs:
         run: |
           sudo apt install -y rsync ssh
           cd $GITHUB_WORKSPACE
-          rsync -e "ssh -i ~/.ssh/private.key" -avz AtypicalSpeech $USER@$HOST:~/
-          ssh -i ~/.ssh/private.key $USER@$HOST -- "killall npm ; cd AtypicalSpeech/client ; npm run build ; nohup npm start & disown"
+          rsync -e "ssh -i ~/.ssh/private.key" -avz Webapp $USER@$HOST:~/
+          ssh -i ~/.ssh/private.key $USER@$HOST -- "killall npm ; cd Webapp/client ; npm run build ; nohup npm start & disown"
         shell: bash
