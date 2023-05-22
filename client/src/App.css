@@ -175,4 +175,8 @@
     /* padding: 10px; */
     /* border: 2px solid red; */
     line-height: 50px;
-} 
+}
+
+.disable_all_clicks {
+    pointer-events:none;
+}

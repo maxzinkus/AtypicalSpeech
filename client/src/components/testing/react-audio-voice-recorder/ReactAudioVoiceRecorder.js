@@ -54,7 +54,7 @@ const ExampleComponent = () => {
   };
 
   return (
-    <div>
+    <div className='disable_all_clicks'>
       <AudioRecorder 
         onRecordingComplete={saveBlob}
         audioTrackConstraints={{
