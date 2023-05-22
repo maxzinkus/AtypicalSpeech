@@ -11,6 +11,7 @@ import AdminDashboard from './components/admin/AdminDashboard'
 import AssignScriptsSpecificUserModal from './components/admin/AssignScriptsSpecificUserModal'
 import AssignScriptMultipleUsersModal from './components/admin/AssignScriptMultipleUsersModal'
 import UnassignScriptSpecificUserModal from './components/admin/UnassignScriptSpecificUserModal'
+import ReactAudioVoiceRecorder from './components/testing/react-audio-voice-recorder/ReactAudioVoiceRecorder'
 
 const api = axios.create({
   baseURL: `http://localhost:3001/`
@@ -31,6 +32,7 @@ function App() {
             <Route path="/unassign_script_specific_user" element={<UnassignScriptSpecificUserModal/>}/>
             <Route path="/assign-script-multiple-users" element={<AssignScriptMultipleUsersModal/>}/>
             <Route path="/admin" element={<AdminDashboard/>}/>
+            <Route path="/react_audio_voice_recorder" element={<ReactAudioVoiceRecorder/>}/>
           {/* </Switch> */}
           </Routes>
         </div>
