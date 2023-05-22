@@ -54,7 +54,8 @@ const ExampleComponent = () => {
   };
 
   return (
-    <div className='disable_all_clicks'>
+    // <div className='disable_all_clicks'>
+    <div>
       <AudioRecorder 
         onRecordingComplete={saveBlob}
         audioTrackConstraints={{
@@ -71,8 +72,14 @@ const ExampleComponent = () => {
         // downloadOnSavePress={true}
         downloadFileExtension="mp3"
         recorderControls={recorderControls}
+        classes={{
+          AudioRecorderStartSaveClass: 'display_none',
+          AudioRecorderPauseResumeClass: 'display_none',
+          AudioRecorderDiscardClass: 'visibility_hidden'
+        }}
       />
       {/* <button onClick={recorderControls.stopRecording}>Stop recording</button> */}
+      <button onClick={recorderControls.startRecording}>Start recording</button>
     </div>
   )
 }

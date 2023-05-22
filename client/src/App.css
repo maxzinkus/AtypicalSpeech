@@ -180,3 +180,11 @@
 .disable_all_clicks {
     pointer-events:none;
 }
+
+.display_none {
+    display: none;
+}
+
+.visibility_hidden {
+    visibility: hidden;
+}
