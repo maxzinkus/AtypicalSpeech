@@ -80,6 +80,7 @@ const ExampleComponent = () => {
       />
       {/* <button onClick={recorderControls.stopRecording}>Stop recording</button> */}
       <button onClick={recorderControls.startRecording}>Start recording</button>
+      <button onClick={recorderControls.stopRecording}>Stop recording</button>
     </div>
   )
 }
