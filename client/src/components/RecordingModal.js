@@ -39,7 +39,12 @@ function RecordingModal() {
 
     // new recorder library
     const recorderControls = useAudioRecorder()
+    const [shouldSave, setShouldSave] = useState(false);
 
+    const stopAudioRecorder = (save) => {
+        setShouldSave(save);
+        recorderControls.stopRecording();
+    }
 
     useEffect(() => {
 
@@ -137,7 +142,8 @@ function RecordingModal() {
             return result * 2;
           
           }).then(function(result) {
-            recorderControls.stopRecording()
+            // recorderControls.stopRecording()
+            stopAudioRecorder(true);
             return result * 2;
           })
           .then(function(result) {
@@ -181,7 +187,10 @@ function RecordingModal() {
                 recordState: RecordState.STOP,
                 review: true
             })
-        });
+        })
+        .then(() => {
+            recorderControls.togglePauseResume();
+        })
     }
 
     const createFileName = () => {
@@ -257,6 +266,7 @@ function RecordingModal() {
             recordState: RecordState.START,
             review: false
         })
+        stopAudioRecorder(false);
 
         recorderControls.startRecording()
     }
