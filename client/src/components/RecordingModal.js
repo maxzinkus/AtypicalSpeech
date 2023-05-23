@@ -11,6 +11,10 @@ import { Button } from 'react-bootstrap';
 import renderProgressBar from './ProgressBar';
 import { create_csv_receipt } from './utils/CSVReceiptUtils';
 
+// new recorder library
+import { AudioRecorder, useAudioRecorder } from 'react-audio-voice-recorder';
+
+
 function RecordingModal() {
 
     const location = useLocation();
@@ -32,6 +36,10 @@ function RecordingModal() {
 
     const RECORDING_DELAY = 1000;
     const RECORDING_DELAY_HALF = 500;
+
+    // new recorder library
+    const recorderControls = useAudioRecorder()
+
 
     useEffect(() => {
 
@@ -62,15 +70,6 @@ function RecordingModal() {
         fetchScript();
         fetchProgress();
     }, [])
-
-    // const utterances = JSON.parse('["", "Ellen looked out at the street through the glass front.", " The man from four hundred and ten was standing out there, smoking a cigarette, watching her.", " When their eyes met, he abruptly threw away the cigarette and started walking toward the apartment house.", " Again she felt that faint dread she had experienced in the hall earlier.", " The waitress picked up her quarter, gave her back a nickel and a dime.", " four hundred and ten was just ahead of her in the lobby.", "He held the front door open for her.", " He opened the elevator doors, too, and she stepped in ahead of him.", " When the doors clanged shut, she had a feeling of panic.", "Come in, my dear, come in.", " She almost fell over the landing.", " The door closed behind her.", " She stumbled to the davenport, sank down, gasping.", " Two cats rubbed against her legs, purring.", " Two cats? She heard herself say stupidly, Missis Moffatt, wheres the other cat? and wondered why she said it."]')
-    
-    const blobToFile = (theBlob, fileName) => {
-        //A Blob() is almost a File() - it's just missing the two properties below which we will add
-        theBlob.lastModifiedDate = new Date();
-        theBlob.name = fileName;
-        return theBlob;
-    }
 
     const previousLine = (event) => {
         var originalLineNumber = currentState.currentLine
@@ -118,19 +117,6 @@ function RecordingModal() {
                 currentLine: originalLineNumber + 1
             })
         }
-        // console.log("next line: ", currentState.currentLine)
-
-        // const blob_promise = new Promise(async resolve => await saveBlob())
-        // blob_promise.then(start());
-
-        // await new Promise(resolve => saveBlob())
-        // .then(
-        //     setCurrentState({
-        //         ...currentState,
-        //         audioData: null
-        //     })
-        // )
-        // .then(start());
 
         new Promise(function(resolve, reject) {
 
@@ -140,7 +126,6 @@ function RecordingModal() {
           }).then(function(result) { // (**)
           
             setTimeout(() => 1000); // (*)
-            // alert(currentState.audioData.url); // 1
             return result * 2;
           
           }).then(function(result) { // (***)
@@ -149,21 +134,14 @@ function RecordingModal() {
                 ...currentState,
                 audioData: null
             })
-
-            // alert(result); // 2
             return result * 2;
           
           }).then(function(result) {
-            
-            start()
-          
-            // alert(result); // 4
+            recorderControls.stopRecording()
             return result * 2;
-          
           })
           .then(function(result) {
-            console.log("check audiodata null: ", currentState.audioData)
-            // alert(result)
+            start()
             return result * 2
 
           })
@@ -176,9 +154,6 @@ function RecordingModal() {
     }
 
     const start = async (event) => {
-        // console.log("start recording after one second")
-        // await new Promise(resolve => setTimeout(resolve, RECORDING_DELAY));
-
         setCurrentState({
             ...currentState,
             currentLine: currentState.currentLine + 1,
@@ -186,8 +161,8 @@ function RecordingModal() {
             review: false,
             audioData: null
         })
-
-        // console.log(currentState)
+        
+        recorderControls.startRecording()
     }
 
     const pause = (event) => {
@@ -206,8 +181,6 @@ function RecordingModal() {
                 recordState: RecordState.STOP,
                 review: true
             })
-            // console.log("stope")
-            console.log(currentState)
         });
     }
 
@@ -222,8 +195,9 @@ function RecordingModal() {
     }
 
     const saveBlob = async (event) => {
-        console.log("currentState.audioData: ", currentState.audioData)
-        var blob = currentState.audioData.blob
+        console.log("current blob: ", recorderControls.recordingBlob)
+  
+        var blob = recorderControls.recordingBlob
         var fileName = createFileName()
         // console.log("file name: ", fileName);
         var a = document.createElement("a");
@@ -235,14 +209,6 @@ function RecordingModal() {
         a.download = fileName;
         a.click();
         window.URL.revokeObjectURL(url);
-
-        setCurrentState({
-            ...currentState,
-            audioData: null
-        })
-
-        // console.log("check audiodata null: ", currentState.audioData)
-
     };
 
     async function createBlobFromLocalPath(containerClient, blobName, localFileWithPath, uploadOptions){
@@ -292,12 +258,45 @@ function RecordingModal() {
             review: false
         })
 
-        console.log(currentState)
+        recorderControls.startRecording()
     }
 
-    const renderRecording = () => {
+    const renderRecorder = () => {
         console.log("render recording utterance detail: ", currentUtteranceDetails)
         // console.log("current record state: ", currentState.recordState)
+        return (
+            // <div className='disable_all_clicks'>
+            <div>
+              <AudioRecorder 
+                onRecordingComplete={saveBlob}
+                audioTrackConstraints={{
+                  noiseSuppression: true,
+                  echoCancellation: true,
+                  // autoGainControl,
+                  // channelCount,
+                  // deviceId,
+                  // groupId,
+                  // sampleRate,
+                  // sampleSize,
+                }}
+                onNotAllowedOrFound={(err) => console.table(err)}
+                // downloadOnSavePress={true}
+                downloadFileExtension="mp3"
+                recorderControls={recorderControls}
+                classes={{
+                  AudioRecorderStartSaveClass: 'display_none',
+                  AudioRecorderPauseResumeClass: 'display_none',
+                  AudioRecorderDiscardClass: 'visibility_hidden'
+                }}
+              />
+              {/* <button onClick={start}>Start recording</button> */}
+              {/* <button onClick={stop}>Stop recording</button> */}
+              {<ScriptController previousLine={previousLine} nextLine={nextLine} start={start} stop={stop} pause={pause} restart={restart} save={saveBlob} review={review} nextContent={"Review"} reviewState={currentState.review} recordingState={currentState.recordState} currentLine={currentState.currentLine}></ScriptController>}
+            </div>
+          )
+    }
+
+    const renderRecordingModal = () => {
         return (
             <>
             <div className='utterance_display'>
@@ -305,11 +304,7 @@ function RecordingModal() {
             </div>
             <br/>
             <div className='center'>
-                {<AudioReactRecorder state={currentState.recordState} onStop={onStop}></AudioReactRecorder>}
-                {currentState.review && <audio id="audio" controls src={currentState.audioData ? currentState.audioData.url : null}></audio>}
-                {currentState.review && <ReviewPage audioData={currentState.audioData}></ReviewPage>}
-                <br/>
-                {<ScriptController previousLine={previousLine} nextLine={nextLine} start={start} stop={stop} pause={pause} restart={restart} save={saveBlob} review={review} nextContent={"Review"} reviewState={currentState.review} recordingState={currentState.recordState} currentLine={currentState.currentLine}></ScriptController>}
+                {renderRecorder()}
             </div>
             </>
         )
@@ -437,7 +432,7 @@ function RecordingModal() {
         <div>
             {renderProgressBar({current: currentState.currentLine, total: currentState.totalLines})}
 
-            {currentState.totalLines !== currentState.currentLine && renderRecording()}
+            {currentState.totalLines !== currentState.currentLine && renderRecordingModal()}
             {currentState.totalLines === currentState.currentLine && renderComplete()}
 
         </div>
