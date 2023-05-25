@@ -32,9 +32,8 @@ jobs:
           
       - name: Push to server
         run: |
-          sudo apt install -y rsync ssh
           cd $GITHUB_WORKSPACE/..
-          mv AtypicalSpeech Webapp
-          rsync -e "ssh -i ~/.ssh/private.key" -avz Webapp $USER@$HOST:~/
-          ssh -i ~/.ssh/private.key $USER@$HOST -- "./deploy-build.sh"
+          cp -R AtypicalSpeech Webapp
+          rsync -e "ssh -i ~/.ssh/private.key -o StrictHostKeyChecking=no" -avz Webapp $USER@$HOST:~/
+          ssh -i ~/.ssh/private.key $USER@$HOST -o StrictHostKeyChecking=no -- "./deploy-build.sh"
         shell: bash
