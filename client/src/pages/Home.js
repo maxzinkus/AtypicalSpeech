@@ -32,7 +32,7 @@ function Home() {
   return (
     <div className="welcome_page">
       <div className="top">
-        AtypicalSpeech Platform
+        HermeSpeech Recorder
       </div>
       <div className='center'>
         {renderLoginForm()}
