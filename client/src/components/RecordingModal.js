@@ -286,7 +286,12 @@ function RecordingModal() {
         return (
             // <div className='disable_all_clicks'>
             <div className='central_recorder'>
-              {checkBlob && <audio src={checkBlob} controls />}
+              {checkBlob && 
+              <>
+                <audio src={checkBlob} controls />
+                <div class="color: blue">Please Review Your Recording</div>
+              </>
+              }
               <AudioRecorder 
                 onRecordingComplete={addAudioElement}
                 audioTrackConstraints={{
