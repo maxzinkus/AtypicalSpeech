@@ -33,6 +33,7 @@ function RecordingModal() {
     const [currentUtteranceDetails, setCurrentUtteranceDetails] = useState([]);
     const [isFetched, setIsFetched] = useState(false);
     const [error, setError] = useState("");
+    const [checkBlob, setCheckBlob] = useState(null);
 
     const RECORDING_DELAY = 1000;
     const RECORDING_DELAY_HALF = 500;
@@ -137,7 +138,7 @@ function RecordingModal() {
           
             setCurrentState({
                 ...currentState,
-                audioData: null
+                audioData: null,
             })
             return result * 2;
           
@@ -189,7 +190,7 @@ function RecordingModal() {
             })
         })
         .then(() => {
-            recorderControls.togglePauseResume(); 
+            recorderControls.stopRecording(); 
         })
     }
 
@@ -205,6 +206,8 @@ function RecordingModal() {
 
     const saveBlob = async (event) => {
         console.log("current blob: ", recorderControls.recordingBlob)
+
+        setCheckBlob(null);
   
         var blob = recorderControls.recordingBlob
         var fileName = createFileName()
@@ -264,12 +267,18 @@ function RecordingModal() {
             ...currentState,
             currentLine: currentState.currentLine,
             recordState: RecordState.START,
-            review: false
+            review: false,
         })
+        setCheckBlob(null);
         stopAudioRecorder(false);
 
         recorderControls.startRecording()
     }
+
+    const addAudioElement = (blob) => {
+        const url = URL.createObjectURL(blob);
+        setCheckBlob(url);
+      };
 
     const renderRecorder = () => {
         console.log("render recording utterance detail: ", currentUtteranceDetails)
@@ -277,17 +286,12 @@ function RecordingModal() {
         return (
             // <div className='disable_all_clicks'>
             <div className='central_recorder'>
+              {checkBlob && <audio src={checkBlob} controls />}
               <AudioRecorder 
-                onRecordingComplete={saveBlob}
+                onRecordingComplete={addAudioElement}
                 audioTrackConstraints={{
                   noiseSuppression: true,
                   echoCancellation: true,
-                  // autoGainControl,
-                  // channelCount,
-                  // deviceId,
-                  // groupId,
-                  // sampleRate,
-                  // sampleSize,
                 }}
                 onNotAllowedOrFound={(err) => console.table(err)}
                 // downloadOnSavePress={true}
@@ -295,7 +299,7 @@ function RecordingModal() {
                 recorderControls={recorderControls}
                 classes={{
                   AudioRecorderStartSaveClass: 'display_none',
-                  AudioRecorderPauseResumeClass: 'display_none',
+                //   AudioRecorderPauseResumeClass: 'display_none',
                   AudioRecorderDiscardClass: 'visibility_hidden'
                 }}
               />
