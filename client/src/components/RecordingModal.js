@@ -189,7 +189,7 @@ function RecordingModal() {
             })
         })
         .then(() => {
-            recorderControls.togglePauseResume();
+            recorderControls.togglePauseResume(); 
         })
     }
 
@@ -276,7 +276,7 @@ function RecordingModal() {
         // console.log("current record state: ", currentState.recordState)
         return (
             // <div className='disable_all_clicks'>
-            <div>
+            <div className='central_recorder'>
               <AudioRecorder 
                 onRecordingComplete={saveBlob}
                 audioTrackConstraints={{
@@ -291,7 +291,7 @@ function RecordingModal() {
                 }}
                 onNotAllowedOrFound={(err) => console.table(err)}
                 // downloadOnSavePress={true}
-                downloadFileExtension="mp3"
+                downloadFileExtension="webm"
                 recorderControls={recorderControls}
                 classes={{
                   AudioRecorderStartSaveClass: 'display_none',
