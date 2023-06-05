@@ -3,6 +3,14 @@
     justify-content: center;
 }
 
+.central_recorder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 150px;
+    justify-content: space-evenly;
+}
+
 .utterance_display_whole {
     color: white;
     background-color: dodgerblue;
