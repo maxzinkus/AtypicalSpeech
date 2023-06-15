@@ -302,9 +302,10 @@ function RecordingModal() {
                 // downloadOnSavePress={true}
                 downloadFileExtension="webm"
                 recorderControls={recorderControls}
+                showVisualizer
                 classes={{
                   AudioRecorderStartSaveClass: 'display_none',
-                //   AudioRecorderPauseResumeClass: 'display_none',
+                  AudioRecorderPauseResumeClass: 'display_none',
                   AudioRecorderDiscardClass: 'visibility_hidden'
                 }}
               />
