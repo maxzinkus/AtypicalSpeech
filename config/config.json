@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "Pc!!2400pjw3",
+    "password": "030786205",
     "database": "speech_db",
     "host": "127.0.0.1",
     "dialect": "mysql"
@@ -14,9 +14,9 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
+    "username": "database_speech",
+    "password": "database_speech",
+    "database": "database_speech",
     "host": "127.0.0.1",
     "dialect": "mysql"
   }
