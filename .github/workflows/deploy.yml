@@ -1,0 +1,39 @@
+name: deploy
+env:
+  USER: azureuser
+  HOST: hermespeech.wse.jhu.edu
+  PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
+on:
+  workflow_dispatch:
+  #push:
+  #  branches:
+  #    - main
+
+jobs:
+  deploy-code:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create SSH key
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$PRIVATE_KEY" | base64 -d > ~/.ssh/private.key
+          chmod 600 ~/.ssh/private.key
+        shell: bash
+
+      - name: Checkout
+        uses: actions/checkout@v3
+        
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: v20.1.0
+          cache: npm
+          
+      - name: Push to server
+        run: |
+          cd $GITHUB_WORKSPACE/..
+          cp -R AtypicalSpeech Webapp
+          rsync -e "ssh -i ~/.ssh/private.key -o StrictHostKeyChecking=no" -avz Webapp $USER@$HOST:~/
+          ssh -i ~/.ssh/private.key $USER@$HOST -o StrictHostKeyChecking=no -- "./deploy-build.sh"
+        shell: bash

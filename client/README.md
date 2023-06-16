@@ -27,3 +27,8 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
+# Recording logic
+
+![Flowchart](https://github.com/maxzinkus/AtypicalSpeech/assets/71309062/a53837ba-b854-49ad-9981-ddb52556f95f)
+
+

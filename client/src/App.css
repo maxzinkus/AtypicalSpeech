@@ -74,33 +74,46 @@
     height: 30%;
 }
 
-.general_background {
-    /* background-image: url("https://ep.jhu.edu/wp-content/uploads/2021/01/zoom-option1.jpg"); */
-    background-image: url("../src/images/wse\ logo\ image.webp");
-    background-position: 'center';
-    background-size: 'cover';
-    background-repeat: 'no-repeat';
-    width: 100vw;
+.welcome_page{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: rgb(16, 53, 114);
     height: 100vh;
-    opacity: 0.92
+}
+
+.welcome_page .top{
+    padding: 40px 0;
+    display: block;
+    text-align: center;
+    font-family: times;
+    font-size: 40px;
+    font-weight: 700;
+    color: white;
+}
+
+.welcome_page .center{
+    
+}
+
+.welcome_page .bottom{
+    display: flex;
+    justify-content: space-evenly;
 }
 
 .jhu_som_logo {
-    width: 45vw;
-    height: 45vh;
+    width: 226px;
+    height: 174px;
     opacity: 0.92;
-    margin-top: 350px;
 }
 
-.right {
-    position: absolute;
-    top: 100px;
-    right: 100px;
-    width: 300px;
-    /* border: 3px solid #73AD21; */
-    padding: 10px;
-    margin-bottom: 100px;
-  }
+.jhu_wse_logo {
+    width: 180px;
+    height: 139px;
+    opacity: 0.92;
+    position: relative;
+    top: 21px;
+}
 
 .login_button {
     top: 30px;
