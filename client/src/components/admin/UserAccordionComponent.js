@@ -172,7 +172,7 @@ function UserAccordionComponent() {
         async function fetchData() {
 
             // fetch all users to display all users on admin page
-            const users = await axios.get('/user/get_all_users');
+            const users = await axios.get('/api/user/get_all_users');
 
             setCurrentState({...currentState, users: users})
 

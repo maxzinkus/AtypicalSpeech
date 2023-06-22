@@ -6,7 +6,7 @@ router.get('/', (_, res) => {
 });
 
 router.use('/script', require('./script'));
-router.use('/user', require('./user'));
+router.use('/api/user', require('./user'));
 router.use('/utterancedetail', require('./utterancedetail'));
 
 module.exports = router;

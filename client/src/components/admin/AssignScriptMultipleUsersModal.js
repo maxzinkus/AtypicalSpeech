@@ -13,7 +13,7 @@ import makeAnimated from 'react-select/animated';
 
 function AssignScriptMultipleUsersModal() {
 
-    const get_all_users_url = '/user/get_all_users';
+    const get_all_users_url = '/api/user/get_all_users';
 
     const location = useLocation();
     const script_id = location.state.script_id;
