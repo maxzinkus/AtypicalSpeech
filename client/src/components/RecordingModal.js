@@ -256,7 +256,7 @@ function RecordingModal() {
     }
 
     const UtteranceDisplayerRendering = () => {
-        return <UtteranceDisplayer currentRecordState={currentState.recordState} line={currentUtterances[currentState.currentLine]} user_id={accessCode} script_id={scriptID} current_line={currentState.currentLine}></UtteranceDisplayer>
+        return <UtteranceDisplayer currentRecordState={recorderControls.isRecording} line={currentUtterances} user_id={accessCode} script_id={scriptID} current_line={currentState.currentLine}></UtteranceDisplayer>
     }
 
     const restart = async (event) => {
