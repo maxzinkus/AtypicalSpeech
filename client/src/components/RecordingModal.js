@@ -333,7 +333,7 @@ function RecordingModal() {
     const handleComplete = async (event) => {
         event.preventDefault();
 
-        fetch("http://localhost:3000/user/mark_task_complete", {
+        await fetch("http://localhost:3000/user/mark_task_complete", {
             method: 'POST',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({
@@ -350,7 +350,7 @@ function RecordingModal() {
 
         await createCSVReceipt();
 
-        fetch("http://localhost:3000/script/unassign_task", {
+        await fetch("http://localhost:3000/script/unassign_task", {
             method: 'POST',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({
@@ -362,11 +362,14 @@ function RecordingModal() {
         .then((user_search_result) => {
             alert("Script #" + scriptID + " unassigned! Redirecting to dashboard.")
         })
-        .then(() => navigate('/dashboard', {
-            state: {
-                accessCode: accessCode
-            }
-        }))
+        .then(() => {
+            navigate('/dashboard', {
+                state: {
+                    accessCode: accessCode
+                }
+            })
+            window.location.reload()
+        })
     }
 
     const startModule = () => {
