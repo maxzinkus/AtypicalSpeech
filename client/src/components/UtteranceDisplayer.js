@@ -2,11 +2,11 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 import SaveProgressButton from './SaveProgressButton';
 
-function UtteranceDisplayer({user_id, script_id, line, current_line, currentRecordState}) {
+function UtteranceDisplayer({user_id, script_id, line, current_line, currentRecordState}) { 
 
   // console.log("current record state in utterance displayer: ", currentRecordState)
 
-  const [currentState, setCurrentState] = useState({line_to_display: ""})
+  const [prevLine, setPrevLine] = useState('')
 
   useEffect(() => {
     
@@ -24,6 +24,11 @@ function UtteranceDisplayer({user_id, script_id, line, current_line, currentReco
     visibility_timeout();
 
   }, [current_line])
+
+  // add the prevLine
+  useEffect(()=>{
+    if(currentRecordState) setPrevLine(line[current_line])
+  },[currentRecordState])
   
   return (
     <><div className='float-container'>
@@ -32,7 +37,9 @@ function UtteranceDisplayer({user_id, script_id, line, current_line, currentReco
 
       </div>
       <div className='float-right-child'>
-        {line}
+        {/* {line[current_line]} */}
+        {currentRecordState && line[current_line]}
+        {!currentRecordState && prevLine}
       </div>
 
     </div>
