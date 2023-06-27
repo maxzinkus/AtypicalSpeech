@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Accordion from 'react-bootstrap/Accordion';
-import axios from 'axios';
+import axios from 'fetch';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
@@ -12,8 +12,8 @@ function UserAccordionComponent() {
 
     const [currentState, setCurrentState] = useState({users: null, accordionItems: null});
 
-    const assign_task_url = "http://localhost:3000/user/assign_task"
-    const delete_user_url = "http://localhost:3000/user/delete_user"
+    const assign_task_url = "/api/user/assign_task"
+    const delete_user_url = "/api/user/delete_user"
 
     const handleAssignTask = async (accessCode, script_id) => {
 
@@ -172,7 +172,7 @@ function UserAccordionComponent() {
         async function fetchData() {
 
             // fetch all users to display all users on admin page
-            const users = await axios.get('http://localhost:3000/user/get_all_users');
+            const users = await axios.get('/api/user/get_all_users');
 
             setCurrentState({...currentState, users: users})
 

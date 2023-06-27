@@ -1,6 +1,6 @@
 import React from 'react'
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from 'fetch';
 
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -14,10 +14,10 @@ import { Button, Table, Modal } from 'react-bootstrap';
 
 function ScriptTabbedList() {
 
-    const get_all_script_ids_URL = "http://localhost:3000/script/get_all_scripts";
-    const delete_script_URL = "http://localhost:3000/script/delete_script";
-    const get_script_URL = "http://localhost:3000/script/findScriptID";
-    const edit_script_line_URL = "http://localhost:3000/script/update_script_line";
+    const get_all_script_ids_URL = "/api/script/get_all_scripts";
+    const delete_script_URL = "/api/script/delete_script";
+    const get_script_URL = "/api/script/findScriptID";
+    const edit_script_line_URL = "/api/script/update_script_line";
     const generic_fields = ["field1","field2","field3","field4","field5","field6","field7"]
 
     const [currentState, setCurrentState] = useState({all_scripts: null, tabbedlist: null});

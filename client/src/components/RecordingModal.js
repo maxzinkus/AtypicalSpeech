@@ -6,7 +6,7 @@ import AudioReactRecorder, { RecordState } from 'audio-react-recorder'
 import AudioPlayer from './AudioPlayer';
 import ReviewPage from './ReviewPage';
 import { useLocation, useNavigate } from 'react-router-dom';
-import axios from 'axios'
+import axios from 'fetch'
 import { Button } from 'react-bootstrap';
 import renderProgressBar from './ProgressBar';
 import { create_csv_receipt } from './utils/CSVReceiptUtils';
@@ -50,7 +50,7 @@ function RecordingModal() {
     useEffect(() => {
 
         async function fetchScript() {
-            const script = await axios.post('http://localhost:3000/script/findScriptID/', {script_id: scriptID});
+            const script = await axios.post('/api/script/findScriptID/', {script_id: scriptID});
             console.log(script.data.utterances.utterances)
             setCurrentUtterances(script.data.utterances.utterances)
             setCurrentUtteranceDetails(script.data.utterances.details)
@@ -64,7 +64,7 @@ function RecordingModal() {
         }
 
         async function fetchProgress() {
-            const user_data = await axios.post('http://localhost:3000/user/get_user_by_id', {user_id: userID});
+            const user_data = await axios.post('/api/user/get_user_by_id', {user_id: userID});
             const all_progress = user_data.data["taskProgress"];
             if (all_progress.hasOwnProperty(scriptID.toString())) {
                 console.log("most recent progress: ", all_progress[scriptID.toString()]);
@@ -108,7 +108,7 @@ function RecordingModal() {
         const line_to_update = (line >= 0) ? line : 0;
         await new Promise(
             async resolve => 
-                await axios.post('http://localhost:3000/user/update_task_progress', {user_id: user_id, script_id: script_id, current_line: line_to_update})
+                await axios.post('/api/user/update_task_progress', {user_id: user_id, script_id: script_id, current_line: line_to_update})
             )
     }
 
@@ -333,7 +333,7 @@ function RecordingModal() {
     const handleComplete = async (event) => {
         event.preventDefault();
 
-        await fetch("http://localhost:3000/user/mark_task_complete", {
+        await axios("/api/user/mark_task_complete", {
             method: 'POST',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({
@@ -350,7 +350,7 @@ function RecordingModal() {
 
         await createCSVReceipt();
 
-        await fetch("http://localhost:3000/script/unassign_task", {
+        await axios("/api/script/unassign_task", {
             method: 'POST',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({

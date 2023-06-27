@@ -3,7 +3,7 @@ import { Button, Modal } from 'react-bootstrap'
 
 import UploadService from "../utils/UploadService";
 
-import axios from 'axios';
+import axios from 'fetch';
 
 import Papa from "papaparse";
 
@@ -93,14 +93,14 @@ function AddScriptButton() {
             for (const scriptID in scriptID2utterances) {
               var params = {"script_id": scriptID, "utterances": {"utterances": scriptID2utterances[scriptID]["utterances"], "details": scriptID2utterances[scriptID]["details"]}}
 
-              await axios.put("http://localhost:3000/script/add_utterances", params);
+              await axios.put("/api/script/add_utterances", params);
             }
 
             return data;
         })
         .then((data) => {
             
-            // return fetch("http://localhost:3000/script/process_script", {
+            // return fetch("/api/script/process_script", {
             // method: 'POST',
             // headers: {'Content-Type':'application/json'},
             // body: JSON.stringify({

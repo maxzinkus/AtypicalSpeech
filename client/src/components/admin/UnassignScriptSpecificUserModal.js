@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import axios from 'axios';
+import axios from 'fetch';
 import ReactDOM from 'react-dom';
 import { useNavigate, useLocation } from 'react-router-dom'
 
@@ -59,14 +59,14 @@ function UnassignScriptSpecificUserModal() {
       async function fetchData() {
 
           // fetch all users to display all users on admin page
-          const all_scripts = await axios.get('http://localhost:3000/script/get_all_script_ids');
+          const all_scripts = await axios.get('/api/script/get_all_script_ids');
 
           const all_script_ids = all_scripts.data.map((script) => {
               return {value: script.id, label: script.id};
           })
 
           const assigned_scripts_res = await axios.post(
-            'http://localhost:3000/user/get_assigned_tasks',
+            '/api/user/get_assigned_tasks',
             {
                 "user_id": accessCode
             }
@@ -87,7 +87,7 @@ function UnassignScriptSpecificUserModal() {
 
   }, [selectedScripts])
 
-  const unassign_script_url = "http://localhost:3000/script/update_assigned_task"
+  const unassign_script_url = "/api/script/update_assigned_task"
 
   const handleUnAssignScripts = async () => {
     console.log("handleUnAssignScripts selectedScripts: ", selectedScripts)

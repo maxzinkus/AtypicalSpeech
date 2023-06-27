@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import axios from 'axios';
+import axios from 'fetch';
 import ReactDOM from 'react-dom';
 import { useNavigate, useLocation } from 'react-router-dom'
 
@@ -13,7 +13,7 @@ import makeAnimated from 'react-select/animated';
 
 function AssignScriptMultipleUsersModal() {
 
-    const get_all_users_url = 'http://localhost:3000/user/get_all_users';
+    const get_all_users_url = '/api/user/get_all_users'; 
 
     const location = useLocation();
     const script_id = location.state.script_id;
@@ -49,7 +49,7 @@ function AssignScriptMultipleUsersModal() {
 
     const animatedComponents = makeAnimated();
 
-    const assign_task_to_multiple_users_url = "http://localhost:3000/script/assign_task_to_multiple_users"
+    const assign_task_to_multiple_users_url = "/api/script/assign_task_to_multiple_users"
 
     const handleAssignMultipleTasks = async () => {
 

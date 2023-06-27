@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import axios from 'axios'
+import axios from 'fetch'
 import { Link, useNavigate } from 'react-router-dom'
 import { Button } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -20,7 +20,7 @@ function LoginForm({Login, error}) {
 
         event.preventDefault();
 
-        fetch("http://localhost:3000/user/get_user_by_id", {
+        axios("/api/user/get_user_by_id", {
             method: 'POST',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({

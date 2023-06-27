@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import axios from 'axios';
+import axios from 'fetch';
 import ReactDOM from 'react-dom';
 import { useNavigate, useLocation } from 'react-router-dom'
 
@@ -22,7 +22,7 @@ function AssignScriptsSpecificUserModal() {
       async function fetchData() {
 
           // fetch all users to display all users on admin page
-          const result = await axios.get('http://localhost:3000/script/get_all_script_ids');
+          const result = await axios.get('/api/script/get_all_script_ids');
 
           const all_script_ids = result.data.map((script) => {
               return {value: script.id, label: script.id};
@@ -35,7 +35,7 @@ function AssignScriptsSpecificUserModal() {
 
   }, [])
 
-  const assign_task_url = "http://localhost:3000/user/assign_multiple_tasks"
+  const assign_task_url = "/api/user/assign_multiple_tasks"
 
   const handleAssignMultipleTasks = async () => {
 

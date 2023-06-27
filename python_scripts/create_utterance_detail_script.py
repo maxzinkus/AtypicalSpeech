@@ -33,7 +33,7 @@ for data in [train_data, test_data, valid_data]:
 
     utterance2details[utterance] = details
 
-create_utterance_detail_url = "http://localhost:3000/utterancedetail/create_utterance_detail"
+create_utterance_detail_url = "/api/utterancedetail/create_utterance_detail"
 
 for utterance, detail in utterance2details.items():
   request_data = json.dumps({"utterance": utterance, "detail": detail})

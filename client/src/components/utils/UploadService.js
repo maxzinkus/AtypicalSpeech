@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from 'fetch';
 import Papa from "papaparse";
 
 import React from 'react'
@@ -58,7 +58,7 @@ const process = (file, onUploadProgress) => {
     // const bodyFormData = new FormData();
     // // bodyFormData.append("data", JSON.stringify(data))
 
-    // const process_url = "http://localhost:3000/script/process_script"
+    // const process_url = "/api/script/process_script"
 
     // return axios.post(process_url, {
     //     headers: {
@@ -78,7 +78,7 @@ const process = (file, onUploadProgress) => {
 
 //     console.log("formData: ", serializeForm(formData));
 
-//     const process_url = "http://localhost:3000/script/process_script"
+//     const process_url = "/api/script/process_script"
 
 //     return axios.post(process_url, formData, {
 //         headers: {

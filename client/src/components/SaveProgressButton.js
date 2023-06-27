@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from 'react-bootstrap'
-import axios from 'axios';
+import axios from 'fetch';
 
 function SaveProgressButton({user_id, script_id, current_line}) {
 
@@ -12,7 +12,7 @@ function SaveProgressButton({user_id, script_id, current_line}) {
         const line_to_update = (line >= 0) ? line : 0;
         await new Promise(
             async resolve => 
-                await axios.post('http://localhost:3000/user/update_task_progress', {user_id: user_id, script_id: script_id, current_line: line_to_update})
+                await axios.post('/api/user/update_task_progress', {user_id: user_id, script_id: script_id, current_line: line_to_update})
             )
             .then(displayProgressUpdateAlert(line_to_update))
     }

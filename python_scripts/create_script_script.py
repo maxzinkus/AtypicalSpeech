@@ -44,7 +44,7 @@ for scriptID, utterance in scriptID2utterances.items():
 # print(len(scriptID2utterances["2BqVo8kVB2Skwgyb"]))
 # print(len(scriptID2utteranceDetails["2BqVo8kVB2Skwgyb"]))
 
-create_script_url = "http://localhost:3000/script/create"
+create_script_url = "/api/script/create"
 
 for scriptID, utterances in scriptID2utterances.items():
   request_data = json.dumps({"id": scriptID, "utterances": {"utterances": utterances, "details": scriptID2utteranceDetails[scriptID]}})

@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import axios from 'axios';
+import axios from 'fetch';
 import ReactDOM from 'react-dom';
 import { useNavigate } from 'react-router-dom'
 
@@ -32,7 +32,7 @@ function CreateUserModal() {
 
         console.log("handleCreateUser accessCode: ", currentState.accessCode)
 
-        fetch("http://localhost:3000/user/create", {
+        axios("/api/user/create", {
             method: 'POST',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({

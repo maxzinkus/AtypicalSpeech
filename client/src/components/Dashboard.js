@@ -1,7 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from 'fetch';
 import DashboardCard from './DashboardCard';
 import { useLocation } from 'react-router-dom';
 import url from 'url';
@@ -19,7 +19,7 @@ function Dashboard() {
 
         async function fetchAssignedTasks() {
 
-            const assignedTasks = await axios.post('http://localhost:3000/user/get_assigned_tasks/', {user_id: accessCode});
+            const assignedTasks = await axios.post('/api/user/get_assigned_tasks/', {user_id: accessCode});
             console.log(assignedTasks.data.tasks)
 
             if (currentState.assignedTasks === assignedTasks.data.tasks) {
