@@ -19,9 +19,8 @@
     "react-audio-voice-recorder": "^1.2.1",
     "react-bootstrap": "^2.7.4",
     "react-dom": "^18.2.0",
-    "react-list-view": "^1.0.0",
     "react-router-dom": "^6.6.1",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "react-select": "^5.7.2",
     "url": "^0.11.0",
     "web-vitals": "^3.3.2"
