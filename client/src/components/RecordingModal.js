@@ -333,15 +333,11 @@ function RecordingModal() {
     const handleComplete = async (event) => {
         event.preventDefault();
 
-        await axios("/api/user/mark_task_complete", {
-            method: 'POST',
-            headers: {'Content-Type':'application/json'},
-            body: JSON.stringify({
-                'user_id': accessCode,
-                'script_id': scriptID
-            })
+        await axios.post("/api/user/mark_task_complete", {
+            user_id: accessCode,
+            script_id: scriptID
         })
-        .then((res) => res.json())
+        // .then((res) => res.json())
         .then((user_search_result) => {
             // console.log("result: ", user_search_result["completedTasks"]["tasks"])
             // alert(user_search_result["completedTasks"]["tasks"])
@@ -350,15 +346,11 @@ function RecordingModal() {
 
         await createCSVReceipt();
 
-        await axios("/api/script/unassign_task", {
-            method: 'POST',
-            headers: {'Content-Type':'application/json'},
-            body: JSON.stringify({
-                'user_id': accessCode,
-                'script_id': scriptID
-            })
+        await axios.post("/api/script/unassign_task", {
+            user_id: accessCode,
+            script_id: scriptID
         })
-        .then((res) => res.json())
+        // .then((res) => res.json())
         .then((user_search_result) => {
             alert("Script #" + scriptID + " unassigned! Redirecting to dashboard.")
         })

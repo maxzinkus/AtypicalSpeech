@@ -20,14 +20,8 @@ function LoginForm({Login, error}) {
 
         event.preventDefault();
 
-        axios("/api/user/get_user_by_id", {
-            method: 'POST',
-            headers: {'Content-Type':'application/json'},
-            body: JSON.stringify({
-                'user_id': loginDetails.accessCode
-            })
-        })
-        .then((res) => res.json())
+        axios.post("/api/user/get_user_by_id", {user_id: loginDetails.accessCode})
+        // .then((res) => res.json()) 
         .then((user_search_result) => {
             if (user_search_result === null) {
                 alert("incorrect credentials");

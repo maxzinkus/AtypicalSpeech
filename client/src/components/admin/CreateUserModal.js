@@ -32,13 +32,7 @@ function CreateUserModal() {
 
         console.log("handleCreateUser accessCode: ", currentState.accessCode)
 
-        axios("/api/user/create", {
-            method: 'POST',
-            headers: {'Content-Type':'application/json'},
-            body: JSON.stringify({
-                'user_id': currentState.accessCode
-            })
-        })
+        axios.post("/api/user/create", {user_id: currentState.accessCode})
         .then(() => {
             handleClose()
         })

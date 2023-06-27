@@ -43,13 +43,9 @@ function AssignScriptsSpecificUserModal() {
         return script.value;
       })
 
-      fetch(assign_task_url, {
-          method: 'POST',
-          headers: {'Content-Type':'application/json'},
-          body: JSON.stringify({
-              'user_id': accessCode,
-              'script_ids': selectedScriptIDs
-          })
+      axios.post(assign_task_url, {
+        user_id: accessCode,
+        script_ids: selectedScriptIDs
       }).then(() => {
         handleClose()
       })
