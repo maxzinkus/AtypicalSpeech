@@ -5,8 +5,8 @@ router.get('/', (_, res) => {
     res.send("Welcome to AtypicalSpeech")
 });
 
-router.use('/script', require('./script'));
-router.use('/user', require('./user'));
-router.use('/utterancedetail', require('./utterancedetail'));
+router.use('/api/script', require('./script'));
+router.use('/api/user', require('./user'));
+router.use('/api/utterancedetail', require('./utterancedetail'));
 
 module.exports = router;
