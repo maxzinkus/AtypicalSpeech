@@ -13,10 +13,6 @@ import AssignScriptMultipleUsersModal from './components/admin/AssignScriptMulti
 import UnassignScriptSpecificUserModal from './components/admin/UnassignScriptSpecificUserModal'
 import ReactAudioVoiceRecorder from './components/testing/react-audio-voice-recorder/ReactAudioVoiceRecorder'
 
-const api = axios.create({
-  baseURL: `http://localhost:3001/`
-})
-
 function App() {
 
   return (
