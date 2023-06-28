@@ -8,5 +8,6 @@ router.get('/', (_, res) => {
 router.use('/api/script', require('./script'));
 router.use('/api/user', require('./user'));
 router.use('/api/utterancedetail', require('./utterancedetail'));
+router.use('/api/upload', require('./upload'))
 
 module.exports = router;
