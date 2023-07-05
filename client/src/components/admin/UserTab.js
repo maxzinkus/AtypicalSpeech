@@ -6,9 +6,9 @@ function UserTab() {
   return (
     <div>
       <div className='padding_bottom_20'>
-        {CreateUserModal()}
+        <CreateUserModal/>
       </div>
-        {UserAccordionComponent()}
+        <UserAccordionComponent/>
     </div>
   )
 }
