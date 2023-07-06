@@ -1,5 +1,23 @@
-import React, { useState } from 'react';
-import { Button, Table } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Button, Table, Space } from 'antd';
+import axios from 'fetch';
+
+const download = async (filename)=>{
+
+  const res = await axios.post('/api/audios/download_single_audio',{
+    filename
+  },{
+    responseType: 'blob'
+  })
+
+  const url = window.URL.createObjectURL(res.data);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'filename'; // or any name you want
+  document.body.appendChild(a);
+  a.click(); // simulate a click
+  a.remove(); // clean up
+}
 
 const columns = [
   {
@@ -7,28 +25,33 @@ const columns = [
     dataIndex: 'name',
   },
   {
-    title: 'Age',
-    dataIndex: 'age',
-  },
-  {
-    title: 'Address',
-    dataIndex: 'address',
+    title: 'Action',
+    render: (_, record) => (
+      <Space size="middle">
+        <a onClick={()=>download(record.name)}>Download</a>
+      </Space>
+    ),
   },
 ];
-
-const data = [];
-for (let i = 0; i < 46; i++) {
-  data.push({
-    key: i,
-    name: `Edward King ${i}`,
-    age: 32,
-    address: `London, Park Lane no. ${i}`,
-  });
-}
 
 const App = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([])
+
+  useEffect(()=>{
+    (async ()=>{
+      const res = await axios.get('/api/audios/get_all_audios')
+      const { data } = res
+      const tmp = data.map((item, index)=>{
+        return {
+          key: item.path,
+          name: item.name
+        }
+      })
+      setData(tmp)
+    })()
+  },[])
 
   const start = () => {
     setLoading(true);
