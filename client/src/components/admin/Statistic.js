@@ -28,7 +28,7 @@ const columns = [
     title: 'Action',
     render: (_, record) => (
       <Space size="middle">
-        <a onClick={()=>download(record.name)}>Download</a>
+        <a style={{color: '#1677ff'}} onClick={()=>download(record.name)}>Download</a>
       </Space>
     ),
   },
