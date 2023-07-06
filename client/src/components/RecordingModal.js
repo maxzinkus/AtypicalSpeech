@@ -10,6 +10,7 @@ import axios from 'fetch'
 import { Button } from 'react-bootstrap';
 import renderProgressBar from './ProgressBar';
 import { create_csv_receipt } from './utils/CSVReceiptUtils';
+import { notification } from 'antd';
 
 // new recorder library
 import { AudioRecorder, useAudioRecorder } from 'react-audio-voice-recorder';
@@ -41,6 +42,15 @@ function RecordingModal() {
     // new recorder library
     const recorderControls = useAudioRecorder()
     const [shouldSave, setShouldSave] = useState(false);
+
+    const [api, contextHolder] = notification.useNotification();
+
+    const openNotificationWithIcon = (type, msg) => {
+        api[type]({
+          message: type,
+          description: msg,
+        });
+    };
 
     const stopAudioRecorder = (save) => {
         setShouldSave(save);
@@ -205,22 +215,34 @@ function RecordingModal() {
     }
 
     const saveBlob = async (event) => {
-        console.log("current blob: ", recorderControls.recordingBlob)
 
         setCheckBlob(null);
   
         var blob = recorderControls.recordingBlob
         var fileName = createFileName()
-        // console.log("file name: ", fileName);
-        var a = document.createElement("a");
-        document.body.appendChild(a);
-        a.style = "display: none";
-    
-        var url = window.URL.createObjectURL(blob);
-        a.href = url;
-        a.download = fileName;
-        a.click();
-        window.URL.revokeObjectURL(url);
+
+        // automatically upload
+        let formData = new FormData();
+        formData.append('filename', blob, fileName);
+        try {
+            axios.post('/api/upload', formData, {
+                headers: {
+                  'Content-Type': 'multipart/form-data'
+                }
+            })
+        } catch (error) {
+            openNotificationWithIcon('error', error)
+        }
+
+        // automatically download
+        // var a = document.createElement("a");
+        // document.body.appendChild(a);
+        // a.style = "display: none";
+        // var url = window.URL.createObjectURL(blob);
+        // a.href = url;
+        // a.download = fileName;
+        // a.click();
+        // window.URL.revokeObjectURL(url);
     };
 
     async function createBlobFromLocalPath(containerClient, blobName, localFileWithPath, uploadOptions){
@@ -339,9 +361,7 @@ function RecordingModal() {
         })
         // .then((res) => res.json())
         .then((user_search_result) => {
-            // console.log("result: ", user_search_result["completedTasks"]["tasks"])
-            // alert(user_search_result["completedTasks"]["tasks"])
-            alert("Script #" + scriptID + " complete!")
+            openNotificationWithIcon('success', "Script #" + scriptID + " complete!")
         });
 
         await createCSVReceipt();
@@ -352,7 +372,7 @@ function RecordingModal() {
         })
         // .then((res) => res.json())
         .then((user_search_result) => {
-            alert("Script #" + scriptID + " unassigned! Redirecting to dashboard.")
+            openNotificationWithIcon('success', "Script #" + scriptID + " unassigned! Redirecting to dashboard.")
         })
         .then(() => {
             navigate('/dashboard', {
