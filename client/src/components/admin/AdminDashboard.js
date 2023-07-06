@@ -28,9 +28,9 @@ const items = [{
   label:'Scripts' 
  },
  {
-  key:'statistic',
+  key:'audios',
   icon: React.createElement(UploadOutlined),
-  label:'Statistic' 
+  label:'Audios' 
  }]
 
 const AdminDashboard = () => {
@@ -64,7 +64,7 @@ const AdminDashboard = () => {
           <div style={{ padding: 24, textAlign: 'center', background: colorBgContainer}}>
             {key == 'users' && <UserTab/>}
             {key == 'scripts' && <ScriptTab/>}
-            {key == 'statistic' && <Statistic />}
+            {key == 'audios' && <Statistic />}
           </div>
         </Content>
         <Footer style={{ textAlign: 'center' }}>Herme Speech ©2023 Created by JHU ECE</Footer>
