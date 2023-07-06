@@ -21,7 +21,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.post('/', upload.single('audioFile'), (req, res) => {
+router.post('/', upload.single('filename'), (req, res) => {
     try {
         res.send(req.file);
     } catch(err) {
