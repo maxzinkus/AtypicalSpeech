@@ -7,6 +7,7 @@ router.get('/', (_, res) => {
 });
 
 router.post('/admin/register', ctrl.register);
+router.post('/admin/login', ctrl.login);
 
 
 module.exports = router;
