@@ -3,6 +3,7 @@ const mysql = require('mysql2');
 const db = require('./models');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const cookieParser = require("cookie-parser");
 
 class App {
 
@@ -41,6 +42,8 @@ class App {
         this.app.use(bodyParser.urlencoded({ extended: false }));
         
         this.app.use(cors());
+
+        app.use(cookieParser());
     }
 
     getRouting() {
