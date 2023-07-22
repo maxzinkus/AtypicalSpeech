@@ -15,9 +15,9 @@ module.exports = (sequelize, DataTypes) => {
   };
   AdminUser.init({
     id: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       primaryKey: true,
-      allowNull: false,
+      autoIncrement: true
     },
     username: {
       type: DataTypes.STRING,
@@ -26,13 +26,13 @@ module.exports = (sequelize, DataTypes) => {
     password: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        is: /^[0-9a-zA-Z]{64}$/i,
-        min: 6
-      }
+    //   validate: {
+    //     is: /^[0-9a-zA-Z]{64}$/i,
+    //     min: 6
+    //   }
     },
     role: {
-      type: DataTypes.JSON,
+      type: DataTypes.STRING,
       defaultValue: 'basic',
       allowNull: true,
     }
@@ -40,5 +40,5 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'AdminUser',
   });
-  return User;
+  return AdminUser;
 };
