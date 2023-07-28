@@ -1,8 +1,7 @@
 const { AdminUser } = require('../../models')
 const bcrypt = require("bcryptjs")
 const jwt = require('jsonwebtoken')
-
-const jwtSecret = '35d3331f40dac9c738ab5b9f0ed745adf7a126b218b0dc477d0a006e1914640f423d0e'
+const jwtSecret = require('../../config/jwt.json')['jwtSecret'];
 
 exports.register = async (req, res, next) => {
     const { username, password } = req.body
@@ -100,46 +99,4 @@ exports.login = async (req, res, next) => {
           error: error.message,
         })
       }
-  }
-
-  exports.adminAuth = (req, res, next) => {
-    const token = req.cookies.jwt
-    if (token) {
-      jwt.verify(token, jwtSecret, (err, decodedToken) => {
-        if (err) {
-          return res.status(203).json({ message: "Not authorized" })
-        } else {
-          if (decodedToken.role !== "admin") {
-            return res.status(203).json({ message: "Not authorized" })
-          } else {
-            next()
-          }
-        }
-      })
-    } else {
-      return res
-        .status(203)
-        .json({ message: "Not authorized, token not available" })
-    }
-  }
-
-  exports.userAuth = (req, res, next) => {
-    const token = req.cookies.jwt
-    if (token) {
-      jwt.verify(token, jwtSecret, (err, decodedToken) => {
-        if (err) {
-          return res.status(203).json({ message: "Not authorized" })
-        } else {
-          if (decodedToken.role !== "user") {
-            return res.status(203).json({ message: "Not authorized" })
-          } else {
-            next()
-          }
-        }
-      })
-    } else {
-      return res
-        .status(203)
-        .json({ message: "Not authorized, token not available" })
-    }
   }
