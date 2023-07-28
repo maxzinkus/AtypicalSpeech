@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom"
 import {
   AppstoreOutlined,
   BarChartOutlined,
@@ -14,6 +15,8 @@ import { Layout, Menu, theme } from 'antd';
 import UserTab from './UserTab';
 import ScriptTab from './ScriptTab';
 import Statistic from './Statistic'
+
+import axios from 'fetch';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -39,6 +42,14 @@ const AdminDashboard = () => {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+
+  const navigate = useNavigate();
+
+  useEffect(()=>{
+    axios.get('/api/auth/admin').then(res=>{
+      if(res.status !== 200) { navigate("/admin/login") }
+    })
+  }, [])
 
   return (
     <Layout hasSider>
