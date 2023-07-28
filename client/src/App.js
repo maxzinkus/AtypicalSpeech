@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Switch } from 'react-router-dom'
 import Dashboard from './components/Dashboard'
 import RecordingModal from './components/RecordingModal'
 import AdminDashboard from './components/admin/AdminDashboard'
+import AdminLogin from './components/admin/AdminLogin'
 import AssignScriptsSpecificUserModal from './components/admin/AssignScriptsSpecificUserModal'
 import AssignScriptMultipleUsersModal from './components/admin/AssignScriptMultipleUsersModal'
 import UnassignScriptSpecificUserModal from './components/admin/UnassignScriptSpecificUserModal'
@@ -28,6 +29,7 @@ function App() {
             <Route path="/unassign_script_specific_user" element={<UnassignScriptSpecificUserModal/>}/>
             <Route path="/assign-script-multiple-users" element={<AssignScriptMultipleUsersModal/>}/>
             <Route path="/admin" element={<AdminDashboard/>}/>
+            <Route path="/admin/login" element={<AdminLogin/>}/>
             <Route path="/react_audio_voice_recorder" element={<ReactAudioVoiceRecorder/>}/>
           {/* </Switch> */}
           </Routes>
