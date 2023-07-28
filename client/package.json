@@ -54,5 +54,6 @@
   "overrides": {
     "react": "$react",
     "react-dom": "$react-dom"
-  }
+  },
+  "proxy": "http://localhost:3000"
 }
