@@ -43,7 +43,7 @@ class App {
         
         this.app.use(cors());
 
-        app.use(cookieParser());
+        this.app.use(cookieParser());
     }
 
     getRouting() {
