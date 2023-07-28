@@ -1,8 +1,9 @@
 const { Router } = require('express');
 const router = Router();
 const ctrl = require('./auth.ctrl');
+const { adminAuth } = require('../../middleware/auth.js');
 
-router.get('/admin', ctrl.adminAuth, (_, res) => {
+router.get('/admin', adminAuth, (_, res) => {
     res.send("AdminUser")
 });
 
