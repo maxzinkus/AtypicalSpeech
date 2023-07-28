@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 const jwtSecret = require('../../config/jwt.json')['jwtSecret'];
 
 exports.register = async (req, res, next) => {
-    const { username, password } = req.body
+    const { username, password, role } = req.body
 
     if (password.length < 6) {
       return res.status(400).json({ message: "Password less than 6 characters" })
@@ -22,6 +22,7 @@ exports.register = async (req, res, next) => {
       await AdminUser.create({
         username,
         password: hashedPassword,
+        role: role || 'basic'
       }).then(user => {
         const maxAge = 24 * 60 * 60;
 
@@ -82,6 +83,8 @@ exports.login = async (req, res, next) => {
                     res.cookie("jwt", token, {
                         httpOnly: true,
                         maxAge: maxAge * 1000, // 24hrs in ms
+                        sameSite: 'none',
+                        secure: true
                     });
 
                     res.status(200).json({
