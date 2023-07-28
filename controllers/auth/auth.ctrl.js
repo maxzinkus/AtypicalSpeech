@@ -82,12 +82,12 @@ exports.login = async (req, res, next) => {
     
                     res.cookie("jwt", token, {
                         httpOnly: true,
-                        maxAge: maxAge * 1000, // 3hrs in ms
+                        maxAge: maxAge * 1000, // 24hrs in ms
                     });
 
                     res.status(200).json({
-                    message: "Login successful",
-                    user,
+                        message: "Login successful",
+                        user,
                     })
                 }else{
                     res.status(400).json({ message: "Login not succesful" })
@@ -100,4 +100,46 @@ exports.login = async (req, res, next) => {
           error: error.message,
         })
       }
+  }
+
+  exports.adminAuth = (req, res, next) => {
+    const token = req.cookies.jwt
+    if (token) {
+      jwt.verify(token, jwtSecret, (err, decodedToken) => {
+        if (err) {
+          return res.status(203).json({ message: "Not authorized" })
+        } else {
+          if (decodedToken.role !== "admin") {
+            return res.status(203).json({ message: "Not authorized" })
+          } else {
+            next()
+          }
+        }
+      })
+    } else {
+      return res
+        .status(203)
+        .json({ message: "Not authorized, token not available" })
+    }
+  }
+
+  exports.userAuth = (req, res, next) => {
+    const token = req.cookies.jwt
+    if (token) {
+      jwt.verify(token, jwtSecret, (err, decodedToken) => {
+        if (err) {
+          return res.status(203).json({ message: "Not authorized" })
+        } else {
+          if (decodedToken.role !== "user") {
+            return res.status(203).json({ message: "Not authorized" })
+          } else {
+            next()
+          }
+        }
+      })
+    } else {
+      return res
+        .status(203)
+        .json({ message: "Not authorized, token not available" })
+    }
   }
