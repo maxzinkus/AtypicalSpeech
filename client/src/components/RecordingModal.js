@@ -205,7 +205,7 @@ function RecordingModal() {
     }
 
     const createFileName = () => {
-        var fileName =  accessCode + "_script" + scriptID + "_line" + currentState.currentLine.toString().padStart(4, '0')
+        var fileName =  accessCode + "_script" + scriptID + "_line" + currentState.currentLine.toString().padStart(4, '0') + '.webm'
         return fileName;
     }
 
