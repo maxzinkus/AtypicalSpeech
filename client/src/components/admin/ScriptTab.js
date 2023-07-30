@@ -12,7 +12,7 @@ function ScriptTab() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const renderAddScriptModal = () => {
+  const RenderAddScriptModal = () => {
     return (
       <>
         <Button variant="primary" onClick={handleShow}>
@@ -47,9 +47,9 @@ function ScriptTab() {
   return (
     <div>
       <div className='padding_bottom_20'>
-        <renderAddScriptModal/>
+        <RenderAddScriptModal />
       </div>
-        <ScriptTabbedList/>
+        <ScriptTabbedList />
     </div>
   )
 }
