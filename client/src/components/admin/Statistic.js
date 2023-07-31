@@ -6,14 +6,24 @@ const download = async (filename)=>{
 
   const res = await axios.post('/api/audios/download_single_audio',{
     filename
-  },{
-    responseType: 'blob'
   })
 
-  const url = window.URL.createObjectURL(res.data);
+  const base64 = res.data.file;
+  const raw = window.atob(base64);
+  const rawLength = raw.length;
+  const array = new Uint8Array(new ArrayBuffer(rawLength));
+
+  for(let i = 0; i < rawLength; i++) {
+      array[i] = raw.charCodeAt(i);
+  }
+
+  // Now 'array' is an ArrayBuffer
+  const blob = new Blob([array], {type: res.data.type.mime});
+
+  const url = window.URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = 'filename'; // or any name you want
+  a.download = res.data.filename; // or any name you want
   document.body.appendChild(a);
   a.click(); // simulate a click
   a.remove(); // clean up
