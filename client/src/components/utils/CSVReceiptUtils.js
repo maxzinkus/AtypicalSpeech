@@ -1,13 +1,4 @@
-// exports.csv_receipt = () => {
-//     var csvFileData = [  
-//         ['Alan Walker', 'Singer'],  
-//         ['Cristiano Ronaldo', 'Footballer'],  
-//         ['Saina Nehwal', 'Badminton Player'],  
-//         ['Arijit Singh', 'Singer'],  
-//         ['Terence Lewis', 'Dancer']  
-//      ];  
-         
-// }
+import axios from 'fetch'
 
 function format_header_rows (rows) {
     var header = ""
@@ -23,7 +14,7 @@ function format_header_rows (rows) {
 }
 
 // create a user-defined function to download CSV file   
-exports.create_csv_receipt = (data, rows, title) => {  
+export const create_csv_receipt = (data, rows, title) => {  
        
     // define the heading for each row of the data  
     var csv = format_header_rows(rows)
@@ -33,15 +24,18 @@ exports.create_csv_receipt = (data, rows, title) => {
             csv += row.join(',');  
             csv += "\n";  
     });  
-   
-    // display the created CSV data on the web browser   
-    document.write(csv);  
-  
-    var hiddenElement = document.createElement('a');  
-    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);  
-    hiddenElement.target = '_blank';  
-      
-    // provide the name for the CSV file to be downloaded  
-    hiddenElement.download = title + '.csv';  
-    hiddenElement.click();  
+
+    // upload to server
+    const blob = new Blob([csv], {type: 'text/csv'})
+    let formData = new FormData();
+    formData.append('filename', blob, title + '.csv');
+    try {
+        axios.post('/api/upload', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+        })
+    } catch (error) {
+
+    }
 }  
