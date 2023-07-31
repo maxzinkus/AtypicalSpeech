@@ -4,6 +4,23 @@ const fileType = require('file-type')
 
 const uploadDir = path.resolve(__dirname, '../../uploads');
 
+const isFileType = async (data, filename)=>{
+    // Determine the file type based on the extension
+    if(filename){
+        const ext = path.extname(filename);
+
+        if(ext == '.csv'){
+            return {
+                ext: 'csv',
+                mime: 'text/csv'
+            }
+        }
+    }
+
+    const type = await fileType.fromBuffer(data);
+    return type
+}
+
 exports.get_all_audios = async (req, res) => {
     fs.readdir(uploadDir, (err, files) => {
         try {
@@ -34,7 +51,7 @@ exports.download_single_audio = async (req, res) => {
             }
 
             const base64File = Buffer.from(data).toString('base64');
-            const type = await fileType.fromBuffer(data);
+            const type = await isFileType(data, filename);
             
             res.json({
                 file: base64File,
