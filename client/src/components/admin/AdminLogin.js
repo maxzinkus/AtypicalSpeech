@@ -61,7 +61,7 @@ function AdminLogin() {
                       <input
                         style={{position: 'relative', left: '13px'}}
                         id='password'
-                        type='text'
+                        type='password'
                       />
                   </h1>
               </div>
