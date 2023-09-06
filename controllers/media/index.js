@@ -2,13 +2,28 @@ const { Router } = require('express');
 const router = Router();
 const ctrl = require('./media.ctrl');
 
-router.get('/', (_, res) => {
-    res.send("Media")
+const multer  = require('multer');
+const fs = require('fs');
+const path = require('path');
+
+const uploadMedia = path.resolve(__dirname, '../../medias');
+
+if (!fs.existsSync(uploadMedia)) {
+    fs.mkdirSync(uploadMedia); 
+}
+
+const mediaStorage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, 'medias/')
+    },
+    filename: function(req, file, cb) {
+        cb(null, file.originalname);
+    }
 });
 
-router.post('/create', ctrl.create_script);
-router.post('/delete', ctrl.download_single_audio);
-router.post('/get_by_id', ctrl.download_single_audio);
-router.post('/delete', ctrl.download_single_audio);
+const uploadM = multer({ storage: mediaStorage });
+
+router.post('/create', uploadM.single('filename'), ctrl.create_script);
+
 
 module.exports = router;
