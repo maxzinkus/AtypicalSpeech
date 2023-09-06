@@ -26,10 +26,15 @@ module.exports = (sequelize, DataTypes) => {
     addr: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    type: {
+        type: DataTypes.STRING,
+        allowNull: false
     }
   }, {
     sequelize,
     modelName: 'Media',
   });
+
   return Media;
 };
