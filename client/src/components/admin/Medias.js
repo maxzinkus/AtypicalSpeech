@@ -8,7 +8,7 @@ const columns = [
     title: 'Media',
     dataIndex: 'addr',
     render: (addr) => (
-      <Modal>
+
         <img
           alt="example"
           style={{
@@ -16,7 +16,7 @@ const columns = [
           }}
           src={addr}
         />
-      </Modal>
+
     )
   },
   {
@@ -37,18 +37,18 @@ const App = () => {
   const [data, setData] = useState([])
 
   useEffect(()=>{
-    (async ()=>{
-      axios.get('/api/media/get_all_medias').then(res=>{
-        console.log(res.data)
-        setData([{
-          media: '1',
-          name: '1',
-          addr: '1',
-          desc: '1',
-          type: '1'
-        }])
+    axios.get('/api/media/get_all_medias').then(res=>{
+      const tmp = res.data.map((item, index)=>{
+        return {
+          key: item.id,
+          name: item.id,
+          addr: item.addr,
+          desc: item.desc,
+          type: item.type
+        }
       })
-    })()
+      setData(tmp)
+    })
   }, [])
 
   return (
