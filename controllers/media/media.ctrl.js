@@ -128,13 +128,12 @@ exports.get_all_script_ids = async (_, res) => {
 
 exports.create_script = async (req, res) => {
 
-    console.log("create script")
+    const { id, desc } = req.body
 
-    const {id, desc} = req.body
+    const addr = '/'+ req.file.path
 
     try {
-        // res.send(req.file);
-        const media = await Media.create({id, desc, addr:'sdfds'})
+        const media = await Media.create({id, desc, addr})
         return res.json(media)
     } catch (err) {
         console.log(err)
