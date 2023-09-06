@@ -72,9 +72,15 @@ function UserAccordionComponent() {
 
     const renderAssignScriptsSpecificUserModalButton = (user_data) => {
         return (
-            <Button variant="success" onClick={() => handleAssignScriptClick(user_data)}>
-                Assign scripts to this user
-            </Button>
+            <>
+                <Button variant="success" onClick={() => handleAssignScriptClick(user_data)}>
+                    Assign medias to this user
+                </Button>
+                <Button variant="success" onClick={() => handleAssignScriptClick(user_data)}>
+                    Assign scripts to this user
+                </Button>
+            </>
+
         )
     }
 
@@ -153,6 +159,7 @@ function UserAccordionComponent() {
                 {tasks.length} script(s) assigned
                 <ul>
                     {tasks.map((task, index) => {
+                        task = task.script_id ? task.script_id : task
                         if (!progress.hasOwnProperty(task)) {
                             return (<li key={index}>
                                 {task} - Not in progress
