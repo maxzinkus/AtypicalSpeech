@@ -8,5 +8,6 @@ router.use('/api/utterancedetail', require('./utterancedetail'));
 router.use('/api/upload', require('./upload'))
 router.use('/api/audios', adminAuth, require('./audios'))
 router.use('/api/auth', require('./auth'))
+router.use('/api/media', require('./media'))
 
 module.exports = router;
