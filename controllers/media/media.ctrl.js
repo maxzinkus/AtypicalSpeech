@@ -57,3 +57,12 @@ exports.assign = async (req, res) => {
         return res.status(500).json(err)
     }
 }
+
+exports.get_all_medias = async (req, res) =>{
+    try {
+        return res.json(await Media.findAll());
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json(err)
+    }
+}
