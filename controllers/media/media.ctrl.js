@@ -132,11 +132,10 @@ exports.create_script = async (req, res) => {
 
     const {id, desc} = req.body
 
-    // addr
-
     try {
-        const script = await Script.create({id, desc, addr})
-        return res.json(script)
+        // res.send(req.file);
+        const media = await Media.create({id, desc, addr:'sdfds'})
+        return res.json(media)
     } catch (err) {
         console.log(err)
         return res.status(500).json(err)
