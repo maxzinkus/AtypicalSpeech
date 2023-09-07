@@ -74,9 +74,6 @@ function UserAccordionComponent() {
         return (
             <>
                 <Button variant="success" onClick={() => handleAssignScriptClick(user_data)}>
-                    Assign medias to this user
-                </Button>
-                <Button variant="success" onClick={() => handleAssignScriptClick(user_data)}>
                     Assign scripts to this user
                 </Button>
             </>
