@@ -8,13 +8,14 @@ import {
   TeamOutlined,
   UploadOutlined,
   UserOutlined,
-  VideoCameraOutlined,
+  PlayCircleOutlined,
 } from '@ant-design/icons'
 import { Layout, Menu, theme } from 'antd';
 
 import UserTab from './UserTab';
 import ScriptTab from './ScriptTab';
 import Statistic from './Statistic'
+import Medias from './Medias'
 
 import axios from 'fetch';
 
@@ -34,6 +35,11 @@ const items = [{
   key:'audios',
   icon: React.createElement(UploadOutlined),
   label:'Audios' 
+ },
+ {
+  key:'medias',
+  icon: React.createElement(PlayCircleOutlined),
+  label:'Medias' 
  }]
 
 const AdminDashboard = () => {
@@ -76,6 +82,7 @@ const AdminDashboard = () => {
             {key == 'users' && <UserTab/>}
             {key == 'scripts' && <ScriptTab/>}
             {key == 'audios' && <Statistic />}
+            {key == 'medias' && <Medias />}
           </div>
         </Content>
         <Footer style={{ textAlign: 'center' }}>Herme Speech ©2023 Created by JHU ECE</Footer>
