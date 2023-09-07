@@ -5,17 +5,28 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-function DashboardCard({script_id, accessCode, type}) {
+function DashboardCard({script_id, accessCode, type, line}) {
     const navigate = useNavigate();
 
     const handleClick = (event) => {
-        navigate('/module', {
-            state: {
-                accessCode: accessCode,
-                script_id: script_id,
-                type
-            }
-        })
+        if(type !== 'script'){
+            navigate('/record', {
+                state: {
+                    accessCode: accessCode,
+                    script_id: script_id,
+                    type,
+                    line
+                }
+            })
+        }else{
+            navigate('/module', {
+                state: {
+                    accessCode: accessCode,
+                    script_id: script_id,
+                    type
+                }
+            })
+        }
     }
 
   return (
