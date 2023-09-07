@@ -30,7 +30,7 @@ function Dashboard() {
             for (var i = 0; i < assignedTasks.data.tasks.length; i++) {
                 // compatible to diff types
                 assignedTasks.data.tasks[i].type ? 
-                    cards.push(<DashboardCard type={assignedTasks.data.tasks[i].type} script_id={assignedTasks.data.tasks[i].script_id} accessCode={accessCode}/>)
+                    cards.push(<DashboardCard type={assignedTasks.data.tasks[i].type} script_id={assignedTasks.data.tasks[i].script_id} accessCode={accessCode} line={assignedTasks.data.tasks[i].desc}/>)
                 :
                     cards.push(<DashboardCard type={'script'} script_id={assignedTasks.data.tasks[i]} accessCode={accessCode}/>)
             }
