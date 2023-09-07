@@ -2,9 +2,11 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AudioRecorder, useAudioRecorder } from 'react-audio-voice-recorder';
-import { message } from 'antd';
+import { RecordState } from 'audio-react-recorder'
+import { message, Button } from 'antd';
 import axios from 'fetch'
 import UtteranceDisplayer from './UtteranceDisplayer';
+import ScriptController from './ScriptController'
 
 function RecordingMedia(){
     const location = useLocation();
@@ -16,9 +18,11 @@ function RecordingMedia(){
     const type = location.state.type;
     const line = location.state.line;
 
+    const RECORDING_DELAY = 1000;
+
     // state
     const [checkBlob, setCheckBlob] = useState(null);
-    const [currentState, setCurrentState] = useState({currentLine: 0, recordState: null, audioData: null, review: false, totalLines: [], startState: false, addr:''})
+    const [currentState, setCurrentState] = useState({currentLine: 0, recordState: null, review: false, totalLines: [], startState: false, addr:'', completed: false})
 
     // effect
     useEffect(()=>{
@@ -42,13 +46,149 @@ function RecordingMedia(){
     // new recorder library
     const recorderControls = useAudioRecorder()
 
-    // const stopAudioRecorder = (save) => {
-    //     setShouldSave(save);
-    //     recorderControls.stopRecording();
-    // }
+    const stopAudioRecorder = (save) => {
+        recorderControls.stopRecording();
+    }
+
+    const createFileName = () => {
+        let fileName = `${accessCode}_${type}_${scriptID}_${line.toString().padStart(4, '0')}.webm`
+        return fileName;
+    }
 
     const startModule = async () => {
         setCurrentState({...currentState, startState: true})
+    }
+
+    const addAudioElement = (blob) => {
+        const url = URL.createObjectURL(blob);
+        setCheckBlob(url);
+    };
+
+    const start = async (event) => {
+        setCurrentState({
+            ...currentState,
+            recordState: RecordState.START,
+            review: false
+        })
+        
+        recorderControls.startRecording()
+    }
+
+    const pause = (event) => {
+        setCurrentState({
+            ...currentState,
+            recordState: RecordState.PAUSE,
+        })
+    }
+
+    const stop = async (event) => {
+        await new Promise(resolve => setTimeout(resolve, RECORDING_DELAY))
+        .then(() => {
+            setCurrentState({
+                ...currentState,
+                recordState: RecordState.STOP,
+                review: true
+            })
+        })
+        .then(() => {
+            recorderControls.stopRecording(); 
+        })
+    }
+
+    const saveBlob = async (event) => {
+
+        setCheckBlob(null);
+
+        recorderControls.stopRecording();
+  
+        var blob = recorderControls.recordingBlob
+        var fileName = createFileName()
+
+        // automatically upload
+        let formData = new FormData();
+        formData.append('filename', blob, fileName);
+        try {
+            axios.post('/api/upload', formData, {
+                headers: {
+                  'Content-Type': 'multipart/form-data'
+                }
+            }).then(()=>{
+                setCurrentState({
+                    ...currentState,
+                    completed: true
+                })
+            })
+        } catch (error) {
+            message('error', error)
+        }
+    };
+
+    const restart = async (event) => {
+        setCurrentState({
+            ...currentState,
+            recordState: RecordState.START,
+            review: false,
+        })
+        setCheckBlob(null);
+        stopAudioRecorder(false);
+
+        recorderControls.startRecording()
+    }
+
+    const renderComplete = () => {
+        return (
+            <div>
+                <Button onClick={handleComplete}>Exit</Button>
+            </div>
+        )
+    }
+
+    const handleComplete = async (event) => {
+        event.preventDefault();
+
+        await axios.post("/api/media/unassign_task", {
+            user_id: accessCode,
+            script_id: scriptID,
+            desc: line
+        }).then(() => {
+            navigate('/dashboard', {
+                state: {
+                    accessCode: accessCode
+                }
+            })
+            window.location.reload()
+        })
+    }
+
+    const renderRecorder = () => {
+        return (
+            <div className='central_recorder'>
+              {checkBlob && 
+              <>
+                <audio src={checkBlob} controls />
+                <div class="color: blue">Please Review Your Recording</div>
+              </>
+              }
+              <AudioRecorder 
+                onRecordingComplete={addAudioElement}
+                audioTrackConstraints={{
+                  noiseSuppression: true,
+                  echoCancellation: true,
+                }}
+                onNotAllowedOrFound={(err) => console.table(err)}
+                // downloadOnSavePress={true}
+                downloadFileExtension="webm"
+                recorderControls={recorderControls}
+                showVisualizer
+                classes={{
+                  AudioRecorderStartSaveClass: 'display_none',
+                  AudioRecorderPauseResumeClass: 'display_none',
+                  AudioRecorderDiscardClass: 'visibility_hidden'
+                }}
+              />
+              {<ScriptController start={start} review={stop} pause={pause} restart={restart} save={saveBlob} recordingState={currentState.recordState} reviewState={currentState.review} ></ScriptController>}
+            </div>
+          )
     }
 
     const UtteranceDisplayerRendering = () => {
@@ -64,7 +204,7 @@ function RecordingMedia(){
                 <br/>
                 <div className='center'>
                     <img alt="example" style={{width: '800px',}} src={currentState.addr}/>
-                    {/* {renderRecorder()} */}
+                    {renderRecorder()}
                 </div>
             </>
         )
@@ -89,8 +229,8 @@ function RecordingMedia(){
 
     return(
         <div>
-            {renderRecordingModal()}
-        {/* {currentState.totalLines === currentState.currentLine && renderComplete()} */}
+            {!currentState.completed && renderRecordingModal()}
+            {currentState.completed && renderComplete()}
         </div>
     )
 }
