@@ -76,3 +76,40 @@ exports.get_id = async (req, res)=>{
         return res.status(500).json(err)
     }
 }
+
+exports.unassign_task = async (req, res) => {
+    const {user_id, script_id, desc} = req.body
+
+    try {
+        const user = await User.findByPk(user_id)
+        console.log("user: ", user)
+
+        // if user not found, show error
+        if (user === null) {
+            console.log("user not found!")
+        }
+
+        const script = await Media.findByPk(script_id)
+
+        // if script not found, show error
+        if (script === null) {
+            console.log("script not found!")
+        }
+
+        let original_assigned_tasks = user.assignedTasks.tasks
+        console.log(original_assigned_tasks)
+
+        original_assigned_tasks = original_assigned_tasks.filter(item=>{
+            return !(item.script_id == script_id && item.desc == desc)
+        })
+        
+        user.assignedTasks.tasks = original_assigned_tasks
+        user.changed('assignedTasks', true)
+        await user.save()
+    
+        return res.json(user)
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json(err)
+    }
+}
