@@ -18,7 +18,7 @@ function RecordingMedia(){
 
     // state
     const [checkBlob, setCheckBlob] = useState(null);
-    const [currentState, setCurrentState] = useState({currentLine: 0, recordState: null, audioData: null, review: false, totalLines: [], startState: false})
+    const [currentState, setCurrentState] = useState({currentLine: 0, recordState: null, audioData: null, review: false, totalLines: [], startState: false, addr:''})
 
     // effect
     useEffect(()=>{
@@ -31,7 +31,8 @@ function RecordingMedia(){
             setCurrentState({
                 ...currentState,
                 totalLines: script.desc,
-                currentLine: line
+                currentLine: line,
+                addr: script.addr
             })
         }
 
@@ -62,6 +63,7 @@ function RecordingMedia(){
                 </div>
                 <br/>
                 <div className='center'>
+                    <img alt="example" style={{width: '800px',}} src={currentState.addr}/>
                     {/* {renderRecorder()} */}
                 </div>
             </>
