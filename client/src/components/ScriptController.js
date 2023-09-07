@@ -6,15 +6,17 @@ const ScriptController = ({previousLine, nextLine, start, stop, pause, save, res
     {/* <Button content='Back' onClick={previousLine}/> */}
     {/* <Button labelPosition='left' icon='left chevron' content='Back' onClick={previousLine}/> */}
     {!reviewState && recordingState !== 'start' && <Button icon='play' content='Start Recording' onClick={start}/>}
-    {reviewState && renderReviewStateButtons(restart, nextLine)}
+    {reviewState && renderReviewStateButtons(restart, nextLine, save)}
     {!reviewState && currentLine !== 0 && <Button content={"Stop"} onClick={review}></Button>}
   </div>
 )
 
-const renderReviewStateButtons = (restart, nextLine) => {
+const renderReviewStateButtons = (restart, nextLine, save) => {
   return (
     <div>
-      {renderRerecordButton(restart)} {renderNextButton(nextLine)}
+      {renderRerecordButton(restart)} 
+      {nextLine && renderNextButton(nextLine)}
+      {save && renderSaveButton(save)}
     </div>
   )
 }
@@ -31,6 +33,12 @@ const renderRerecordButton = (restart) => {
 const renderNextButton = (nextLine) => {
   return (
     <Button class="ui positive basic button" content={"Move Onto Next Line"} onClick={nextLine}/>
+  )
+}
+
+const renderSaveButton = (save) => {
+  return (
+    <Button class="ui positive basic button" content={"Save"} onClick={save}/>
   )
 }
 
