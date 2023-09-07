@@ -13,7 +13,7 @@ function Dashboard() {
     const [isCardsCreated, setIsCardsCreated] = useState(false);
 
     const location = useLocation();
-    const accessCode = location.state.accessCode;
+    const accessCode = location.state.accessCode; 
 
     useEffect(() => {
 
@@ -28,7 +28,11 @@ function Dashboard() {
 
             var cards = [];
             for (var i = 0; i < assignedTasks.data.tasks.length; i++) {
-                cards.push(<DashboardCard script_id={assignedTasks.data.tasks[i]} accessCode={accessCode}/>)
+                // compatible to diff types
+                assignedTasks.data.tasks[i].type ? 
+                    cards.push(<DashboardCard type={assignedTasks.data.tasks[i].type} script_id={assignedTasks.data.tasks[i].script_id} accessCode={accessCode}/>)
+                :
+                    cards.push(<DashboardCard type={'script'} script_id={assignedTasks.data.tasks[i]} accessCode={accessCode}/>)
             }
             setCurrentState({...currentState, assignedTasks: assignedTasks.data.tasks, cards: cards});
             setIsFetched(true);
