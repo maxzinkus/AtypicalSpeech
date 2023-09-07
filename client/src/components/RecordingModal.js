@@ -333,7 +333,7 @@ function RecordingModal() {
               />
               {/* <button onClick={start}>Start recording</button> */}
               {/* <button onClick={stop}>Stop recording</button> */}
-              {<ScriptController previousLine={previousLine} nextLine={nextLine} start={start} stop={stop} pause={pause} restart={restart} save={saveBlob} review={review} nextContent={"Review"} reviewState={currentState.review} recordingState={currentState.recordState} currentLine={currentState.currentLine}></ScriptController>}
+              {<ScriptController previousLine={previousLine} nextLine={nextLine} start={start} stop={stop} pause={pause} restart={restart} review={review} nextContent={"Review"} reviewState={currentState.review} recordingState={currentState.recordState} currentLine={currentState.currentLine}></ScriptController>}
             </div>
           )
     }
