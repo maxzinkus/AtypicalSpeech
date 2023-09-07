@@ -66,3 +66,13 @@ exports.get_all_medias = async (req, res) =>{
         return res.status(500).json(err)
     }
 }
+
+exports.get_id = async (req, res)=>{
+    const { script_id } = req.body
+    try {
+        return res.json(await Media.findByPk(script_id));
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json(err)
+    }
+}
