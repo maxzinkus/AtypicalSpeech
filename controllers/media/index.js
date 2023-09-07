@@ -27,6 +27,7 @@ router.post('/create', uploadM.single('filename'), ctrl.create_script);
 router.post('/assign', ctrl.assign);
 router.get('/get_all_medias', ctrl.get_all_medias);
 router.post('/get_id',ctrl.get_id);
+router.post('/unassign_task', ctrl.unassign_task);
 
 
 module.exports = router;
