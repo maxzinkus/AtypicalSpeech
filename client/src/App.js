@@ -7,6 +7,7 @@ import LoginForm from './components/LoginForm'
 import { BrowserRouter as Router, Switch } from 'react-router-dom'
 import Dashboard from './components/Dashboard'
 import RecordingModal from './components/RecordingModal'
+import RecordingMedia from './components/RecordingMedia'
 import AdminDashboard from './components/admin/AdminDashboard'
 import AdminLogin from './components/admin/AdminLogin'
 import AssignScriptsSpecificUserModal from './components/admin/AssignScriptsSpecificUserModal'
@@ -25,6 +26,7 @@ function App() {
             <Route exact path="/" element={<Home/>}/>
             <Route exact path="/dashboard" element={<Dashboard />}/>
             <Route path="/module" element={<RecordingModal/>}/>
+            <Route path="/record" element={<RecordingMedia/>}/>
             <Route path="/assign-script-specific" element={<AssignScriptsSpecificUserModal/>}/>
             <Route path="/unassign_script_specific_user" element={<UnassignScriptSpecificUserModal/>}/>
             <Route path="/assign-script-multiple-users" element={<AssignScriptMultipleUsersModal/>}/>
