@@ -4,12 +4,12 @@ const { parse } = require("csv-parse");
 
 exports.create_script = async (req, res) => {
 
-    const { id, desc, type } = req.body
+    const { id, desc, type = 'image' } = req.body
 
     const addr = '/'+ req.file.path
 
     try {
-        const media = await Media.create({id, desc, addr, type})
+        const media = await Media.create({id: 'media_' + new Date().getTime(), desc, addr, type})
         return res.json(media)
     } catch (err) {
         console.log(err)
@@ -42,7 +42,7 @@ exports.assign = async (req, res) => {
             }
             original_assigned_tasks.push({
                 script_id,
-                type: script.type,
+                type: 'image',
                 desc
             })
         }
