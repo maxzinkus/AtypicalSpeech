@@ -364,7 +364,7 @@ function RecordingModal() {
             openNotificationWithIcon('success', "Script #" + scriptID + " complete!")
         });
 
-        await createCSVReceipt();
+        // await createCSVReceipt();
 
         await axios.post("/api/script/unassign_task", {
             user_id: accessCode,
@@ -384,8 +384,10 @@ function RecordingModal() {
         })
     }
 
-    const startModule = () => {
+    const startModule = async () => {
         setCurrentState({...currentState, startState: true})
+
+        await createCSVReceipt();
     }
 
     const formatCSVReceiptTitle = (scriptID, userID) => {
@@ -420,7 +422,7 @@ function RecordingModal() {
             temp.push(accessCode) // access code
             temp.push(scriptID) // script id
             temp.push(i.toString()) // line number
-            temp.push(currentUtterances[i]) // utterance
+            temp.push(`"${currentUtterances[i]}"`) // utterance
             temp.push(createFileNameWithLineNumber(i)) // recording file name
 
             for (const script_detail of script_details) {
