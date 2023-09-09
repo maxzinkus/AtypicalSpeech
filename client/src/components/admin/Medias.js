@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { UploadOutlined, MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { Upload, Button, Table, message, Form, Modal, Space, Input, Radio  } from 'antd';
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { Select, Button, Table, message, Form, Modal, Space, Input, Radio  } from 'antd';
 import axios from 'fetch';
 
 const { Column } = Table;
@@ -19,6 +19,7 @@ const App = () => {
   const [isAssignModalOpen, setIsAssignModalOpen] = useState(false);
   const [form] = Form.useForm();
   const [formAssign] = Form.useForm();
+  const [user_ids, setUid] = useState([]);
 
   useEffect(()=>{
     axios.get('/api/media/get_all_medias').then(res=>{
@@ -62,6 +63,17 @@ const App = () => {
       script_id: record.name,
       desc: record.desc
     })
+
+    axios.get('/api/user/get_all_users').then(res=>{
+      const data = res.data
+      let tmp = data.map(item=>{
+        return {
+          value: item.id,
+          label: item.id
+        }
+      })
+      setUid(tmp);
+    })
     
     setIsAssignModalOpen(true);
   }
@@ -73,7 +85,7 @@ const App = () => {
       message.error('Please add a description')
       return;
     }
-    
+
     const desc = values.desc?.map(item=>item.desc)
 
     // Create FormData for file uploading, for example:
@@ -194,9 +206,11 @@ const App = () => {
             <Form.Item
               label="User_id"
               name="user_id"
-              rules={[{ required: true, message: 'Please input your user_id!' }]}
+              rules={[{ required: true, message: 'Please select your user_id!' }]}
             >
-              <Input />
+              <Select
+                options={user_ids}
+              />
             </Form.Item>
 
             <Form.Item
