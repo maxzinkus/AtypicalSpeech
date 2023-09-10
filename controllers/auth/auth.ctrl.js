@@ -1,7 +1,9 @@
 const { AdminUser } = require('../../models')
 const bcrypt = require("bcryptjs")
 const jwt = require('jsonwebtoken')
-const jwtSecret = require('../../config/jwt.json')['jwtSecret'];
+require('dotenv').config();
+const jwtSecret_DEV = require('../../config/jwt.json')['jwtSecret']
+const jwtSecret = process.env.JWT_SECRET || jwtSecret_DEV;
 
 exports.register = async (req, res, next) => {
     const { username, password, role } = req.body
