@@ -24,6 +24,9 @@ function RecordingMedia(){
     const [checkBlob, setCheckBlob] = useState(null);
     const [currentState, setCurrentState] = useState({currentLine: 0, recordState: null, review: false, totalLines: [], startState: false, addr:'', completed: false})
 
+    // new recorder library
+    const recorderControls = useAudioRecorder()
+
     // effect
     useEffect(()=>{
         async function fetchScript() {
@@ -43,8 +46,21 @@ function RecordingMedia(){
         fetchScript()
     }, [])
 
-    // new recorder library
-    const recorderControls = useAudioRecorder()
+    // delay medias showup
+    useEffect(() => {
+    
+        function visibility_timeout() {
+    
+          if (document.getElementById("record_media") !== null) {
+            setTimeout(function() {
+              document.getElementById('record_media').style.visibility = 'visible';
+            }, 500);
+          }
+        }
+    
+        if(recorderControls.isRecording) visibility_timeout();
+    
+    }, [recorderControls.isRecording])
 
     const stopAudioRecorder = (save) => {
         recorderControls.stopRecording();
@@ -192,7 +208,7 @@ function RecordingMedia(){
     }
 
     const UtteranceDisplayerRendering = () => {
-        return <UtteranceDisplayer currentRecordState={true} line={currentState.totalLines} current_line={currentState.currentLine}></UtteranceDisplayer>
+        return <UtteranceDisplayer currentRecordState={recorderControls.isRecording} line={currentState.totalLines} current_line={currentState.currentLine}></UtteranceDisplayer>
     }
 
     const renderRecordingModal = () => {
@@ -203,7 +219,7 @@ function RecordingMedia(){
                 </div>
                 <br/>
                 <div className='center'>
-                    <img alt="example" style={{width: '800px',}} src={currentState.addr}/>
+                    <img id='record_media' alt="example" style={{width: '800px', visibility: 'hidden'}} src={currentState.addr}/>
                     {renderRecorder()}
                 </div>
             </>
