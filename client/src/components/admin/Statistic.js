@@ -55,7 +55,7 @@ const App = () => {
       const { data } = res
       const tmp = data.map((item, index)=>{
         return {
-          key: item.path,
+          key: item.name,
           name: item.name
         }
       })
@@ -63,17 +63,40 @@ const App = () => {
     })()
   },[])
 
-  const start = () => {
+  const start = async () => {
     setLoading(true);
-    // ajax request after empty completing
-    setTimeout(() => {
-      setSelectedRowKeys([]);
-      setLoading(false);
-    }, 1000);
+
+    const res = await axios.post('/api/audios/download_in_zip',{
+      filenames: selectedRowKeys
+    },{
+      responseType: 'blob'
+    })
+
+    const url = window.URL.createObjectURL(new Blob([res.data]));
+    const link = document.createElement('a');
+    link.href = url;
+    const contentDisposition = res.headers['content-disposition'];
+    let filename = 'default-filename.zip'; // Default name if no content-disposition header
+
+    // Extract filename from HTTP headers if available
+    if (contentDisposition) {
+        const filenameMatch = contentDisposition.match(/filename="?(.+)"?\b/);
+        if (filenameMatch.length >= 2) {
+            filename = filenameMatch[1];
+        }
+    }
+
+    link.setAttribute('download', filename);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.URL.revokeObjectURL(url); // Clean up
+
+    setSelectedRowKeys([]);
+    setLoading(false);
   };
 
   const onSelectChange = (newSelectedRowKeys) => {
-    console.log('selectedRowKeys changed: ', newSelectedRowKeys);
     setSelectedRowKeys(newSelectedRowKeys);
   };
 
@@ -87,7 +110,7 @@ const App = () => {
     <div>
       <div style={{ marginBottom: 16, textAlign: 'left' }}>
         <Button type="primary" onClick={start} disabled={!hasSelected} loading={loading}>
-          Upload
+          Download
         </Button>
         <span style={{ marginLeft: 8 }}>
           {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
