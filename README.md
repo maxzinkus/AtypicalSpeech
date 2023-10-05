@@ -30,7 +30,6 @@ with atypical speech using this open-source tool.
 
 ### Installing
 
-* For our web-deployed version for the Johns Hopkins University & Medical Institute, please visit https://hermespeech.wse.jhu.edu/.
 * For local installations, please follow the instructions below:
   1. Clone your desired version of this AtypicalSpeech repository. On your local terminal, please run something along the lines of ```git clone https://github.com/forrestpark/AtypicalSpeech.git```
   2. Install necessary packages and libraries to run the cloned repository, one pack for server side code and another for client side. To do this, from the repository’s root folder AtypicalSpeech, please run `npm install` and `cd client && npm install`.
