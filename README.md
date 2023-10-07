@@ -26,7 +26,64 @@ with atypical speech using this open-source tool.
 
 ### Dependencies
 
-* TODO
+**archiver**
+* https://github.com/maxzinkus/AtypicalSpeech/blob/fe6c70558e2afa3cd0259508f57fbd17d74ef078/controllers/audios/audios.ctrl.js#L68
+* [docs](https://github.com/archiverjs/node-archiver)
+* used for downloading audio files in .zip
+
+**axios**: Promise based HTTP client for the browser and node.js
+* [docs](https://www.npmjs.com/package/axios)
+
+**bcryptjs**: A library for hashing and verifying passwords
+* https://github.com/maxzinkus/AtypicalSpeech/blob/fe6c70558e2afa3cd0259508f57fbd17d74ef078/controllers/auth/auth.ctrl.js#L22
+
+**cookie-parser**: A library for parsing and setting cookies
+
+**cors**: A library for enabling cross-origin resource sharing (CORS)
+
+**csv-parse**: A library for parsing CSV files
+
+**dotenv**: A library for loading environment variables from a .env file
+
+**express**: A popular web framework for Node.js
+
+**file-type**: A library for detecting the file type of a file
+
+**fs**: The built-in file system module in Node.js
+
+**jsonwebtoken**: A library for creating and verifying JSON Web Tokens (JWTs)
+* https://github.com/maxzinkus/AtypicalSpeech/blob/fe6c70558e2afa3cd0259508f57fbd17d74ef078/middleware/auth.js#L9
+
+**list-files**: A library for listing the files in a directory
+
+**list-react-files**: A library for listing the React components in a directory
+
+**multer**: A library for handling multipart/form-data requests
+* https://github.com/maxzinkus/AtypicalSpeech/blob/fe6c70558e2afa3cd0259508f57fbd17d74ef078/controllers/media/index.js#L15
+* https://github.com/maxzinkus/AtypicalSpeech/blob/fe6c70558e2afa3cd0259508f57fbd17d74ef078/controllers/upload/index.js#L13
+
+**mysql2**: A library for connecting to and interacting with MySQL databases
+
+**papaparse**: A library for parsing CSV and TSV files
+* https://github.com/maxzinkus/AtypicalSpeech/blob/fe6c70558e2afa3cd0259508f57fbd17d74ef078/client/src/components/admin/AddScriptButton.js#L27C31-L27C31
+
+**path**: The built-in path module in Node.js
+
+**pm2**: A process manager for Node.js applications
+
+**React**
+* bootstrap: A popular CSS framework for creating responsive and mobile-friendly web applications.
+* bootstrap-icons: A collection of over 1,500 free and open source icons for use with Bootstrap.
+* react-bootstrap: A library for using Bootstrap components in React applications.
+* react-csv-reader: A library for reading CSV files in React applications.
+* react-router-dom: A library for routing in React applications.
+* react-uploader: A library for uploading files in React applications.
+* semantic-ui-css: A popular CSS framework for creating responsive and mobile-friendly web applications.
+* semantic-ui-react: A library for using Semantic UI components in React applications.
+  
+**Sequelize ORM**
+* sequelize: A library for object-relational mapping (ORM) in Node.js.
+* sequelize-cli: A command-line interface for Sequelize.
 
 ### Installing
 
