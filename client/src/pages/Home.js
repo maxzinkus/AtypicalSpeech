@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import LoginForm from '../components/LoginForm';
 import RecordingModal from '../components/RecordingModal';
 import "../../src/App.css"
-import Logo from "./../images/logo2.png"
+import Logo from "./../images/atypical_speech_logo.png"
 import SOM_Logo from "./../images/rounded_jhu_som_logo_transparent_white.png"
 import JHU_logo from "../images/wse_logo.png"
 
@@ -32,7 +32,7 @@ function Home() {
   return (
     <div className="welcome_page">
       <div className="top">
-        HermeSpeech Recorder
+        <img className="logo" src={Logo} alt="logo1"></img>
       </div>
       <div className='center'>
         {renderLoginForm()}
